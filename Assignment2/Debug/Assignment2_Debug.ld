@@ -3,7 +3,7 @@
 * (C) Code Red Technologies Ltd, 2008-10
 * Generated linker script file for LPC1768
 * Created from nxp_lpc17_c.ld (vLPCXpresso v3.6 (3 [Build 317] [08/04/2011] ))
-* By LPCXpresso v3.6.3 [Build 317] [08/04/2011]  on Tue Apr 01 10:48:08 SGT 2014
+* By LPCXpresso v3.6.3 [Build 317] [08/04/2011]  on Mon Mar 17 09:48:59 SGT 2014
 */
 
 
@@ -38,101 +38,101 @@ SECTIONS
 		__bss_section_table = .;
 		LONG(    ADDR(.bss));
 		LONG(  SIZEOF(.bss));
-		LONG(    ADDR(.bss_RAM2));
-		LONG(  SIZEOF(.bss_RAM2));
-		LONG(    ADDR(.bss_RAM3));
-		LONG(  SIZEOF(.bss_RAM3));
-		__bss_section_table_end = .;
-		__section_table_end = . ;
-		/* End of Global Section Table */
-		
-
-		*(.after_vectors*)
-		
-		*(.text*)
-		*(.rodata .rodata.*)
-		. = ALIGN(4);
-		
-	} > MFlash512
-
-	/*
-	 * for exception handling/unwind - some Newlib functions (in common
-	 * with C++ and STDC++) use this.
-	 */
-	.ARM.extab : ALIGN(4)
-	{
-		*(.ARM.extab* .gnu.linkonce.armextab.*)
-	} > MFlash512
-	__exidx_start = .;
-	
-	.ARM.exidx : ALIGN(4)
-	{
-		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
-	} > MFlash512
-	__exidx_end = .;
-	
-	_etext = .;
-		
-	
-	.data_RAM2 : ALIGN(4)
-	{
-	   FILL(0xff)
-		*(.data.$RAM2*)
-		*(.data.$RamAHB32*)
-	   . = ALIGN(4) ;
-	} > RamAHB32 AT>MFlash512
-	
-	.data_RAM3 : ALIGN(4)
-	{
-	   FILL(0xff)
-		*(.data.$RAM3*)
-		*(.data.$CANAccFilterRAM*)
-	   . = ALIGN(4) ;
-	} > CANAccFilterRAM AT>MFlash512
-	
-	/* MAIN DATA SECTION */
-
-	.uninit_RESERVED : ALIGN(4)
-	{
-		KEEP(*(.bss.$RESERVED*))
-	} > RamLoc32
-
-	.data : ALIGN(4)
-	{
-		FILL(0xff)
-		_data = .;
-		*(vtable)
-		*(.data*)
-		. = ALIGN(4) ;
-		_edata = .;
-	} > RamLoc32 AT>MFlash512
-
-	
-	.bss_RAM2 : ALIGN(4)
-	{
-		*(.bss.$RAM2*)
-		*(.bss.$RamAHB32*)
-	   . = ALIGN(4) ;
-	} > RamAHB32
-	
-	.bss_RAM3 : ALIGN(4)
-	{
-		*(.bss.$RAM3*)
-		*(.bss.$CANAccFilterRAM*)
-	   . = ALIGN(4) ;
-	} > CANAccFilterRAM
-
-	/* MAIN BSS SECTION */
-	.bss : ALIGN(4)
-	{
-		_bss = .;
-		*(.bss*)
-		*(COMMON)
-		. = ALIGN(4) ;
-		_ebss = .;
-		PROVIDE(end = .);
-	} > RamLoc32
-	
-	PROVIDE(_pvHeapStart = .);
-	PROVIDE(_vStackTop = __top_RamLoc32 - 0);
-}
+		LONG(    ADDR(.bss_RAM2));
+		LONG(  SIZEOF(.bss_RAM2));
+		LONG(    ADDR(.bss_RAM3));
+		LONG(  SIZEOF(.bss_RAM3));
+		__bss_section_table_end = .;
+		__section_table_end = . ;
+		/* End of Global Section Table */
+		
+
+		*(.after_vectors*)
+		
+		*(.text*)
+		*(.rodata .rodata.*)
+		. = ALIGN(4);
+		
+	} > MFlash512
+
+	/*
+	 * for exception handling/unwind - some Newlib functions (in common
+	 * with C++ and STDC++) use this.
+	 */
+	.ARM.extab : ALIGN(4)
+	{
+		*(.ARM.extab* .gnu.linkonce.armextab.*)
+	} > MFlash512
+	__exidx_start = .;
+	
+	.ARM.exidx : ALIGN(4)
+	{
+		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
+	} > MFlash512
+	__exidx_end = .;
+	
+	_etext = .;
+		
+	
+	.data_RAM2 : ALIGN(4)
+	{
+	   FILL(0xff)
+		*(.data.$RAM2*)
+		*(.data.$RamAHB32*)
+	   . = ALIGN(4) ;
+	} > RamAHB32 AT>MFlash512
+	
+	.data_RAM3 : ALIGN(4)
+	{
+	   FILL(0xff)
+		*(.data.$RAM3*)
+		*(.data.$CANAccFilterRAM*)
+	   . = ALIGN(4) ;
+	} > CANAccFilterRAM AT>MFlash512
+	
+	/* MAIN DATA SECTION */
+
+	.uninit_RESERVED : ALIGN(4)
+	{
+		KEEP(*(.bss.$RESERVED*))
+	} > RamLoc32
+
+	.data : ALIGN(4)
+	{
+		FILL(0xff)
+		_data = .;
+		*(vtable)
+		*(.data*)
+		. = ALIGN(4) ;
+		_edata = .;
+	} > RamLoc32 AT>MFlash512
+
+	
+	.bss_RAM2 : ALIGN(4)
+	{
+		*(.bss.$RAM2*)
+		*(.bss.$RamAHB32*)
+	   . = ALIGN(4) ;
+	} > RamAHB32
+	
+	.bss_RAM3 : ALIGN(4)
+	{
+		*(.bss.$RAM3*)
+		*(.bss.$CANAccFilterRAM*)
+	   . = ALIGN(4) ;
+	} > CANAccFilterRAM
+
+	/* MAIN BSS SECTION */
+	.bss : ALIGN(4)
+	{
+		_bss = .;
+		*(.bss*)
+		*(COMMON)
+		. = ALIGN(4) ;
+		_ebss = .;
+		PROVIDE(end = .);
+	} > RamLoc32
+	
+	PROVIDE(_pvHeapStart = .);
+	PROVIDE(_vStackTop = __top_RamLoc32 - 0);
+}

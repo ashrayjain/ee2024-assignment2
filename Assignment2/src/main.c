@@ -533,6 +533,7 @@ void EINT3_IRQHandler(void) {
 }
 
 void TIMER0_IRQHandler(void) {
+	TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
 	printf("YES!\n");
 }
 
@@ -602,24 +603,26 @@ void initAllPeripherals()
 
 void configureTimer() {
 	TIM_TIMERCFG_Type TimerConfigStruct;
-	TIM_MATCHCGF_Type TimerMatcher;
+	TIM_MATCHCFG_Type TimerMatcher;
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
-	TimerConfigStruct.PrescaleValue = 20000;
+	TimerConfigStruct.PrescaleValue = 500000;
 
 	TimerMatcher.MatchChannel = 0;
 	TimerMatcher.IntOnMatch = ENABLE;
 	TimerMatcher.ResetOnMatch = TRUE;
-	TimerMatcher.StopOnMatch = FALSE;
+	TimerMatcher.StopOnMatch = TRUE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
 	TimerMatcher.MatchValue = 10;
 
-	TIM_init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
+	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
 
 	NVIC_SetPriority(TIMER0_IRQn, ((0x01<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER0_IRQn);
 	NVIC_EnableIRQ(TIMER0_IRQn);
+
+	TIM_Cmd(LPC_TIM0, ENABLE);
 }
 
 static char* msg = NULL;
