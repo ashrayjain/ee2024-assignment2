@@ -46,7 +46,7 @@ const unsigned short RESET_PIN = 4;
 const unsigned short LIGHT_PORT = 2;
 const unsigned short LIGHT_PIN = 5;
 
-const unsigned short TEMP_UPPER_LIMIT = 340;
+const unsigned short TEMP_UPPER_LIMIT = 200;
 
 int FREQ_UPDATE_TIME = 500;
 unsigned short WARNING_UPDATE_TIME = 3000;
@@ -134,6 +134,45 @@ void rgb_setLeds_OledHack(uint8_t ledMask) {
 }
 
 void oneSecondHandler();
+
+
+// TEMP RELATED STUFF
+
+#define TEMP_SCALAR_DIV10 1
+#define TEMP_NUM_HALF_PERIODS 340
+#define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
+
+void temp_init_int(int32_t *var);
+
+
+uint32_t temp_t1 = 0;
+uint32_t temp_t2 = 0;
+int temp_i = 0;
+int32_t *temp_pointer = 0;
+
+void temp_init_int(int32_t *var) {
+	PINSEL_CFG_Type PinCfg;
+
+	PinCfg.Funcnum = 0;
+	PinCfg.Pinnum = 2;
+	PinCfg.Portnum = 0;
+	PinCfg.Pinmode = 0;
+	PinCfg.OpenDrain = 0;
+	PINSEL_ConfigPin(&PinCfg);
+
+	GPIO_SetDir(0, (1<<2), 0);
+
+	LPC_GPIOINT->IO0IntEnF |= (1 << 2);
+	LPC_GPIOINT->IO0IntEnR |= (1 << 2);
+
+	temp_pointer = var;
+	NVIC_ClearPendingIRQ(EINT3_IRQn);
+	NVIC_EnableIRQ(EINT3_IRQn);
+}
+
+//////////////////////
+
+
 
 // SYSTICK RELATED STUFF
 
@@ -336,8 +375,6 @@ void activeHandler() {
 }
 
 void updateTemperatureReading() {
-	currentTemperatureReading = temp_read();
-
 	if (currentTemperatureReading < TEMP_UPPER_LIMIT) {
 		temperatureState = NORMAL;
 	}
@@ -530,11 +567,34 @@ void EINT3_IRQHandler(void) {
 		light_clearIrqStatus();
 		LPC_GPIOINT->IO2IntClr |= (1 << 5);
 	}
+	else if (((LPC_GPIOINT->IO0IntStatF >> 2) & 0x1) ||
+			((LPC_GPIOINT->IO0IntStatR >> 2) & 0x1)) {
+		if (temp_t1 == 0 && temp_t2 == 0) {
+			temp_t1 = getMsTicks();
+		}
+		else if (temp_t1 != 0 && temp_t2 == 0) {
+			temp_i++;
+			if (temp_i == TEMP_NUM_HALF_PERIODS) {
+				temp_t2 = getMsTicks();
+				if (temp_t2 > temp_t1) {
+					temp_t2 = temp_t2 - temp_t1;
+				}
+				else {
+					temp_t2 = (0xFFFFFFFF - temp_t1 + 1) + temp_t2;
+				}
+				*temp_pointer = ((2*1000*temp_t2) / (TEMP_NUM_HALF_PERIODS*TEMP_SCALAR_DIV10) - 2731 );
+				temp_t2 = 0;
+				temp_t1 = 0;
+				temp_i = 0;
+			}
+		}
+		LPC_GPIOINT->IO0IntClr |= (1 << 2);
+	}
 }
 
 void TIMER0_IRQHandler(void) {
 	TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
-	printf("YES!\n");
+	//printf("YES!\n");
 }
 
 void buzzer_init() {
@@ -599,6 +659,8 @@ void initAllPeripherals()
     NVIC_ClearPendingIRQ(EINT0_IRQn);
     NVIC_EnableIRQ(EINT3_IRQn);
     NVIC_EnableIRQ(EINT0_IRQn);
+
+    temp_init_int(&currentTemperatureReading);
 }
 
 void configureTimer() {
@@ -635,7 +697,7 @@ int main (void) {
 	configureTimer();
 	initAllPeripherals();
 
-	uint8_t data = 0;
+	/*uint8_t data = 0;
 	uint32_t len = 0;
 	uint8_t line[64];
 
@@ -661,7 +723,7 @@ int main (void) {
 	printf("--%s--\n", line);
 	while (1);
 	return 0;
-
+*/
     while (1)
     {
     	switch(currentState)
