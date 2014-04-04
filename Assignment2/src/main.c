@@ -316,8 +316,8 @@ void activeHandler() {
 	led7seg_setChar('-', 0);
 	acc_setMode(ACC_MODE_MEASURE);
 	while(currentState == FFS_ACTIVE){
-		updateReadings();
-		updateFreqCounter();
+		//updateReadings();
+		//updateFreqCounter();
 		writeStatesToOled();
 		char freq[15] = "";
 		sprintf(freq, "%.1f", currentFrequency);
@@ -534,7 +534,8 @@ void EINT3_IRQHandler(void) {
 
 void TIMER0_IRQHandler(void) {
 	TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
-	printf("YES!\n");
+	updateReadings();
+	updateFreqCounter();
 }
 
 void buzzer_init() {
@@ -606,14 +607,14 @@ void configureTimer() {
 	TIM_MATCHCFG_Type TimerMatcher;
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
-	TimerConfigStruct.PrescaleValue = 500000;
+	TimerConfigStruct.PrescaleValue = 10000;
 
 	TimerMatcher.MatchChannel = 0;
 	TimerMatcher.IntOnMatch = ENABLE;
 	TimerMatcher.ResetOnMatch = TRUE;
-	TimerMatcher.StopOnMatch = TRUE;
+	TimerMatcher.StopOnMatch = FALSE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = 10;
+	TimerMatcher.MatchValue = 5;
 
 	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
