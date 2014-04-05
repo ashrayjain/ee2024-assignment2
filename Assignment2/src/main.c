@@ -48,6 +48,8 @@ const unsigned short LIGHT_PIN = 5;
 
 const unsigned short TEMP_UPPER_LIMIT = 340;
 
+const float ACC_THRESHOLD = 1;
+
 int FREQ_UPDATE_TIME = 500;
 unsigned short WARNING_UPDATE_TIME = 3000;
 unsigned short UNSAFE_LOWER = 2;
@@ -73,8 +75,11 @@ int32_t currentTemperatureReading;
 RADIATION_STATE radiationState = SAFE;
 //int32_t currentRadiationReading;
 
-int8_t accX = 0, accY = 0, accZ = 0, accZOld = 0;
+int8_t accX = 0, accY = 0, accZ = 0;
 int8_t accXOffset = 0, accYOffset = 0, accZOffset = 0;
+int8_t accZValRemoved = 0;
+float currentAccAvgValue = 0.0, prevAccAvgValue = 0.0;
+uint8_t zeroCrossFlag = 0;
 
 FLUTTER_STATE flutterState;
 ACC_MODE accMode;
@@ -86,6 +91,9 @@ int currentCount;
 int oneSecondTick = 0;
 
 int currentFreqCounter = 0;
+int countOfValuesToAverage = 4;
+int currentAccIdx = 0;
+int accValues[countOfValuesToAverage] = {0};
 float currentFrequency = 0;
 int accTick = 0;
 int warningTick = 0;
@@ -205,7 +213,6 @@ void updateReadings() {
 			//currentTemperatureReading = 1000;
 			//updateTemperatureReading();
 			updateAccReading();
-			//updateRadiationReading();
 			break;
 		case FFS_CALIBRATING:
 			updateAccReading();
@@ -348,14 +355,30 @@ void updateTemperatureReading() {
 
 void updateAccReading() {
 	acc_read(&accX, &accY, &accZ);
+	accX -= accXOffset;
+	accY -= accYOffset;
+	accZ -= accZOffset;
 }
 
 void updateFreqCounter() {
-	if ((accZOld < 0 && (accZ - accZOffset) > 0) || (accZOld > 0 && (accZ - accZOffset) < 0)) {
-		currentFreqCounter ++;
+	updateAccReading();
+	accZValRemoved = accValues[currentAccIdx];
+	accValues[currentAccIdx] = accZ;
+	currentAccIdx = (++currentAccIdx) % countOfValuesToAverage;
+	currentAccAvgValue = (prevAccAvgValue * countOfValuesToAverage - accZValRemoved + accZ) / countOfValuesToAverage;
+
+	if (zeroCrossFlag) {
+		if ((prevAccAvgValue < 0 && currentAccAvgValue > 0) || (prevAccAvgValue > 0 && currentAccAvgValue < 0))) {
+			currentFreqCounter ++;
+			zeroCrossFlag = 0;
+		}
 	}
-	//printf("%f\n", currentFrequency);
-	accZOld = (accZ - accZOffset);
+
+	if (currentAccAvgValue <= -1 * ACC_THRESHOLD || currentAccAvgValue >= ACC_THRESHOLD) {
+		zeroCrossFlag = 1;
+	}
+
+	prevAccAvgValue = currentAccAvgValue;
 }
 
 void startWarning() {
@@ -393,9 +416,9 @@ void leaveStdByCountingDownState() {
 }
 
 void leaveCalibratingState() {
-	accXOffset = accX;
-	accYOffset = accY;
-	accZOffset = accZ;
+	accXOffset += accX;
+	accYOffset += accY;
+	accZOffset += accZ;
 }
 
 void countDownFrom(int startCount) {
@@ -536,7 +559,6 @@ void TIMER0_IRQHandler(void) {
 
 	if(LPC_TIM0->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM0,TIM_MR0_INT);
-		updateReadings();
 		updateFreqCounter();
 	} else if(LPC_TIM0->IR & (1 << 1)) {
 		TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
@@ -638,7 +660,7 @@ void configureTimer() {
 	TimerMatcher.ResetOnMatch = TRUE;
 	TimerMatcher.StopOnMatch = FALSE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = 5;
+	TimerMatcher.MatchValue = 2;
 
 	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
