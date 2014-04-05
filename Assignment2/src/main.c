@@ -210,8 +210,6 @@ void updateReadings() {
 			updateTemperatureReading();
 			break;
 		case FFS_ACTIVE:
-			//currentTemperatureReading = 1000;
-			//updateTemperatureReading();
 			updateAccReading();
 			break;
 		case FFS_CALIBRATING:
