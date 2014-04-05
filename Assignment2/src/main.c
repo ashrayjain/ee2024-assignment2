@@ -31,13 +31,16 @@
 #define NOTE_PIN_HIGH() GPIO_SetValue(0, 1<<26);
 #define NOTE_PIN_LOW()  GPIO_ClearValue(0, 1<<26);
 
-typedef enum {FFS_CALIBRATING, FFS_STDBY_COUNTING_DOWN, FFS_STDBY_ENV_TESTING, FFS_ACTIVE} STATES;
+// ##################################### //
+// ######  Variable Definitions   ###### //
+// ##################################### //
+
+typedef enum {FFS_CALIBRATING, FFS_STDBY_COUNTING_DOWN, FFS_STDBY_ENV_TESTING, FFS_ACTIVE} SYSTEM_STATE;
 typedef enum {UNKNOWN_TEMPERATURE, NORMAL, HOT} TEMPERATURE_STATE;
 typedef enum {UNKNOWN_RADIATION, SAFE, RISKY} RADIATION_STATE;
 typedef enum {NON_RESONANT, RESONANT} FLUTTER_STATE;
 typedef enum {STDBY_MODE, ACTIVE_MODE} ACC_MODE;
 typedef enum {EINT0, EINT1, ENT2, ENT3} EXTERNAL_INTERRUPT;
-typedef enum {true, false} bool;
 
 const unsigned short CALIBRATED_PORT = 1;
 const unsigned short CALIBRATED_PIN = 31;
@@ -50,12 +53,15 @@ const unsigned short LIGHT_PIN = 5;
 
 const unsigned short TEMP_UPPER_LIMIT = 340;
 
+const unsigned short ACC_UPDATE_PERIOD_MS = 20;
 const float ACC_THRESHOLD = 1;
+const int NUM_OF_ACC_VALUES_TO_AVG = 4;
+const int FREQ_UPDATE_PERIOD_MS = 500;
 
-int FREQ_UPDATE_TIME = 500;
-unsigned short WARNING_UPDATE_TIME = 3000;
-unsigned short UNSAFE_LOWER = 2;
-unsigned short UNSAFE_UPPER = 10;
+unsigned short TIME_WINDOW_MS = 3000;
+unsigned short UNSAFE_LOWER_HZ = 2;
+unsigned short UNSAFE_UPPER_HZ = 10;
+unsigned short REPORTING_PERIOD_MS = 1000;
 
 const uint32_t notes[] = {
         2272, // A - 440 Hz
@@ -86,41 +92,50 @@ const char radiationStateStringMap[3][7] = {
 		"RISKY "
 };
 
-STATES currentState;
+// #################################### //
+// #####  Variable Declarations   ##### //
+// #################################### //
+
+SYSTEM_STATE currentState;
+
+short countDownStarted = 0;
+int currentCountValue = 0;
+
 TEMPERATURE_STATE temperatureState;
 int32_t currentTemperatureReading;
 
 RADIATION_STATE radiationState = SAFE;
 
-int8_t accX = 0, accY = 0, accZ = 0;
-int8_t accXOffset = 0, accYOffset = 0, accZOffset = 0;
-int8_t accZValRemoved = 0;
-float currentAccAvgValue = 0.0, prevAccAvgValue = 0.0;
-uint8_t zeroCrossFlag = 0;
-
-FLUTTER_STATE flutterState;
 ACC_MODE accMode;
+int8_t accX = 0;
+int8_t accY = 0;
+int8_t accZ = 0;
+int8_t accXOffset = 0;
+int8_t accYOffset = 0;
+int8_t accZOffset = 0;
+int8_t accZValToRemove = 0;
 
-short countDownStarted = 0;
-short isWarningOn = 0;
-
-int currentCount;
-int oneSecondTick = 0;
+int accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+int currentAccIdx = 0;
+float currentAccZAvgValue = 0.0
+float prevAccZAvgValue = 0.0;
+uint8_t hasCrossedAccThreshold = 0;
 
 int currentFreqCounter = 0;
-int countOfValuesToAverage = 4;
-int currentAccIdx = 0;
-int accValues[countOfValuesToAverage] = {0};
 float currentFrequency = 0;
-int accTick = 0;
-int warningTick = 0;
+
+FLUTTER_STATE flutterState;
+short isWarningOn = 0;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
-static char* msg = NULL;
+volatile uint32_t oneSecondTick = 0;
+volatile uint32_t accTick = 0;
+volatile uint32_t warningTick = 0;
+static 	 char* msg = NULL;
 
-// ########################### //
-// #####  Declarations   ##### //
-// ########################### //
+// #################################### //
+// #####  Function Declarations   ##### //
+// #################################### //
 
 //// initialisers ////
 void initAllPeripherals();
@@ -347,24 +362,25 @@ void init_uart() {
 }
 
 void init_timer() {
+	int preScaleValue = 10000;
 	TIM_TIMERCFG_Type TimerConfigStruct;
 	TIM_MATCHCFG_Type TimerMatcher;
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
-	TimerConfigStruct.PrescaleValue = 10000;
+	TimerConfigStruct.PrescaleValue = preScaleValue;
 
 	TimerMatcher.MatchChannel = 0;
 	TimerMatcher.IntOnMatch = ENABLE;
 	TimerMatcher.ResetOnMatch = TRUE;
 	TimerMatcher.StopOnMatch = FALSE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = 2;
+	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / prescaleValue;
 
 	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
 
 	TimerMatcher.MatchChannel = 1;
-	TimerMatcher.MatchValue = 300;
+	TimerMatcher.MatchValue = (TIME_WINDOW_MS * 1000) / prescaleValue;
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);	
 
 	NVIC_SetPriority(TIMER0_IRQn, ((0x01<<3)|0x01));
@@ -450,15 +466,15 @@ void SysTick_Handler(void) {
 		}
 		break;
 	case FFS_ACTIVE:
-		if (msTicks - accTick >= FREQ_UPDATE_TIME) {
+		if (msTicks - accTick >= FREQ_UPDATE_PERIOD_MS) {
 		  	accTick = msTicks;
-			currentFrequency = ((currentFreqCounter*500.0)/FREQ_UPDATE_TIME);
+			currentFrequency = ((currentFreqCounter*500.0)/FREQ_UPDATE_PERIOD_MS);
 			currentFreqCounter = 0;
 		}
 		/*
-		if (msTicks - warningTick >= WARNING_UPDATE_TIME) {
+		if (msTicks - warningTick >= TIME_WINDOW_MS) {
 			warningTick = msTicks;
-			int isNonResonant = (currentFrequency > UNSAFE_UPPER || currentFrequency < UNSAFE_LOWER);
+			int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
 
 			if (flutterState == NON_RESONANT) {
 				if (isNonResonant) {
@@ -512,7 +528,7 @@ void TIMER0_IRQHandler(void) {
 		updateFreqCounter();
 	} else if(LPC_TIM0->IR & (1 << 1)) {
 		TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
-		int isNonResonant = (currentFrequency > UNSAFE_UPPER || currentFrequency < UNSAFE_LOWER);
+		int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
 
 		if (flutterState == NON_RESONANT) {
 			if (isNonResonant) {
@@ -603,23 +619,23 @@ void updateAccReading() {
 
 void updateFreqCounter() {
 	updateAccReading();
-	accZValRemoved = accValues[currentAccIdx];
+	accZValToRemove = accValues[currentAccIdx];
 	accValues[currentAccIdx] = accZ;
-	currentAccIdx = (++currentAccIdx) % countOfValuesToAverage;
-	currentAccAvgValue = (prevAccAvgValue * countOfValuesToAverage - accZValRemoved + accZ) / countOfValuesToAverage;
+	currentAccIdx = (++currentAccIdx) % NUM_OF_ACC_VALUES_TO_AVG;
+	currentAccZAvgValue = (prevAccZAvgValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
 
-	if (zeroCrossFlag) {
-		if ((prevAccAvgValue < 0 && currentAccAvgValue > 0) || (prevAccAvgValue > 0 && currentAccAvgValue < 0))) {
+	if (hasCrossedAccThreshold == 1) {
+		if ((prevAccZAvgValue < 0 && currentAccZAvgValue > 0) || (prevAccZAvgValue > 0 && currentAccZAvgValue < 0))) {
 			currentFreqCounter ++;
-			zeroCrossFlag = 0;
+			hasCrossedAccThreshold = 0;
 		}
 	}
 
-	if (currentAccAvgValue <= -1 * ACC_THRESHOLD || currentAccAvgValue >= ACC_THRESHOLD) {
-		zeroCrossFlag = 1;
+	if (currentAccZAvgValue <= -1 * ACC_THRESHOLD || currentAccZAvgValue >= ACC_THRESHOLD) {
+		hasCrossedAccThreshold = 1;
 	}
 
-	prevAccAvgValue = currentAccAvgValue;
+	prevAccZAvgValue = currentAccZAvgValue;
 }
 
 //-----------------------------------------------------------
@@ -656,14 +672,14 @@ void runWarning() {
 
 void countDownFrom(int startCount) {
 	currentState = FFS_STDBY_COUNTING_DOWN;
-	currentCount = startCount;
+	currentCountValue = startCount;
 	countDownStarted = 1;
 }
 
 void decrementCount() {
-	if (currentCount != 0) {
+	if (currentCountValue != 0) {
 		char str[2];
-		toStringInt(str, currentCount--);
+		toStringInt(str, currentCountValue--);
 		led7seg_setChar(str[0], 0);
 	}
 	else {
@@ -726,6 +742,31 @@ void writeAccValueToOled() {
 //-------------------- Helper Functions ---------------------
 //-----------------------------------------------------------
 
+static void playNote(uint32_t note, uint32_t durationMs) {
+
+    uint32_t t = 0;
+
+    if (note > 0) {
+
+        while (t < (durationMs*1000)) {
+            NOTE_PIN_HIGH();
+            Timer0_us_Wait(note / 2);
+            //delay32Us(0, note / 2);
+
+            NOTE_PIN_LOW();
+            Timer0_us_Wait(note / 2);
+            //delay32Us(0, note / 2);
+
+            t += note;
+        }
+
+    }
+    else {
+    	Timer0_Wait(durationMs);
+        //delay32Ms(0, durationMs);
+    }
+}
+
 void tempToString(char *str) {
 	strcat(str, " TEMP: ");
 	char tempStr[5] = "";
@@ -741,6 +782,10 @@ void toStringInt(char *str, int val) {
 
 void toStringDouble(char *str, float val) {
 	sprintf(str, "%.1f", val);
+}
+
+void rgb_setLeds_OledHack(uint8_t ledMask) {
+	rgb_setLeds(ledMask | RGB_GREEN);
 }
 
 int main (void) {
@@ -800,40 +845,6 @@ int main (void) {
     	}
         //Timer0_Wait(1);
     }
-}
-
-/*
-
-
-
-*/
-static void playNote(uint32_t note, uint32_t durationMs) {
-
-    uint32_t t = 0;
-
-    if (note > 0) {
-
-        while (t < (durationMs*1000)) {
-            NOTE_PIN_HIGH();
-            Timer0_us_Wait(note / 2);
-            //delay32Us(0, note / 2);
-
-            NOTE_PIN_LOW();
-            Timer0_us_Wait(note / 2);
-            //delay32Us(0, note / 2);
-
-            t += note;
-        }
-
-    }
-    else {
-    	Timer0_Wait(durationMs);
-        //delay32Ms(0, durationMs);
-    }
-}
-
-void rgb_setLeds_OledHack(uint8_t ledMask) {
-	rgb_setLeds(ledMask | RGB_GREEN);
 }
 
 void check_failed(uint8_t *file, uint32_t line)
