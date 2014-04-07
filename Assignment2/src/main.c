@@ -547,7 +547,7 @@ void SysTick_Handler(void) {
 					break;
 				case BUZZER_LOW:
 					NOTE_PIN_HIGH();
-					buzzerState = BUZZER_HIGh;
+					buzzerState = BUZZER_HIGH;
 					break;
 			}
 		}
@@ -739,6 +739,8 @@ void turnOnLedArray() {
 
 void stopWarning() {
 	isWarningOn = 0;
+	NOTE_PIN_LOW();
+	buzzerState = BUZZER_LOW;
 	turnOffLedArray();
 	rgb_setLeds_OledHack(0);
 }
