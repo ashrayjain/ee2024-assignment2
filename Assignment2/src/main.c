@@ -534,7 +534,7 @@ void SysTick_Handler(void) {
 					break;
 				case BUZZER_LOW:
 					NOTE_PIN_HIGH();
-					buzzerState = BUZZER_HIGh;
+					buzzerState = BUZZER_HIGH;
 					break;
 			}
 		}
@@ -758,6 +758,8 @@ void turnOnLedArray() {
 
 void stopWarning() {
 	isWarningOn = 0;
+	NOTE_PIN_LOW();
+	buzzerState = BUZZER_LOW;
 	turnOffLedArray();
 	rgb_setLeds_OledHack(0);
 	NOTE_PIN_LOW();
@@ -900,9 +902,9 @@ int main (void) {
 	}
 
 	initAllPeripherals();
-	init_timer();
+	//init_timer();
 
-	/*uint8_t data = 0;
+	uint8_t data[10];
 	uint32_t len = 0;
 	uint8_t line[64];
 
@@ -910,10 +912,14 @@ int main (void) {
 	msg = "Welcome to EE2024 \r\n";
 	UART_Send(LPC_UART3, (uint8_t *)msg , strlen(msg), BLOCKING);
 	//test receiving a letter and sending back to port
-	UART_Receive(LPC_UART3, &data, 1, BLOCKING);
-	UART_Send(LPC_UART3, &data, 1, BLOCKING);
+	UART_Receive(LPC_UART3, data, 3, BLOCKING);
+	data[3] = '\0';
+	printf("%s\n", data);
+	data[3] = '\n';
+	data[4] = '\0';
+	UART_Send(LPC_UART3, data, strlen(data), BLOCKING);
 	//test receiving message without knowing message length
-	len = 0;
+	/*len = 0;
 	do
 	{ 
 		UART_Receive(LPC_UART3, &data, 1, BLOCKING);
@@ -927,8 +933,9 @@ int main (void) {
 	UART_SendString(LPC_UART3, &line);
 	printf("--%s--\n", line);
 	while (1);
-	return 0;
 	*/
+	return 0;
+	/*
     while (1)
     {
     	switch(currentState)
@@ -950,6 +957,7 @@ int main (void) {
     	}
         //Timer0_Wait(1);
     }
+    */
 }
 
 void check_failed(uint8_t *file, uint32_t line)
