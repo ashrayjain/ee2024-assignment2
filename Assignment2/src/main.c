@@ -543,9 +543,11 @@ void SysTick_Handler(void) {
 			switch(buzzerState) {
 				case BUZZER_HIGH:
 					NOTE_PIN_LOW();
+					buzzerState = BUZZER_LOW;
 					break;
 				case BUZZER_LOW:
 					NOTE_PIN_HIGH();
+					buzzerState = BUZZER_HIGh;
 					break;
 			}
 		}
