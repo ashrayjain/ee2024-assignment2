@@ -209,9 +209,9 @@ void toStringDouble			(char *str, float val);
 //-----------------------------------------------------------
 
 void initAllPeripherals() {
+	init_GPIO();
     init_i2c();
     init_ssp();
-    init_GPIO();
     init_uart();
 
     pca9532_init();
@@ -797,7 +797,7 @@ int main (void) {
 	init_timer();
 	initAllPeripherals();
 
-	uint8_t data = 0;
+	/*uint8_t data = 0;
 	uint32_t len = 0;
 	uint8_t line[64];
 
@@ -823,7 +823,7 @@ int main (void) {
 	printf("--%s--\n", line);
 	while (1);
 	return 0;
-
+	*/
     while (1)
     {
     	switch(currentState)
