@@ -445,7 +445,7 @@ void disable_temp_interrupt() {
 
 void calibratingHandler() {
 	acc_setMode(ACC_MODE_MEASURE);
-	TIM_ResetCounter(LPC_TIM0, DISABLE);
+	TIM_ResetCounter(LPC_TIM0);
 	TIM_Cmd(LPC_TIM0, ENABLE);
 	writeHeaderToOled(" CALIBRATING! ");
 	rgb_setLeds_OledHack(0);
@@ -534,8 +534,8 @@ void SysTick_Handler(void) {
 		if (msTicks - accTick >= FREQ_UPDATE_PERIOD_MS) {
 		  	accTick = msTicks;
 			currentFrequency = ((currentFreqCounter*500.0)/FREQ_UPDATE_PERIOD_MS);
-			if (FLUTTER_STATE == RESONANT && (currentFrequency < UNSAFE_LOWER_HZ || currentFrequency > UNSAFE_UPPER_HZ)) ||
-				(FLUTTER_STATE == NON_RESONANT && (currentFrequency >= UNSAFE_LOWER_HZ && currentFrequency >= UNSAFE_UPPER_HZ))) {
+			if ((flutterState == RESONANT && (currentFrequency < UNSAFE_LOWER_HZ || currentFrequency > UNSAFE_UPPER_HZ)) ||
+				(flutterState == NON_RESONANT && (currentFrequency >= UNSAFE_LOWER_HZ && currentFrequency >= UNSAFE_UPPER_HZ))) {
 				TIM_ResetCounter(LPC_TIM1);
 			}
 			currentFreqCounter = 0;
