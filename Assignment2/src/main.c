@@ -755,13 +755,14 @@ void updateFreqCounter() {
 
 	accValuesSorted[tempIdx] = accZ;
 
+	// xor swap DOES NOT work when (accZValToRemove == accZ)
 	if(accZValToRemove > accZ) {
 		while ((--tempIdx) && accValuesSorted[tempIdx] < accZ) {
 			accValuesSorted[tempIdx] ^= accZ;
 			accZ ^= accValuesSorted[tempIdx];
 			accValuesSorted[tempIdx] ^= accZ;
 		}
-	} else {
+	} else if (accZ > accZValToRemove) {
 		while (((++tempIdx) < NUM_OF_ACC_VALUES_TO_AVG) && (accValuesSorted[tempIdx] > accZ)) {
 			accValuesSorted[tempIdx] ^= accZ;
 			accZ ^= accValuesSorted[tempIdx];
