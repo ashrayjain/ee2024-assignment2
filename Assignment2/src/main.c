@@ -46,7 +46,7 @@ typedef enum {NON_RESONANT, RESONANT} FLUTTER_STATE;
 typedef enum {STDBY_MODE, ACTIVE_MODE} ACC_MODE;
 typedef enum {EINT0, EINT1, ENT2, ENT3} EXTERNAL_INTERRUPT;
 typedef enum {BUZZER_LOW, BUZZER_HIGH} BUZZER_STATE;
-typedef enum {HANDSHAKE_NOT_DONE, HANDSHAKE_READY_ACK, HANDSHAKE_DONE} HANDSHAKE_STATE;
+typedef enum {HANDSHAKE_NOT_DONE, HANDSHAKE_DONE} HANDSHAKE_STATE;
 
 const unsigned short CALIBRATED_PORT = 1;
 const unsigned short CALIBRATED_PIN = 31;
@@ -680,7 +680,7 @@ void enterActiveState() {
 	TIM_ResetCounter(LPC_TIM1);
 	TIM_Cmd(LPC_TIM2, ENABLE);
 	TIM_Cmd(LPC_TIM1, ENABLE);
-	
+
 	writeHeaderToOled("    ACTIVE    ");
 	led7seg_setChar('-', 0);
 }
