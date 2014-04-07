@@ -30,6 +30,7 @@
 #define COUNT_DOWN_START 1
 #define NOTE_PIN_HIGH() GPIO_SetValue(0, 1<<26);
 #define NOTE_PIN_LOW()  GPIO_ClearValue(0, 1<<26);
+#define NUM_OF_ACC_VALUES_TO_AVG 4
 
 // ##################################### //
 // ######  Variable Definitions   ###### //
@@ -55,7 +56,6 @@ const unsigned short TEMP_UPPER_LIMIT = 340;
 
 const unsigned short ACC_UPDATE_PERIOD_MS = 20;
 const float ACC_THRESHOLD = 1;
-const int NUM_OF_ACC_VALUES_TO_AVG = 4;
 const int FREQ_UPDATE_PERIOD_MS = 500;
 
 unsigned short TIME_WINDOW_MS = 3000;
@@ -117,7 +117,7 @@ int8_t accZValToRemove = 0;
 
 int accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
 int currentAccIdx = 0;
-float currentAccZAvgValue = 0.0
+float currentAccZAvgValue = 0.0;
 float prevAccZAvgValue = 0.0;
 uint8_t hasCrossedAccThreshold = 0;
 
@@ -374,13 +374,13 @@ void init_timer() {
 	TimerMatcher.ResetOnMatch = TRUE;
 	TimerMatcher.StopOnMatch = FALSE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / prescaleValue;
+	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / preScaleValue;
 
 	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
 
 	TimerMatcher.MatchChannel = 1;
-	TimerMatcher.MatchValue = (TIME_WINDOW_MS * 1000) / prescaleValue;
+	TimerMatcher.MatchValue = (TIME_WINDOW_MS * 1000) / preScaleValue;
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);	
 
 	NVIC_SetPriority(TIMER0_IRQn, ((0x01<<3)|0x01));
@@ -625,7 +625,7 @@ void updateFreqCounter() {
 	currentAccZAvgValue = (prevAccZAvgValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
 
 	if (hasCrossedAccThreshold == 1) {
-		if ((prevAccZAvgValue < 0 && currentAccZAvgValue > 0) || (prevAccZAvgValue > 0 && currentAccZAvgValue < 0))) {
+		if ((prevAccZAvgValue < 0 && currentAccZAvgValue > 0) || (prevAccZAvgValue > 0 && currentAccZAvgValue < 0)) {
 			currentFreqCounter ++;
 			hasCrossedAccThreshold = 0;
 		}
