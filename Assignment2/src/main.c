@@ -794,8 +794,8 @@ int main (void) {
 	    while (1);  // Capture error
 	}
 
-	init_timer();
 	initAllPeripherals();
+	init_timer();
 
 	/*uint8_t data = 0;
 	uint32_t len = 0;
