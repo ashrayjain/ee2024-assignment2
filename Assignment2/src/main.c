@@ -30,7 +30,7 @@
 #define COUNT_DOWN_START 1
 #define NOTE_PIN_HIGH() GPIO_SetValue(0, 1<<26);
 #define NOTE_PIN_LOW()  GPIO_ClearValue(0, 1<<26);
-#define NUM_OF_ACC_VALUES_TO_AVG 4
+#define NUM_OF_ACC_VALUES_TO_AVG 10
 #define TEMP_SCALAR_DIV10 1
 #define TEMP_NUM_HALF_PERIODS 340
 #define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
@@ -57,8 +57,8 @@ const unsigned short LIGHT_PIN = 5;
 
 const unsigned short TEMP_UPPER_LIMIT = 340;
 
-const unsigned short ACC_UPDATE_PERIOD_MS = 50;
-const float ACC_THRESHOLD = 1;
+const unsigned short ACC_UPDATE_PERIOD_MS = 20;
+const float ACC_THRESHOLD = 3;
 const int FREQ_UPDATE_PERIOD_MS = 500;
 
 unsigned short TIME_WINDOW_MS = 3000;
