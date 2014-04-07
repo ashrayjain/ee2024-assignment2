@@ -147,7 +147,7 @@ static 	 char* msg = NULL;
 // #####  Function Declarations   ##### //
 // #################################### //
 
-//// initialisers ////
+//// Initializers ////
 void initAllPeripherals();
 static	void init_ssp	(void);
 static	void init_i2c	(void);
@@ -171,6 +171,9 @@ void oneSecondHandler			();
 uint32_t getMsTicks				(void);
 
 //// State changers	////
+void enterCalibratingState		();
+void enterStdByCountingDownState();
+void enterActiveState			();
 void leaveCalibratingState		();
 void leaveStdByCountingDownState();
 void leaveActiveState			();
@@ -444,13 +447,7 @@ void disable_temp_interrupt() {
 // state handlers
 
 void calibratingHandler() {
-	acc_setMode(ACC_MODE_MEASURE);
-	TIM_ResetCounter(LPC_TIM2);
-	TIM_Cmd(LPC_TIM2, ENABLE);
-	writeHeaderToOled(" CALIBRATING! ");
-	rgb_setLeds_OledHack(0);
-	led7seg_setChar('-', 0);
-	disable_temp_interrupt();
+	enterCalibratingState();
 	while(currentState == FFS_CALIBRATING) {
 		writeAccValueToOled();
         if (((GPIO_ReadValue(CALIBRATED_PORT) >> CALIBRATED_PIN) & 0x01) == 0) {
@@ -461,12 +458,8 @@ void calibratingHandler() {
 }
 
 void stdbyCountingDownHandler() {
-	TIM_Cmd(LPC_TIM2, DISABLE);
-	writeHeaderToOled("   STAND-BY   ");
-	countDownFrom(COUNT_DOWN_START);
-	acc_setMode(ACC_MODE_STANDBY);
-	light_setHiThreshold(800);
-    init_temp_interrupt(&currentTemperatureReading);
+
+	enterStdByCountingDownState();
 	while(currentState == FFS_STDBY_COUNTING_DOWN){}
 	leaveStdByCountingDownState();
 }
@@ -483,13 +476,7 @@ void stdbyEnvTestingHandler() {
 }
 
 void activeHandler() {
-	acc_setMode(ACC_MODE_MEASURE);
-	TIM_ResetCounter(LPC_TIM2);
-	TIM_ResetCounter(LPC_TIM1);
-	TIM_Cmd(LPC_TIM2, ENABLE);
-	TIM_Cmd(LPC_TIM1, ENABLE);
-	writeHeaderToOled("    ACTIVE    ");
-	led7seg_setChar('-', 0);
+	enterActiveState();
 	while(currentState == FFS_ACTIVE){
 		updateReadings();
 		//updateFreqCounter();
@@ -516,7 +503,7 @@ void activeHandler() {
 		}
 
 		if (isWarningOn) {
-			playNote(2551, 50);
+			//playNote(2551, 50);
 		}
 	}
 	leaveActiveState();
@@ -634,6 +621,35 @@ uint32_t getMsTicks(void) {
 //--------------------- State Changers ----------------------
 //-----------------------------------------------------------
 
+void enterCalibratingState() {
+	acc_setMode(ACC_MODE_MEASURE);
+	TIM_ResetCounter(LPC_TIM2);
+	TIM_Cmd(LPC_TIM2, ENABLE);
+	writeHeaderToOled(" CALIBRATING! ");
+	rgb_setLeds_OledHack(0);
+	led7seg_setChar('-', 0);
+	disable_temp_interrupt();
+}
+
+void enterStdByCountingDownState() {
+	TIM_Cmd(LPC_TIM2, DISABLE);
+	writeHeaderToOled("   STAND-BY   ");
+	countDownFrom(COUNT_DOWN_START);
+	acc_setMode(ACC_MODE_STANDBY);
+	light_setHiThreshold(800);
+	init_temp_interrupt(&currentTemperatureReading);
+}
+
+void enterActiveState() {
+	acc_setMode(ACC_MODE_MEASURE);
+	TIM_ResetCounter(LPC_TIM2);
+	TIM_ResetCounter(LPC_TIM1);
+	TIM_Cmd(LPC_TIM2, ENABLE);
+	TIM_Cmd(LPC_TIM1, ENABLE);
+	writeHeaderToOled("    ACTIVE    ");
+	led7seg_setChar('-', 0);
+}
+
 void leaveActiveState() {
 	TIM_Cmd(LPC_TIM1, DISABLE);
 	if (isWarningOn) {
@@ -641,15 +657,17 @@ void leaveActiveState() {
 	}
 }
 
-void leaveStdByCountingDownState() {
-	countDownStarted = 0;
-}
-
 void leaveCalibratingState() {
 	accXOffset += accX;
 	accYOffset += accY;
 	accZOffset += accZ;
 }
+
+void leaveStdByCountingDownState() {
+	countDownStarted = 0;
+}
+
+
 
 //-----------------------------------------------------------
 //--------------------- Sensor Readers ----------------------
@@ -713,6 +731,7 @@ void startWarning() {
 	isWarningOn = 1;
 	turnOnLedArray();
 	rgb_setLeds_OledHack(RGB_RED);
+	NOTE_PIN_HIGH();
 }
 
 void turnOnLedArray() {
@@ -723,6 +742,7 @@ void stopWarning() {
 	isWarningOn = 0;
 	turnOffLedArray();
 	rgb_setLeds_OledHack(0);
+	NOTE_PIN_LOW();
 }
 
 void turnOffLedArray() {
