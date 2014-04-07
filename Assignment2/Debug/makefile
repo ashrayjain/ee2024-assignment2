@@ -29,7 +29,7 @@ all: Assignment2.axf
 Assignment2.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -L"C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug" -L"C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug" -L"C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug" -Xlinker --gc-sections -Xlinker -Map=Assignment2.map -mcpu=cortex-m3 -mthumb -T "Assignment2_Debug.ld" -o"Assignment2.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -L"C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_CMSISv1p30_LPC17xx\Debug" -L"C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug" -L"C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug" -Xlinker --gc-sections -Xlinker -Map=Assignment2.map -mcpu=cortex-m3 -mthumb -T "Assignment2_Debug.ld" -o"Assignment2.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

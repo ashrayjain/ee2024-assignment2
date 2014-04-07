@@ -392,7 +392,7 @@ void init_timer() {
 	TIM_Init(LPC_TIM2, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM2, &TimerMatcher);
 
-	// configure Timer1 for frequesncy calculations
+	// configure Timer1 for frequency calculations
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
 	TimerConfigStruct.PrescaleValue = preScaleValue1;
@@ -497,7 +497,7 @@ void activeHandler() {
 		char freq[15] = "";
 		sprintf(freq, "%.1f", currentFrequency);
 		oled_putString(7, 40, freq, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
-		//printf("%d\n", 30);
+
 		// sanity check (due to reset interrupt which might have changed currentState)
 		if (currentState == FFS_ACTIVE && !(temperatureState == NORMAL && radiationState == SAFE)) {
 			currentState = FFS_STDBY_COUNTING_DOWN;
@@ -514,7 +514,7 @@ void activeHandler() {
 		}
 
 		if (isWarningOn) {
-			//playNote(2551, 100);
+			playNote(2551, 50);
 		}
 	}
 	leaveActiveState();
@@ -581,7 +581,6 @@ void EINT3_IRQHandler(void) {
 					temp_t2 = (0xFFFFFFFF - temp_t1 + 1) + temp_t2;
 				}
 				*temp_pointer = ((2*1000*temp_t2) / (TEMP_NUM_HALF_PERIODS*TEMP_SCALAR_DIV10) - 2731 );
-				printf("%d\n", *temp_pointer);
 				temp_t2 = 0;
 				temp_t1 = 0;
 				temp_i = 0;
