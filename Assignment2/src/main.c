@@ -134,6 +134,8 @@ float currentFrequency = 0;
 
 FLUTTER_STATE flutterState;
 short isWarningOn = 0;
+short setWarningToStop = 0;
+short setWarningToStart = 0;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
@@ -500,6 +502,16 @@ void activeHandler() {
 			currentState = FFS_STDBY_COUNTING_DOWN;
 		}
 
+		if(setWarningToStop) {
+			stopWarning();
+			setWarningToStop = 0;
+		}
+
+		if(setWarningToStart) {
+			startWarning();
+			setWarningToStart = 0;
+		}
+
 		if (isWarningOn) {
 			//playNote(2551, 100);
 		}
@@ -612,7 +624,7 @@ void TIMER1_IRQHandler (void) {
 		if (flutterState == NON_RESONANT) {
 			if (isNonResonant) {
 				if (isWarningOn) {
-					stopWarning();
+					setWarningToStop = 1;
 				}
 			} else {
 				flutterState = RESONANT;
@@ -622,7 +634,7 @@ void TIMER1_IRQHandler (void) {
 				flutterState = NON_RESONANT;
 			} else {
 				if (!isWarningOn) {
-					startWarning();
+					setWarningToStart = 1;
 				}
 			}
 		}
