@@ -506,11 +506,13 @@ void activeHandler() {
 		if(setWarningToStop) {
 			stopWarning();
 			setWarningToStop = 0;
+			isWarningOn = 0;
 		}
 
 		if(setWarningToStart) {
 			startWarning();
 			setWarningToStart = 0;
+			isWarningOn = 1;
 		}
 
 		if (isWarningOn) {
@@ -534,9 +536,14 @@ void SysTick_Handler(void) {
 		if (msTicks - accTick >= FREQ_UPDATE_PERIOD_MS) {
 		  	accTick = msTicks;
 			currentFrequency = ((currentFreqCounter*500.0)/FREQ_UPDATE_PERIOD_MS);
-			if ((flutterState == RESONANT && (currentFrequency < UNSAFE_LOWER_HZ || currentFrequency > UNSAFE_UPPER_HZ)) ||
-				(flutterState == NON_RESONANT && (currentFrequency >= UNSAFE_LOWER_HZ && currentFrequency >= UNSAFE_UPPER_HZ))) {
+			int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
+
+			if (flutterState == RESONANT && isNonResonant) {
 				TIM_ResetCounter(LPC_TIM1);
+				flutterState == NON_RESONANT;
+			} else if(flutterState == NON_RESONANT && !isNonResonant) {
+				TIM_ResetCounter(LPC_TIM1);
+				flutterState == RESONANT;
 			}
 			currentFreqCounter = 0;
 		}
@@ -601,23 +608,14 @@ void TIMER2_IRQHandler(void) {
 void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
-		int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
 
 		if (flutterState == NON_RESONANT) {
-			if (isNonResonant) {
-				if (isWarningOn) {
-					setWarningToStop = 1;
-				}
-			} else {
-				flutterState = RESONANT;
+			if (isWarningOn) {
+				setWarningToStop = 1;
 			}
 		} else {
-			if (isNonResonant) {
-				flutterState = NON_RESONANT;
-			} else {
-				if (!isWarningOn) {
-					setWarningToStart = 1;
-				}
+			if (!isWarningOn) {
+				setWarningToStart = 1;
 			}
 		}
 	}
