@@ -46,7 +46,7 @@ const unsigned short RESET_PIN = 4;
 const unsigned short LIGHT_PORT = 2;
 const unsigned short LIGHT_PIN = 5;
 
-const unsigned short TEMP_UPPER_LIMIT = 200;
+const unsigned short TEMP_UPPER_LIMIT = 300;
 
 int FREQ_UPDATE_TIME = 500;
 unsigned short WARNING_UPDATE_TIME = 3000;
@@ -195,7 +195,7 @@ void SysTick_Handler(void) {
 			currentFrequency = ((currentFreqCounter*500.0)/FREQ_UPDATE_TIME);
 			currentFreqCounter = 0;
 		}
-
+		/*
 		if (msTicks - warningTick >= WARNING_UPDATE_TIME) {
 			warningTick = msTicks;
 			int isNonResonant = (currentFrequency > UNSAFE_UPPER || currentFrequency < UNSAFE_LOWER);
@@ -217,7 +217,7 @@ void SysTick_Handler(void) {
 					}
 				}
 			}
-		}
+		}*/
 		break;
 	default:
 		break;
@@ -355,8 +355,8 @@ void activeHandler() {
 	led7seg_setChar('-', 0);
 	acc_setMode(ACC_MODE_MEASURE);
 	while(currentState == FFS_ACTIVE){
-		updateReadings();
-		updateFreqCounter();
+		//updateReadings();
+		//updateFreqCounter();
 		writeStatesToOled();
 		char freq[15] = "";
 		sprintf(freq, "%.1f", currentFrequency);
@@ -593,8 +593,32 @@ void EINT3_IRQHandler(void) {
 }
 
 void TIMER0_IRQHandler(void) {
-	TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
-	//printf("YES!\n");
+	if(LPC_TIM0->IR & (1 << 0)) {
+		TIM_ClearIntPending(LPC_TIM0,TIM_MR0_INT);
+		updateReadings();
+		updateFreqCounter();
+	} else if(LPC_TIM0->IR & (1 << 1)) {
+		TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
+		int isNonResonant = (currentFrequency > UNSAFE_UPPER || currentFrequency < UNSAFE_LOWER);
+
+		if (flutterState == NON_RESONANT) {
+			if (isNonResonant) {
+				if (isWarningOn) {
+					stopWarning();
+				}
+			} else {
+				flutterState = RESONANT;
+			}
+		} else {
+			if (isNonResonant) {
+				flutterState = NON_RESONANT;
+			} else {
+				if (!isWarningOn) {
+					startWarning();
+				}
+			}
+		}
+	}
 }
 
 void buzzer_init() {
@@ -668,17 +692,21 @@ void configureTimer() {
 	TIM_MATCHCFG_Type TimerMatcher;
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
-	TimerConfigStruct.PrescaleValue = 500000;
+	TimerConfigStruct.PrescaleValue = 10000;
 
 	TimerMatcher.MatchChannel = 0;
 	TimerMatcher.IntOnMatch = ENABLE;
 	TimerMatcher.ResetOnMatch = TRUE;
 	TimerMatcher.StopOnMatch = FALSE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = 10;
+	TimerMatcher.MatchValue = 5;
 
 	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
+
+	TimerMatcher.MatchChannel = 1;
+	TimerMatcher.MatchValue = 300;
+	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);	
 
 	NVIC_SetPriority(TIMER0_IRQn, ((0x01<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER0_IRQn);
