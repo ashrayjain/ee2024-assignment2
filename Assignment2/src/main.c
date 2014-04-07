@@ -372,7 +372,7 @@ void init_uart() {
 }
 
 void init_timer() {
-	int preScaleValue0 = 10000;
+	int preScaleValue2 = 10000;
 	int preScaleValue1 = 100000;
 
 	// configure Timer0 for acc reading
@@ -381,17 +381,17 @@ void init_timer() {
 	TIM_MATCHCFG_Type TimerMatcher;
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
-	TimerConfigStruct.PrescaleValue = preScaleValue0;
+	TimerConfigStruct.PrescaleValue = preScaleValue2;
 
 	TimerMatcher.MatchChannel = 0;
 	TimerMatcher.IntOnMatch = ENABLE;
 	TimerMatcher.ResetOnMatch = TRUE;
 	TimerMatcher.StopOnMatch = FALSE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / preScaleValue0;
+	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / preScaleValue2;
 
-	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
-	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
+	TIM_Init(LPC_TIM2, TIM_TIMER_MODE, &TimerConfigStruct);
+	TIM_ConfigMatch (LPC_TIM2, &TimerMatcher);
 
 	// configure Timer1 for frequesncy calculations
 
@@ -593,9 +593,9 @@ void EINT3_IRQHandler(void) {
 	}
 }
 
-void TIMER0_IRQHandler(void) {
-	if(LPC_TIM0->IR & (1 << 0)) {
-		TIM_ClearIntPending(LPC_TIM0,TIM_MR0_INT);
+void TIMER2_IRQHandler(void) {
+	if(LPC_TIM2->IR & (1 << 0)) {
+		TIM_ClearIntPending(LPC_TIM2,TIM_MR0_INT);
 		updateFreqCounter();
 	}
 }
