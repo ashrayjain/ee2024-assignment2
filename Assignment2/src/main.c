@@ -239,7 +239,6 @@ void initAllPeripherals() {
     oled_init();
     oled_clearScreen(OLED_COLOR_BLACK);
 
-
     light_init();
     light_enable();
     light_setRange(LIGHT_RANGE_64000);
@@ -452,7 +451,6 @@ void calibratingHandler() {
 	rgb_setLeds_OledHack(0);
 	led7seg_setChar('-', 0);
 	disable_temp_interrupt();
-
 	while(currentState == FFS_CALIBRATING) {
 		writeAccValueToOled();
         if (((GPIO_ReadValue(CALIBRATED_PORT) >> CALIBRATED_PIN) & 0x01) == 0) {
