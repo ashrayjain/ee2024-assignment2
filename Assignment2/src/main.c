@@ -403,9 +403,9 @@ void init_timer() {
 	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);	
 
-	NVIC_SetPriority(TIMER0_IRQn, ((0x01<<3)|0x01));
-	NVIC_ClearPendingIRQ(TIMER0_IRQn);
-	NVIC_EnableIRQ(TIMER0_IRQn);
+	NVIC_SetPriority(TIMER2_IRQn, ((0x01<<3)|0x01));
+	NVIC_ClearPendingIRQ(TIMER2_IRQn);
+	NVIC_EnableIRQ(TIMER2_IRQn);
 
 	NVIC_SetPriority(TIMER1_IRQn, ((0x01<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER1_IRQn);
