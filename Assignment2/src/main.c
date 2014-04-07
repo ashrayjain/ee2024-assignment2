@@ -57,7 +57,7 @@ const unsigned short LIGHT_PIN = 5;
 
 const unsigned short TEMP_UPPER_LIMIT = 340;
 
-const unsigned short ACC_UPDATE_PERIOD_MS = 20;
+const unsigned short ACC_UPDATE_PERIOD_MS = 50;
 const float ACC_THRESHOLD = 1;
 const int FREQ_UPDATE_PERIOD_MS = 500;
 
@@ -237,7 +237,6 @@ void initAllPeripherals() {
     oled_init();
     oled_clearScreen(OLED_COLOR_BLACK);
 
-    init_temp_interrupt(&currentTemperatureReading);
 
     light_init();
     light_enable();
@@ -432,6 +431,11 @@ void init_temp_interrupt(int32_t *var) {
 	NVIC_EnableIRQ(EINT3_IRQn);
 }
 
+void disable_temp_interrupt() {
+	LPC_GPIOINT->IO0IntEnF &= ~(1 << 2);
+	LPC_GPIOINT->IO0IntEnR &= ~(1 << 2);
+}
+
 //-----------------------------------------------------------
 //------------------------ Handlers -------------------------
 //-----------------------------------------------------------
@@ -444,6 +448,7 @@ void calibratingHandler() {
 	writeHeaderToOled(" CALIBRATING! ");
 	rgb_setLeds_OledHack(0);
 	led7seg_setChar('-', 0);
+	disable_temp_interrupt();
 
 	while(currentState == FFS_CALIBRATING) {
 		writeAccValueToOled();
@@ -460,6 +465,7 @@ void stdbyCountingDownHandler() {
 	countDownFrom(COUNT_DOWN_START);
 	acc_setMode(ACC_MODE_STANDBY);
 	light_setHiThreshold(800);
+    init_temp_interrupt(&currentTemperatureReading);
 	while(currentState == FFS_STDBY_COUNTING_DOWN){}
 	leaveStdByCountingDownState();
 }
@@ -495,7 +501,7 @@ void activeHandler() {
 		}
 
 		if (isWarningOn) {
-			playNote(2551, 100);
+			//playNote(2551, 100);
 		}
 	}
 	leaveActiveState();
@@ -598,7 +604,7 @@ void TIMER0_IRQHandler(void) {
 	}
 }
 
-void Timer1_IRQHandler (void) {
+void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
 		int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
