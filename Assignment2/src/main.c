@@ -45,6 +45,7 @@ typedef enum {UNKNOWN_RADIATION, SAFE, RISKY} RADIATION_STATE;
 typedef enum {NON_RESONANT, RESONANT} FLUTTER_STATE;
 typedef enum {STDBY_MODE, ACTIVE_MODE} ACC_MODE;
 typedef enum {EINT0, EINT1, ENT2, ENT3} EXTERNAL_INTERRUPT;
+typedef enum {BUZZER_LOW, BUZZER_HIGH} BUZZER_STATE;
 
 const unsigned short CALIBRATED_PORT = 1;
 const unsigned short CALIBRATED_PIN = 31;
@@ -136,6 +137,8 @@ FLUTTER_STATE flutterState;
 short isWarningOn = 0;
 short setWarningToStop = 0;
 short setWarningToStart = 0;
+
+BUZZER_STATE buzzerState;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
@@ -377,7 +380,7 @@ void init_timer() {
 	int preScaleValue2 = 10000;
 	int preScaleValue1 = 100000;
 
-	// configure Timer0 for acc reading
+	// configure Timer2 for acc reading
 
 	TIM_TIMERCFG_Type TimerConfigStruct;
 	TIM_MATCHCFG_Type TimerMatcher;
@@ -404,7 +407,10 @@ void init_timer() {
 	TimerMatcher.MatchValue = (TIME_WINDOW_MS * 1000) / preScaleValue1;
 
 	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
-	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);	
+	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
+
+
+	//Configure NVIC
 
 	NVIC_SetPriority(TIMER2_IRQn, ((0x01<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER2_IRQn);
@@ -520,6 +526,16 @@ void SysTick_Handler(void) {
 		}
 		break;
 	case FFS_ACTIVE:
+		if (isWarningOn) {
+			switch(buzzerState) {
+				case BUZZER_HIGH:
+					NOTE_PIN_LOW();
+					break;
+				case BUZZER_LOW:
+					NOTE_PIN_HIGH();
+					break;
+			}
+		}
 		if (msTicks - accTick >= FREQ_UPDATE_PERIOD_MS) {
 		  	accTick = msTicks;
 			currentFrequency = ((currentFreqCounter*500.0)/FREQ_UPDATE_PERIOD_MS);
