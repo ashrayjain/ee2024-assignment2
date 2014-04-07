@@ -445,8 +445,8 @@ void disable_temp_interrupt() {
 
 void calibratingHandler() {
 	acc_setMode(ACC_MODE_MEASURE);
-	TIM_ResetCounter(LPC_TIM0);
-	TIM_Cmd(LPC_TIM0, ENABLE);
+	TIM_ResetCounter(LPC_TIM2);
+	TIM_Cmd(LPC_TIM2, ENABLE);
 	writeHeaderToOled(" CALIBRATING! ");
 	rgb_setLeds_OledHack(0);
 	led7seg_setChar('-', 0);
@@ -461,7 +461,7 @@ void calibratingHandler() {
 }
 
 void stdbyCountingDownHandler() {
-	TIM_Cmd(LPC_TIM0, DISABLE);
+	TIM_Cmd(LPC_TIM2, DISABLE);
 	writeHeaderToOled("   STAND-BY   ");
 	countDownFrom(COUNT_DOWN_START);
 	acc_setMode(ACC_MODE_STANDBY);
@@ -484,9 +484,9 @@ void stdbyEnvTestingHandler() {
 
 void activeHandler() {
 	acc_setMode(ACC_MODE_MEASURE);
-	TIM_ResetCounter(LPC_TIM0);
+	TIM_ResetCounter(LPC_TIM2);
 	TIM_ResetCounter(LPC_TIM1);
-	TIM_Cmd(LPC_TIM0, ENABLE);
+	TIM_Cmd(LPC_TIM2, ENABLE);
 	TIM_Cmd(LPC_TIM1, ENABLE);
 	writeHeaderToOled("    ACTIVE    ");
 	led7seg_setChar('-', 0);
