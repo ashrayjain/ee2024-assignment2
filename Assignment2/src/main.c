@@ -31,6 +31,9 @@
 #define NOTE_PIN_HIGH() GPIO_SetValue(0, 1<<26);
 #define NOTE_PIN_LOW()  GPIO_ClearValue(0, 1<<26);
 #define NUM_OF_ACC_VALUES_TO_AVG 4
+#define TEMP_SCALAR_DIV10 1
+#define TEMP_NUM_HALF_PERIODS 340
+#define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
 
 // ##################################### //
 // ######  Variable Definitions   ###### //
@@ -104,6 +107,11 @@ int currentCountValue = 0;
 TEMPERATURE_STATE temperatureState;
 int32_t currentTemperatureReading;
 
+uint32_t temp_t1 = 0;
+uint32_t temp_t2 = 0;
+int temp_i = 0;
+int32_t *temp_pointer = 0;
+
 RADIATION_STATE radiationState = SAFE;
 
 ACC_MODE accMode;
@@ -144,6 +152,7 @@ static	void init_i2c	(void);
 static	void init_GPIO	(void);
 		void init_buzzer(void);
 		void init_timer (void);
+		void init_temp_interrupt(int32_t *var);
 
 //// handlers ////
 
@@ -228,7 +237,7 @@ void initAllPeripherals() {
     oled_init();
     oled_clearScreen(OLED_COLOR_BLACK);
 
-    temp_init(getMsTicks);
+    init_temp_interrupt(&currentTemperatureReading);
 
     light_init();
     light_enable();
@@ -362,32 +371,65 @@ void init_uart() {
 }
 
 void init_timer() {
-	int preScaleValue = 10000;
+	int preScaleValue0 = 10000;
+	int preScaleValue1 = 100000;
+
+	// configure Timer0 for acc reading
+
 	TIM_TIMERCFG_Type TimerConfigStruct;
 	TIM_MATCHCFG_Type TimerMatcher;
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
-	TimerConfigStruct.PrescaleValue = preScaleValue;
+	TimerConfigStruct.PrescaleValue = preScaleValue0;
 
 	TimerMatcher.MatchChannel = 0;
 	TimerMatcher.IntOnMatch = ENABLE;
 	TimerMatcher.ResetOnMatch = TRUE;
 	TimerMatcher.StopOnMatch = FALSE;
 	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / preScaleValue;
+	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / preScaleValue0;
 
 	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);
 
-	TimerMatcher.MatchChannel = 1;
-	TimerMatcher.MatchValue = (TIME_WINDOW_MS * 1000) / preScaleValue;
-	TIM_ConfigMatch (LPC_TIM0, &TimerMatcher);	
+	// configure Timer1 for frequesncy calculations
+
+	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
+	TimerConfigStruct.PrescaleValue = preScaleValue1;
+
+	TimerMatcher.MatchChannel = 0;
+	TimerMatcher.MatchValue = (TIME_WINDOW_MS * 1000) / preScaleValue1;
+
+	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
+	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);	
 
 	NVIC_SetPriority(TIMER0_IRQn, ((0x01<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER0_IRQn);
 	NVIC_EnableIRQ(TIMER0_IRQn);
 
-	TIM_Cmd(LPC_TIM0, ENABLE);
+	NVIC_SetPriority(TIMER1_IRQn, ((0x01<<3)|0x01));
+	NVIC_ClearPendingIRQ(TIMER1_IRQn);
+	NVIC_EnableIRQ(TIMER1_IRQn);
+}
+
+void init_temp_interrupt(int32_t *var) {
+	PINSEL_CFG_Type PinCfg;
+
+	PinCfg.Funcnum = 0;
+	PinCfg.Pinnum = 2;
+	PinCfg.Portnum = 0;
+	PinCfg.Pinmode = 0;
+	PinCfg.OpenDrain = 0;
+	PINSEL_ConfigPin(&PinCfg);
+
+	GPIO_SetDir(0, (1<<2), 0);
+
+	LPC_GPIOINT->IO0IntEnF |= (1 << 2);
+	LPC_GPIOINT->IO0IntEnR |= (1 << 2);
+
+	temp_pointer = var;
+	NVIC_ClearPendingIRQ(EINT3_IRQn);
+	NVIC_EnableIRQ(EINT3_IRQn);
 }
 
 //-----------------------------------------------------------
@@ -397,12 +439,13 @@ void init_timer() {
 // state handlers
 
 void calibratingHandler() {
+	acc_setMode(ACC_MODE_MEASURE);
+	TIM_Cmd(LPC_TIM0, ENABLE);
 	writeHeaderToOled(" CALIBRATING! ");
 	rgb_setLeds_OledHack(0);
 	led7seg_setChar('-', 0);
-	acc_setMode(ACC_MODE_MEASURE);
+
 	while(currentState == FFS_CALIBRATING) {
-		updateReadings();
 		writeAccValueToOled();
         if (((GPIO_ReadValue(CALIBRATED_PORT) >> CALIBRATED_PIN) & 0x01) == 0) {
         	currentState = FFS_STDBY_COUNTING_DOWN;
@@ -412,6 +455,7 @@ void calibratingHandler() {
 }
 
 void stdbyCountingDownHandler() {
+	TIM_Cmd(LPC_TIM0, DISABLE);
 	writeHeaderToOled("   STAND-BY   ");
 	countDownFrom(COUNT_DOWN_START);
 	acc_setMode(ACC_MODE_STANDBY);
@@ -432,11 +476,13 @@ void stdbyEnvTestingHandler() {
 }
 
 void activeHandler() {
+	acc_setMode(ACC_MODE_MEASURE);
+	TIM_Cmd(LPC_TIM0, ENABLE);
+	TIM_Cmd(LPC_TIM1, ENABLE);
 	writeHeaderToOled("    ACTIVE    ");
 	led7seg_setChar('-', 0);
-	acc_setMode(ACC_MODE_MEASURE);
 	while(currentState == FFS_ACTIVE){
-		//updateReadings();
+		updateReadings();
 		//updateFreqCounter();
 		writeStatesToOled();
 		char freq[15] = "";
@@ -519,15 +565,42 @@ void EINT3_IRQHandler(void) {
 		light_clearIrqStatus();
 		LPC_GPIOINT->IO2IntClr |= (1 << 5);
 	}
+	else if (((LPC_GPIOINT->IO0IntStatF >> 2) & 0x1) ||
+			((LPC_GPIOINT->IO0IntStatR >> 2) & 0x1)) {
+		if (temp_t1 == 0 && temp_t2 == 0) {
+			temp_t1 = getMsTicks();
+		}
+		else if (temp_t1 != 0 && temp_t2 == 0) {
+			temp_i++;
+			if (temp_i == TEMP_NUM_HALF_PERIODS) {
+				temp_t2 = getMsTicks();
+				if (temp_t2 > temp_t1) {
+					temp_t2 = temp_t2 - temp_t1;
+				}
+				else {
+					temp_t2 = (0xFFFFFFFF - temp_t1 + 1) + temp_t2;
+				}
+				*temp_pointer = ((2*1000*temp_t2) / (TEMP_NUM_HALF_PERIODS*TEMP_SCALAR_DIV10) - 2731 );
+				printf("%d\n", *temp_pointer);
+				temp_t2 = 0;
+				temp_t1 = 0;
+				temp_i = 0;
+			}
+		}
+		LPC_GPIOINT->IO0IntClr |= (1 << 2);
+	}
 }
 
 void TIMER0_IRQHandler(void) {
-
 	if(LPC_TIM0->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM0,TIM_MR0_INT);
 		updateFreqCounter();
-	} else if(LPC_TIM0->IR & (1 << 1)) {
-		TIM_ClearIntPending(LPC_TIM0,TIM_MR1_INT);
+	}
+}
+
+void Timer1_IRQHandler (void) {
+	if(LPC_TIM1->IR & (1 << 0)) {
+		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
 		int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
 
 		if (flutterState == NON_RESONANT) {
@@ -565,6 +638,7 @@ uint32_t getMsTicks(void) {
 //-----------------------------------------------------------
 
 void leaveActiveState() {
+	TIM_Cmd(LPC_TIM1, DISABLE);
 	if (isWarningOn) {
 		stopWarning();
 	}
@@ -590,18 +664,14 @@ void updateReadings() {
 			updateTemperatureReading();
 			break;
 		case FFS_ACTIVE:
-			updateAccReading();
+			updateTemperatureReading();
 			break;
-		case FFS_CALIBRATING:
-			updateAccReading();
 		default:
 			break;
 	}
 }
 
 void updateTemperatureReading() {
-	currentTemperatureReading = temp_read();
-
 	if (currentTemperatureReading < TEMP_UPPER_LIMIT) {
 		temperatureState = NORMAL;
 	}
