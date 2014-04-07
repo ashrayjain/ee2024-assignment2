@@ -540,10 +540,10 @@ void SysTick_Handler(void) {
 
 			if (flutterState == RESONANT && isNonResonant) {
 				TIM_ResetCounter(LPC_TIM1);
-				flutterState == NON_RESONANT;
+				flutterState = NON_RESONANT;
 			} else if(flutterState == NON_RESONANT && !isNonResonant) {
 				TIM_ResetCounter(LPC_TIM1);
-				flutterState == RESONANT;
+				flutterState = RESONANT;
 			}
 			currentFreqCounter = 0;
 		}
