@@ -114,7 +114,7 @@ const char radiationStateStringMap[3][7] = {
 
 SYSTEM_STATE currentState;
 
-HANDSHAKE_STATE handShakeState;
+HANDSHAKE_STATE currentHandShakeState;
 
 short countDownStarted = 0;
 int currentCountValue = 0;
@@ -481,7 +481,7 @@ void calibratingHandler() {
 void stdbyCountingDownHandler() {
 
 	enterStdByCountingDownState();
-	while(currentState == FFS_STDBY_COUNTING_DOWN || handShakeState == HANDSHAKE_NOT_DONE) {
+	while(currentState == FFS_STDBY_COUNTING_DOWN) {
 
 	}
 	leaveStdByCountingDownState();
@@ -492,7 +492,7 @@ void stdbyEnvTestingHandler() {
 		updateReadings();
 		writeStatesToOled();
 		writeTempToOled();
-		if (temperatureState == NORMAL && radiationState == SAFE) {
+		if (temperatureState == NORMAL && radiationState == SAFE && currentHandShakeState == HANDSHAKE_DONE) {
 			currentState = FFS_ACTIVE;
 		}
 	}
@@ -698,7 +698,7 @@ void enterStdByCountingDownState() {
 	TIM_Cmd(LPC_TIM2, DISABLE);
 	acc_setMode(ACC_MODE_STANDBY);
 
-	handShakeState = HANDSHAKE_NOT_DONE;
+	currentHandShakeState = HANDSHAKE_NOT_DONE;
 	countDownFrom(COUNT_DOWN_START);
 	light_setHiThreshold(800);
 	init_temp_interrupt(&currentTemperatureReading);
