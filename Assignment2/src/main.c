@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
+#define DEL_ASSET_TAG_ID 013
 #define COUNT_DOWN_START 1
 #define NOTE_PIN_HIGH() GPIO_SetValue(0, 1<<26);
 #define NOTE_PIN_LOW()  GPIO_ClearValue(0, 1<<26);
@@ -46,6 +46,7 @@ typedef enum {NON_RESONANT, RESONANT} FLUTTER_STATE;
 typedef enum {STDBY_MODE, ACTIVE_MODE} ACC_MODE;
 typedef enum {EINT0, EINT1, ENT2, ENT3} EXTERNAL_INTERRUPT;
 typedef enum {BUZZER_LOW, BUZZER_HIGH} BUZZER_STATE;
+typedef enum {HANDSHAKE_NOT_DONE, HANDSHAKE_DONE} HANDSHAKE_STATE;
 
 const unsigned short CALIBRATED_PORT = 1;
 const unsigned short CALIBRATED_PIN = 31;
@@ -101,6 +102,20 @@ const char radiationStateStringMap[3][7] = {
 // #################################### //
 
 SYSTEM_STATE currentState;
+
+HANDSHAKE_STATE handShakeState;
+short isHandShakeReady = 0;
+
+const char MESSAGE_READY[20] = "RDY DEL_ASSET_TAG_ID\r\n";
+const char MESSAGE_HANDSHAKE_CONFIRM[20] = "HSHK DEL_ASSET_TAG_ID\r\n";
+const char MESSAGE_CONFIRM_ENTER_CALIB[20] = "CACK\r\n";
+const char MESSAGE_CONFIRM_ENTER_STDBY[20] = "SACK\r\n";
+const char MESSAGE_REPORT_TEMPLATE[20] = "REPT DEL_ASSET_TAG_ID %02d%s\r\n";
+
+const char REPLY_ACK[7] = "RACK\r";
+const char REPLY_NOT_ACK[7] = "RNACK\r";
+const char CMD_RESET_TO_CALIB[7] = "RSTC\r";
+const char CMD_RESET_TO_STDBY[7] = "RSTS\r";
 
 short countDownStarted = 0;
 int currentCountValue = 0;
@@ -158,6 +173,7 @@ static	void init_GPIO	(void);
 		void init_buzzer(void);
 		void init_timer (void);
 		void init_temp_interrupt(int32_t *var);
+		void init_handShake(void);
 
 //// handlers ////
 
@@ -446,6 +462,14 @@ void disable_temp_interrupt() {
 	LPC_GPIOINT->IO0IntEnR &= ~(1 << 2);
 }
 
+void init_handShake (void) {
+	// enable UART interrupts to send/receive
+	LPC_UART3->IER |= UART_IER_RBRINT_EN;
+	LPC_UART3->IER |= UART_IER_THREINT_EN;
+	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
+	NVIC_EnableIRQ(UART3_IRQn);
+}
+
 //-----------------------------------------------------------
 //------------------------ Handlers -------------------------
 //-----------------------------------------------------------
@@ -622,6 +646,21 @@ void TIMER1_IRQHandler (void) {
 				setWarningToStart = 1;
 			}
 		}
+	}
+}
+
+void UART3_IRQHandler (void) {
+	if (LPC_UART3->IIR & UART_IIR_INTID_RDA) {
+		char data[5];
+		UART_Receive(LPC_UART3, data, 4, BLOCKING);
+		data[4] = '\0';
+		printf("%s\n", data);
+	}
+	if (LPC_UART3->IIR & UART_IIR_INTID_CTI) {
+		
+	}
+	if (LPC_UART3->IIR & UART_IIR_INTID_THRE) {
+
 	}
 }
 
