@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
+#define DEL_ASSET_TAG_ID 013
 #define COUNT_DOWN_START 1
 #define NOTE_PIN_HIGH() GPIO_SetValue(0, 1<<26);
 #define NOTE_PIN_LOW()  GPIO_ClearValue(0, 1<<26);
@@ -62,6 +62,17 @@ const unsigned short TEMP_UPPER_LIMIT = 340;
 const unsigned short ACC_UPDATE_PERIOD_MS = 20;
 const float ACC_THRESHOLD = 3;
 const int FREQ_UPDATE_PERIOD_MS = 500;
+
+const char *MESSAGE_READY = "RDY DEL_ASSET_TAG_ID\r\n";
+const char *MESSAGE_HANDSHAKE_CONFIRM = "HSHK DEL_ASSET_TAG_ID\r\n";
+const char *MESSAGE_CONFIRM_ENTER_CALIB = "CACK\r\n";
+const char *MESSAGE_CONFIRM_ENTER_STDBY = "SACK\r\n";
+const char *MESSAGE_REPORT_TEMPLATE = "REPT DEL_ASSET_TAG_ID %02d%s\r\n";
+
+const char *REPLY_ACK = "RACK\r";
+const char *REPLY_NOT_ACK = "RNACK\r";
+const char *CMD_RESET_TO_CALIB = "RSTC\r";
+const char *CMD_RESET_TO_STDBY = "RSTS\r";
 
 unsigned short TIME_WINDOW_MS = 3000;
 unsigned short UNSAFE_LOWER_HZ = 2;
@@ -141,6 +152,7 @@ FLUTTER_STATE flutterState;
 short isWarningOn = 0;
 short setWarningToStop = 0;
 short setWarningToStart = 0;
+short sendReport = 0;
 
 BUZZER_STATE buzzerState;
 
@@ -414,7 +426,6 @@ void init_timer() {
 	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
 
-
 	//Configure NVIC
 
 	NVIC_SetPriority(TIMER2_IRQn, ((0x01<<3)|0x01));
@@ -489,18 +500,19 @@ void stdbyEnvTestingHandler() {
 
 void activeHandler() {
 	enterActiveState();
+	char report[25] = "";
 	while(currentState == FFS_ACTIVE){
-		updateReadings();
-		//updateFreqCounter();
-		writeStatesToOled();
-		char freq[15] = "";
-		sprintf(freq, "%.1f", currentFrequency);
-		oled_putString(7, 40, freq, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
-
 		// sanity check (due to reset interrupt which might have changed currentState)
 		if (currentState == FFS_ACTIVE && !(temperatureState == NORMAL && radiationState == SAFE)) {
 			currentState = FFS_STDBY_COUNTING_DOWN;
 		}
+
+		updateReadings();
+		writeStatesToOled();
+		// TODO: declare the array outside to remove overhead of getting new memory every iteration
+		char freq[15] = "";
+		sprintf(freq, "%.1f", currentFrequency);
+		oled_putString(7, 40, freq, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 
 		if(setWarningToStop) {
 			stopWarning();
@@ -514,9 +526,14 @@ void activeHandler() {
 			isWarningOn = 1;
 		}
 
-		if (isWarningOn) {
-			//playNote(2551, 50);
+		if (sendReport) {
+			report[0] = '\0';
+			sprintf(report, MESSAGE_REPORT_TEMPLATE, currentFrequency, isWarningOn ? " WARNING" : "");
+
+			// TODO: UART to send report
+
 		}
+
 	}
 	leaveActiveState();
 }
@@ -634,6 +651,10 @@ void TIMER1_IRQHandler (void) {
 void oneSecondHandler() {
 	if (countDownStarted) {
 		decrementCount();
+	}
+
+	if (currentState == ACTIVE) {
+		sendReport = 1;
 	}
 }
 
