@@ -902,40 +902,8 @@ int main (void) {
 	}
 
 	initAllPeripherals();
-	//init_timer();
+	init_timer();
 
-	uint8_t data[10];
-	uint32_t len = 0;
-	uint8_t line[64];
-
-	//test sending message
-	msg = "Welcome to EE2024 \r\n";
-	UART_Send(LPC_UART3, (uint8_t *)msg , strlen(msg), BLOCKING);
-	//test receiving a letter and sending back to port
-	UART_Receive(LPC_UART3, data, 3, BLOCKING);
-	data[3] = '\0';
-	printf("%s\n", data);
-	data[3] = '\n';
-	data[4] = '\0';
-	UART_Send(LPC_UART3, data, strlen(data), BLOCKING);
-	//test receiving message without knowing message length
-	/*len = 0;
-	do
-	{ 
-		UART_Receive(LPC_UART3, &data, 1, BLOCKING);
-		if (data != '\r')
-		{
-			len++;
-			line[len-1] = data;
-		}
-	} while ((len<64) && (data != '\r'));
-	line[len]=0;
-	UART_SendString(LPC_UART3, &line);
-	printf("--%s--\n", line);
-	while (1);
-	*/
-	return 0;
-	/*
     while (1)
     {
     	switch(currentState)
@@ -957,7 +925,6 @@ int main (void) {
     	}
         //Timer0_Wait(1);
     }
-    */
 }
 
 void check_failed(uint8_t *file, uint32_t line)
