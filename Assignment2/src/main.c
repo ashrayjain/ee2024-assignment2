@@ -648,6 +648,18 @@ void TIMER1_IRQHandler (void) {
 	}
 }
 
+void UART3_IRQHandler (void) {
+	if (LPC_UART3->IIR & UART_IIR_INTID_RDA) {
+
+	}
+	if (LPC_UART3->IIR & UART_IIR_INTID_CTI) {
+		
+	}
+	if (LPC_UART3->IIR & UART_IIR_INTID_THRE) {
+
+	}
+}
+
 void oneSecondHandler() {
 	if (countDownStarted) {
 		decrementCount();
