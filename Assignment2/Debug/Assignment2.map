@@ -57,7 +57,7 @@ c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libg
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memcpy.o)
                               C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o) (memcpy)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memset.o)
-                              C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o) (memset)
+                              ./src/main.o (memset)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-printf.o)
                               ./src/main.o (printf)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sprintf.o)
@@ -660,7 +660,7 @@ END GROUP
                 0x20084000                __top_RamAHB32 = 0x20084000
                 0x40038800                __top_CANAccFilterRAM = 0x40038800
 
-.text           0x00000000     0xc8d4
+.text           0x00000000     0xc90c
  FILL mask 0xff
  *(.isr_vector)
  .isr_vector    0x00000000       0xcc ./src/cr_startup_lpc17.o
@@ -668,19 +668,19 @@ END GROUP
                 0x000000cc                . = ALIGN (0x4)
                 0x000000cc                __section_table_start = .
                 0x000000cc                __data_section_table = .
-                0x000000cc        0x4 LONG 0xc8dc LOADADDR (.data)
+                0x000000cc        0x4 LONG 0xc914 LOADADDR (.data)
                 0x000000d0        0x4 LONG 0x10000000 ADDR (.data)
-                0x000000d4        0x4 LONG 0x56c SIZEOF (.data)
-                0x000000d8        0x4 LONG 0xc8dc LOADADDR (.data_RAM2)
+                0x000000d4        0x4 LONG 0x590 SIZEOF (.data)
+                0x000000d8        0x4 LONG 0xc914 LOADADDR (.data_RAM2)
                 0x000000dc        0x4 LONG 0x2007c000 ADDR (.data_RAM2)
                 0x000000e0        0x4 LONG 0x0 SIZEOF (.data_RAM2)
-                0x000000e4        0x4 LONG 0xc8dc LOADADDR (.data_RAM3)
+                0x000000e4        0x4 LONG 0xc914 LOADADDR (.data_RAM3)
                 0x000000e8        0x4 LONG 0x40038000 ADDR (.data_RAM3)
                 0x000000ec        0x4 LONG 0x0 SIZEOF (.data_RAM3)
                 0x000000f0                __data_section_table_end = .
                 0x000000f0                __bss_section_table = .
-                0x000000f0        0x4 LONG 0x1000056c ADDR (.bss)
-                0x000000f4        0x4 LONG 0x474 SIZEOF (.bss)
+                0x000000f0        0x4 LONG 0x10000590 ADDR (.bss)
+                0x000000f4        0x4 LONG 0x470 SIZEOF (.bss)
                 0x000000f8        0x4 LONG 0x2007c000 ADDR (.bss_RAM2)
                 0x000000fc        0x4 LONG 0x0 SIZEOF (.bss_RAM2)
                 0x00000100        0x4 LONG 0x40038000 ADDR (.bss_RAM3)
@@ -787,539 +787,538 @@ END GROUP
                 0x00000acc       0x74 ./src/main.o
                 0x00000acc                TIMER1_IRQHandler
  .text.oneSecondHandler
-                0x00000b40       0x1c ./src/main.o
+                0x00000b40       0x38 ./src/main.o
                 0x00000b40                oneSecondHandler
  .text.getMsTicks
-                0x00000b5c       0x18 ./src/main.o
-                0x00000b5c                getMsTicks
+                0x00000b78       0x18 ./src/main.o
+                0x00000b78                getMsTicks
  .text.updateAccReading
-                0x00000b74       0xa4 ./src/main.o
-                0x00000b74                updateAccReading
+                0x00000b90       0xa4 ./src/main.o
+                0x00000b90                updateAccReading
  .text.updateFreqCounter
-                0x00000c18      0x3d0 ./src/main.o
-                0x00000c18                updateFreqCounter
+                0x00000c34      0x358 ./src/main.o
+                0x00000c34                updateFreqCounter
  .text.decrementCount
-                0x00000fe8       0x78 ./src/main.o
-                0x00000fe8                decrementCount
+                0x00000f8c       0x78 ./src/main.o
+                0x00000f8c                decrementCount
  .text.toStringInt
-                0x00001060       0x24 ./src/main.o
-                0x00001060                toStringInt
+                0x00001004       0x24 ./src/main.o
+                0x00001004                toStringInt
  .text.rgb_setLeds_OledHack
-                0x00001084       0x20 ./src/main.o
-                0x00001084                rgb_setLeds_OledHack
- .text.main     0x000010a4       0xf0 ./src/main.o
-                0x000010a4                main
+                0x00001028       0x20 ./src/main.o
+                0x00001028                rgb_setLeds_OledHack
+ .text.main     0x00001048       0xf0 ./src/main.o
+                0x00001048                main
  .text.SysTick_Config
-                0x00001194       0x68 ./src/main.o
+                0x00001138       0x68 ./src/main.o
  .text.check_failed
-                0x000011fc        0xc ./src/main.o
-                0x000011fc                check_failed
+                0x000011a0        0xc ./src/main.o
+                0x000011a0                check_failed
  .text.SystemInit
-                0x00001208      0x224 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
-                0x00001208                SystemInit
- .text.I2CRead  0x0000142c       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x000011ac      0x224 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+                0x000011ac                SystemInit
+ .text.I2CRead  0x000013d0       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.I2CWrite
-                0x00001490       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00001434       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.getStatus
-                0x000014f4       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00001498       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.setModeControl
-                0x00001530       0x30 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x000014d4       0x30 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.acc_init
-                0x00001560       0x10 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
-                0x00001560                acc_init
+                0x00001504       0x10 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00001504                acc_init
  .text.acc_read
-                0x00001570       0xb4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
-                0x00001570                acc_read
+                0x00001514       0xb4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00001514                acc_read
  .text.led7seg_init
-                0x00001624       0x24 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
-                0x00001624                led7seg_init
+                0x000015c8       0x24 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+                0x000015c8                led7seg_init
  .text.led7seg_setChar
-                0x00001648       0x88 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
-                0x00001648                led7seg_setChar
- .text.I2CRead  0x000016d0       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x000015ec       0x88 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+                0x000015ec                led7seg_setChar
+ .text.I2CRead  0x00001674       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .text.I2CWrite
-                0x00001734       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x000016d8       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .text.readControlReg
-                0x00001798       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x0000173c       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .text.light_init
-                0x000017d4        0xc C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x000017d4                light_init
+                0x00001778        0xc C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00001778                light_init
  .text.light_enable
-                0x000017e0       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x000017e0                light_enable
+                0x00001784       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00001784                light_enable
  .text.light_setRange
-                0x00001828       0xb0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x00001828                light_setRange
+                0x000017cc       0xb0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x000017cc                light_setRange
  .text.light_setHiThreshold
-                0x000018d8       0x58 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x000018d8                light_setHiThreshold
+                0x0000187c       0x58 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x0000187c                light_setHiThreshold
  .text.light_setLoThreshold
-                0x00001930       0x58 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x00001930                light_setLoThreshold
+                0x000018d4       0x58 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x000018d4                light_setLoThreshold
  .text.light_clearIrqStatus
-                0x00001988       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x00001988                light_clearIrqStatus
+                0x0000192c       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x0000192c                light_clearIrqStatus
  .text.writeCommand
-                0x000019c4       0x60 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00001968       0x60 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .text.writeDataLen
-                0x00001a24       0x90 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x000019c8       0x90 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .text.runInitSequence
-                0x00001ab4      0x118 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00001a58      0x118 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .text.oled_init
-                0x00001bcc       0x9c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x00001bcc                oled_init
+                0x00001b70       0x9c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00001b70                oled_init
  .text.oled_clearScreen
-                0x00001c68       0x74 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x00001c68                oled_clearScreen
+                0x00001c0c       0x74 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00001c0c                oled_clearScreen
  .text.I2CWrite
-                0x00001cdc       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00001c80       0x64 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
  .text.setLsStates
-                0x00001d40       0xd0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .text.setLeds  0x00001e10       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00001ce4       0xd0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .text.setLeds  0x00001db4       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
  .text.pca9532_init
-                0x00001eb4        0xc C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
-                0x00001eb4                pca9532_init
+                0x00001e58        0xc C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00001e58                pca9532_init
  .text.pca9532_setLeds
-                0x00001ec0       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
-                0x00001ec0                pca9532_setLeds
+                0x00001e64       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00001e64                pca9532_setLeds
  .text.rgb_init
-                0x00001f64       0x38 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
-                0x00001f64                rgb_init
+                0x00001f08       0x38 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+                0x00001f08                rgb_init
  .text.rgb_setLeds
-                0x00001f9c       0x80 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
-                0x00001f9c                rgb_setLeds
+                0x00001f40       0x80 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+                0x00001f40                rgb_setLeds
  .text.GPIO_GetPointer
-                0x0000201c       0x78 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00001fc0       0x78 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
  .text.GPIO_SetDir
-                0x00002094       0x54 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
-                0x00002094                GPIO_SetDir
+                0x00002038       0x54 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00002038                GPIO_SetDir
  .text.GPIO_SetValue
-                0x000020e8       0x2c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
-                0x000020e8                GPIO_SetValue
+                0x0000208c       0x2c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x0000208c                GPIO_SetValue
  .text.GPIO_ClearValue
-                0x00002114       0x2c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
-                0x00002114                GPIO_ClearValue
+                0x000020b8       0x2c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x000020b8                GPIO_ClearValue
  .text.I2C_getNum
-                0x00002140       0x60 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000020e4       0x60 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_Start
-                0x000021a0       0x40 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00002144       0x40 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_Stop
-                0x000021e0       0x38 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00002184       0x38 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_SendByte
-                0x00002218       0x50 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000021bc       0x50 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_GetByte
-                0x00002268       0x58 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x0000220c       0x58 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_IntCmd
-                0x000022c0       0xa8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000022c0                I2C_IntCmd
+                0x00002264       0xa8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00002264                I2C_IntCmd
  .text.NVIC_EnableIRQ
-                0x00002368       0x38 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x0000230c       0x38 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.NVIC_DisableIRQ
-                0x000023a0       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00002344       0x3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_MasterHandler
-                0x000023dc      0x410 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000023dc                I2C_MasterHandler
+                0x00002380      0x410 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00002380                I2C_MasterHandler
  .text.I2C_SetClock
-                0x000027ec       0xc8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000027ec                I2C_SetClock
+                0x00002790       0xc8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00002790                I2C_SetClock
  .text.I2C_Init
-                0x000028b4       0xd4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000028b4                I2C_Init
- .text.I2C_Cmd  0x00002988       0x84 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x00002988                I2C_Cmd
+                0x00002858       0xd4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00002858                I2C_Init
+ .text.I2C_Cmd  0x0000292c       0x84 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x0000292c                I2C_Cmd
  .text.I2C_MasterTransferData
-                0x00002a0c      0x374 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x00002a0c                I2C_MasterTransferData
+                0x000029b0      0x374 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000029b0                I2C_MasterTransferData
  .text.PINSEL_SetPinFunc
-                0x00002d80       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00002d80                PINSEL_SetPinFunc
+                0x00002d24       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00002d24                PINSEL_SetPinFunc
  .text.PINSEL_SetResistorMode
-                0x00002e24       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00002e24                PINSEL_SetResistorMode
+                0x00002dc8       0xa4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00002dc8                PINSEL_SetResistorMode
  .text.PINSEL_SetOpenDrainMode
-                0x00002ec8       0x84 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00002ec8                PINSEL_SetOpenDrainMode
+                0x00002e6c       0x84 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00002e6c                PINSEL_SetOpenDrainMode
  .text.PINSEL_ConfigPin
-                0x00002f4c       0x4c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00002f4c                PINSEL_ConfigPin
+                0x00002ef0       0x4c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00002ef0                PINSEL_ConfigPin
  .text.SSP_getNum
-                0x00002f98       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00002f3c       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
  .text.SSP_IntHandler
-                0x00002fe0      0x324 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00002fe0                SSP_IntHandler
+                0x00002f84      0x324 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00002f84                SSP_IntHandler
  .text.SSP_SetClock
-                0x00003304       0xf8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00003304                SSP_SetClock
+                0x000032a8       0xf8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000032a8                SSP_SetClock
  .text.SSP_Init
-                0x000033fc      0x10c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x000033fc                SSP_Init
+                0x000033a0      0x10c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000033a0                SSP_Init
  .text.SSP_ConfigStructInit
-                0x00003508       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00003508                SSP_ConfigStructInit
- .text.SSP_Cmd  0x00003550       0x7c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00003550                SSP_Cmd
+                0x000034ac       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000034ac                SSP_ConfigStructInit
+ .text.SSP_Cmd  0x000034f4       0x7c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000034f4                SSP_Cmd
  .text.SSP_SendData
-                0x000035cc       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x000035cc                SSP_SendData
+                0x00003570       0x48 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00003570                SSP_SendData
  .text.SSP_ReceiveData
-                0x00003614       0x44 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00003614                SSP_ReceiveData
+                0x000035b8       0x44 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000035b8                SSP_ReceiveData
  .text.SSP_ReadWrite
-                0x00003658      0x448 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00003658                SSP_ReadWrite
+                0x000035fc      0x448 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000035fc                SSP_ReadWrite
  .text.TIM_ClearIntPending
-                0x00003aa0       0xa8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00003aa0                TIM_ClearIntPending
+                0x00003a44       0xa8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00003a44                TIM_ClearIntPending
  .text.TIM_ResetCounter
-                0x00003b48       0x70 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00003b48                TIM_ResetCounter
+                0x00003aec       0x70 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00003aec                TIM_ResetCounter
  .text.uart_set_divisors
-                0x00003bb8      0x26c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00003bb8                uart_set_divisors
+                0x00003b5c      0x26c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00003b5c                uart_set_divisors
  .text.UART_Init
-                0x00003e24      0x360 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00003e24                UART_Init
+                0x00003dc8      0x360 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00003dc8                UART_Init
  .text.UART_SendData
-                0x00004184       0x78 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00004184                UART_SendData
+                0x00004128       0x78 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00004128                UART_SendData
  .text.UART_ReceiveData
-                0x000041fc       0x7c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x000041fc                UART_ReceiveData
+                0x000041a0       0x7c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x000041a0                UART_ReceiveData
  .text.UART_TxCmd
-                0x00004278       0xf0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00004278                UART_TxCmd
+                0x0000421c       0xf0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x0000421c                UART_TxCmd
  .text.UART_Send
-                0x00004368      0x100 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00004368                UART_Send
+                0x0000430c      0x100 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x0000430c                UART_Send
  .text.UART_Receive
-                0x00004468       0xc8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00004468                UART_Receive
+                0x0000440c       0xc8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x0000440c                UART_Receive
  .text.CLKPWR_SetPCLKDiv
-                0x00004530       0xd0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x00004530                CLKPWR_SetPCLKDiv
+                0x000044d4       0xd0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x000044d4                CLKPWR_SetPCLKDiv
  .text.CLKPWR_GetPCLKSEL
-                0x00004600       0x54 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x00004600                CLKPWR_GetPCLKSEL
+                0x000045a4       0x54 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x000045a4                CLKPWR_GetPCLKSEL
  .text.CLKPWR_GetPCLK
-                0x00004654       0x70 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x00004654                CLKPWR_GetPCLK
+                0x000045f8       0x70 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x000045f8                CLKPWR_GetPCLK
  .text.CLKPWR_ConfigPPWR
-                0x000046c4       0x7c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x000046c4                CLKPWR_ConfigPPWR
- .text          0x00004740      0x370 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubdf3.o)
-                0x00004a54                __floatdidf
-                0x000049e4                __floatsidf
-                0x000049c4                __aeabi_ui2d
-                0x00004740                __aeabi_drsub
-                0x00004a08                __extendsfdf2
-                0x0000474c                __adddf3
-                0x000049c4                __floatunsidf
-                0x0000474c                __aeabi_dadd
-                0x00004a44                __aeabi_ul2d
-                0x00004748                __aeabi_dsub
-                0x00004a44                __floatundidf
-                0x000049e4                __aeabi_i2d
-                0x00004a54                __aeabi_l2d
-                0x00004a08                __aeabi_f2d
-                0x00004748                __subdf3
- .text          0x00004ab0      0x424 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_muldivdf3.o)
-                0x00004d04                __aeabi_ddiv
-                0x00004ab0                __aeabi_dmul
-                0x00004d04                __divdf3
-                0x00004ab0                __muldf3
- .text          0x00004ed4       0xa0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_truncdfsf2.o)
-                0x00004ed4                __aeabi_d2f
-                0x00004ed4                __truncdfsf2
- .text          0x00004f74      0x21c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubsf3.o)
-                0x00004f80                __aeabi_fadd
-                0x00004f7c                __subsf3
-                0x000050e8                __aeabi_i2f
-                0x00004f7c                __aeabi_fsub
-                0x00005114                __floatdisf
-                0x000050e8                __floatsisf
-                0x00005104                __floatundisf
-                0x000050e0                __aeabi_ui2f
-                0x00005114                __aeabi_l2f
-                0x00005104                __aeabi_ul2f
-                0x00004f74                __aeabi_frsub
-                0x000050e0                __floatunsisf
-                0x00004f80                __addsf3
- .text          0x00005190       0xec c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpsf2.o)
-                0x00005268                __aeabi_fcmpgt
-                0x00005198                __lesf2
-                0x000051a0                __nesf2
-                0x00005254                __aeabi_fcmpge
-                0x00005190                __gtsf2
-                0x00005240                __aeabi_fcmple
-                0x000051a0                __eqsf2
-                0x000051a0                __cmpsf2
-                0x00005198                __ltsf2
-                0x00005208                __aeabi_cfcmple
-                0x00005190                __gesf2
-                0x00005218                __aeabi_fcmpeq
-                0x00005200                __aeabi_cfrcmple
-                0x0000522c                __aeabi_fcmplt
-                0x00005208                __aeabi_cfcmpeq
- .text          0x0000527c       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_aeabi_uldivmod.o)
-                0x0000527c                __aeabi_uldivmod
- .text          0x000052a8       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(bpabi.o)
-                0x000052a8                __gnu_uldivmod_helper
-                0x000052d8                __gnu_ldivmod_helper
- .text          0x00005308        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_dvmd_tls.o)
-                0x00005308                __aeabi_ldiv0
-                0x00005308                __aeabi_idiv0
- .text          0x0000530c      0x40c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
-                0x0000530c                __divdi3
- .text          0x00005718      0x3cc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
-                0x00005718                __udivdi3
- .text          0x00005ae4       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivsi3.o)
-                0x00005ae4                __udivsi3
-                0x00005ae4                __aeabi_uidiv
-                0x00005b5c                __aeabi_uidivmod
- .text          0x00005b70      0x12c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memcpy.o)
-                0x00005b70                memcpy
- .text          0x00005c9c       0xb0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memset.o)
-                0x00005c9c                memset
- .text          0x00005d4c       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-printf.o)
-                0x00005d4c                printf
-                0x00005d80                _printf_r
- .text          0x00005dac       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sprintf.o)
-                0x00005df8                _sprintf_r
-                0x00005dac                sprintf
- .text          0x00005e38       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
-                0x00005e38                strlen
- .text          0x00005e98     0x1488 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
-                0x00005f94                _svfprintf_r
- .text          0x00007320     0x1724 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-vfprintf.o)
-                0x0000733c                _vfprintf_r
-                0x00008a28                vfprintf
- .text          0x00008a44      0x100 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-wsetup.o)
-                0x00008a44                __swsetup_r
- *fill*         0x00008b44        0x4 00
- .text          0x00008b48      0xf88 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
-                0x00008c78                _dtoa_r
- .text          0x00009ad0      0x178 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fflush.o)
-                0x00009c18                fflush
-                0x00009ad0                _fflush_r
- .text          0x00009c48      0x1e8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-findfp.o)
-                0x00009dd0                __sinit
-                0x00009d14                __sfmoreglue
-                0x00009ca8                _cleanup
-                0x00009c98                _cleanup_r
-                0x00009c7c                __fp_lock_all
-                0x00009c48                __sfp_lock_acquire
-                0x00009d40                __sfp
-                0x00009c54                __sinit_lock_release
-                0x00009c60                __fp_unlock_all
-                0x00009c4c                __sfp_lock_release
-                0x00009c50                __sinit_lock_acquire
- .text          0x00009e30      0x238 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
-                0x00009edc                _free_r
-                0x00009e30                _malloc_trim_r
- .text          0x0000a068      0x2e8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fvwrite.o)
-                0x0000a068                __sfvwrite_r
- .text          0x0000a350       0xb0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fwalk.o)
-                0x0000a3a8                _fwalk
-                0x0000a350                _fwalk_reent
- .text          0x0000a400       0x74 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
-                0x0000a41c                _setlocale_r
-                0x0000a400                __locale_charset
-                0x0000a40c                _localeconv_r
-                0x0000a45c                setlocale
-                0x0000a414                localeconv
- .text          0x0000a474       0xe0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-makebuf.o)
-                0x0000a474                __smakebuf_r
- .text          0x0000a554       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
-                0x0000a568                malloc
-                0x0000a554                free
- .text          0x0000a57c      0x530 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
-                0x0000a57c                _malloc_r
- .text          0x0000aaac       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
-                0x0000aaac                memchr
- .text          0x0000ab28       0xc0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
-                0x0000ab28                memmove
- .text          0x0000abe8        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
-                0x0000abec                __malloc_unlock
-                0x0000abe8                __malloc_lock
- .text          0x0000abf0      0x92c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
-                0x0000ae1c                _mprec_log10
-                0x0000aea8                __any_on
-                0x0000af3c                _Balloc
-                0x0000adc8                __ratio
-                0x0000b344                __i2b
-                0x0000ad1c                __b2d
-                0x0000b488                __s2b
-                0x0000ac94                __mcmp
-                0x0000abf0                __hi0bits
-                0x0000b3d4                __pow5mult
-                0x0000b160                __lshift
-                0x0000b214                __multiply
-                0x0000afac                __d2b
-                0x0000ae58                __copybits
-                0x0000acd4                __ulp
-                0x0000b064                __mdiff
-                0x0000ac30                __lo0bits
-                0x0000b358                __multadd
-                0x0000af0c                _Bfree
- .text          0x0000b51c      0x388 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
-                0x0000b51c                _realloc_r
- .text          0x0000b8a4       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
-                0x0000b8a4                __isinfd
- .text          0x0000b8cc       0x1c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
-                0x0000b8cc                __isnand
- .text          0x0000b8e8       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
-                0x0000b8e8                _sbrk_r
- .text          0x0000b910       0x94 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-stdio.o)
-                0x0000b91c                __sseek
-                0x0000b980                __sread
-                0x0000b910                __sclose
-                0x0000b944                __swrite
- .text          0x0000b9a4      0x1dc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
-                0x0000b9a4                strcmp
- .text          0x0000bb80       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-writer.o)
-                0x0000bb80                _write_r
- .text          0x0000bbac       0x5c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
-                0x0000bbac                _calloc_r
- .text          0x0000bc08       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-closer.o)
-                0x0000bc08                _close_r
- .text          0x0000bc30       0xcc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fclose.o)
-                0x0000bc30                _fclose_r
-                0x0000bce8                fclose
- .text          0x0000bcfc       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fstatr.o)
-                0x0000bcfc                _fstat_r
- .text          0x0000bd28       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-isattyr.o)
-                0x0000bd28                _isatty_r
- .text          0x0000bd50       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-lseekr.o)
-                0x0000bd50                _lseek_r
- .text          0x0000bd7c       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-readr.o)
-                0x0000bd7c                _read_r
+                0x00004668       0x7c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x00004668                CLKPWR_ConfigPPWR
+ .text          0x000046e4      0x370 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubdf3.o)
+                0x000049f8                __floatdidf
+                0x00004988                __floatsidf
+                0x00004968                __aeabi_ui2d
+                0x000046e4                __aeabi_drsub
+                0x000049ac                __extendsfdf2
+                0x000046f0                __adddf3
+                0x00004968                __floatunsidf
+                0x000046f0                __aeabi_dadd
+                0x000049e8                __aeabi_ul2d
+                0x000046ec                __aeabi_dsub
+                0x000049e8                __floatundidf
+                0x00004988                __aeabi_i2d
+                0x000049f8                __aeabi_l2d
+                0x000049ac                __aeabi_f2d
+                0x000046ec                __subdf3
+ .text          0x00004a54      0x424 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_muldivdf3.o)
+                0x00004ca8                __aeabi_ddiv
+                0x00004a54                __aeabi_dmul
+                0x00004ca8                __divdf3
+                0x00004a54                __muldf3
+ .text          0x00004e78       0xa0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_truncdfsf2.o)
+                0x00004e78                __aeabi_d2f
+                0x00004e78                __truncdfsf2
+ .text          0x00004f18      0x21c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubsf3.o)
+                0x00004f24                __aeabi_fadd
+                0x00004f20                __subsf3
+                0x0000508c                __aeabi_i2f
+                0x00004f20                __aeabi_fsub
+                0x000050b8                __floatdisf
+                0x0000508c                __floatsisf
+                0x000050a8                __floatundisf
+                0x00005084                __aeabi_ui2f
+                0x000050b8                __aeabi_l2f
+                0x000050a8                __aeabi_ul2f
+                0x00004f18                __aeabi_frsub
+                0x00005084                __floatunsisf
+                0x00004f24                __addsf3
+ .text          0x00005134       0xec c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpsf2.o)
+                0x0000520c                __aeabi_fcmpgt
+                0x0000513c                __lesf2
+                0x00005144                __nesf2
+                0x000051f8                __aeabi_fcmpge
+                0x00005134                __gtsf2
+                0x000051e4                __aeabi_fcmple
+                0x00005144                __eqsf2
+                0x00005144                __cmpsf2
+                0x0000513c                __ltsf2
+                0x000051ac                __aeabi_cfcmple
+                0x00005134                __gesf2
+                0x000051bc                __aeabi_fcmpeq
+                0x000051a4                __aeabi_cfrcmple
+                0x000051d0                __aeabi_fcmplt
+                0x000051ac                __aeabi_cfcmpeq
+ .text          0x00005220       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_aeabi_uldivmod.o)
+                0x00005220                __aeabi_uldivmod
+ .text          0x0000524c       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(bpabi.o)
+                0x0000524c                __gnu_uldivmod_helper
+                0x0000527c                __gnu_ldivmod_helper
+ .text          0x000052ac        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_dvmd_tls.o)
+                0x000052ac                __aeabi_ldiv0
+                0x000052ac                __aeabi_idiv0
+ .text          0x000052b0      0x40c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
+                0x000052b0                __divdi3
+ .text          0x000056bc      0x3cc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
+                0x000056bc                __udivdi3
+ .text          0x00005a88       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivsi3.o)
+                0x00005a88                __udivsi3
+                0x00005a88                __aeabi_uidiv
+                0x00005b00                __aeabi_uidivmod
+ .text          0x00005b14      0x12c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memcpy.o)
+                0x00005b14                memcpy
+ .text          0x00005c40       0xb0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memset.o)
+                0x00005c40                memset
+ .text          0x00005cf0       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-printf.o)
+                0x00005cf0                printf
+                0x00005d24                _printf_r
+ .text          0x00005d50       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sprintf.o)
+                0x00005d9c                _sprintf_r
+                0x00005d50                sprintf
+ .text          0x00005ddc       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
+                0x00005ddc                strlen
+ .text          0x00005e3c     0x1488 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+                0x00005f38                _svfprintf_r
+ .text          0x000072c4     0x1724 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-vfprintf.o)
+                0x000072e0                _vfprintf_r
+                0x000089cc                vfprintf
+ .text          0x000089e8      0x100 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-wsetup.o)
+                0x000089e8                __swsetup_r
+ .text          0x00008ae8      0xf88 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
+                0x00008c18                _dtoa_r
+ .text          0x00009a70      0x178 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fflush.o)
+                0x00009bb8                fflush
+                0x00009a70                _fflush_r
+ .text          0x00009be8      0x1e8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-findfp.o)
+                0x00009d70                __sinit
+                0x00009cb4                __sfmoreglue
+                0x00009c48                _cleanup
+                0x00009c38                _cleanup_r
+                0x00009c1c                __fp_lock_all
+                0x00009be8                __sfp_lock_acquire
+                0x00009ce0                __sfp
+                0x00009bf4                __sinit_lock_release
+                0x00009c00                __fp_unlock_all
+                0x00009bec                __sfp_lock_release
+                0x00009bf0                __sinit_lock_acquire
+ .text          0x00009dd0      0x238 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
+                0x00009e7c                _free_r
+                0x00009dd0                _malloc_trim_r
+ .text          0x0000a008      0x2e8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fvwrite.o)
+                0x0000a008                __sfvwrite_r
+ .text          0x0000a2f0       0xb0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fwalk.o)
+                0x0000a348                _fwalk
+                0x0000a2f0                _fwalk_reent
+ .text          0x0000a3a0       0x74 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+                0x0000a3bc                _setlocale_r
+                0x0000a3a0                __locale_charset
+                0x0000a3ac                _localeconv_r
+                0x0000a3fc                setlocale
+                0x0000a3b4                localeconv
+ .text          0x0000a414       0xe0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-makebuf.o)
+                0x0000a414                __smakebuf_r
+ .text          0x0000a4f4       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
+                0x0000a508                malloc
+                0x0000a4f4                free
+ .text          0x0000a51c      0x530 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
+                0x0000a51c                _malloc_r
+ .text          0x0000aa4c       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
+                0x0000aa4c                memchr
+ .text          0x0000aac8       0xc0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
+                0x0000aac8                memmove
+ .text          0x0000ab88        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
+                0x0000ab8c                __malloc_unlock
+                0x0000ab88                __malloc_lock
+ .text          0x0000ab90      0x92c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
+                0x0000adbc                _mprec_log10
+                0x0000ae48                __any_on
+                0x0000aedc                _Balloc
+                0x0000ad68                __ratio
+                0x0000b2e4                __i2b
+                0x0000acbc                __b2d
+                0x0000b428                __s2b
+                0x0000ac34                __mcmp
+                0x0000ab90                __hi0bits
+                0x0000b374                __pow5mult
+                0x0000b100                __lshift
+                0x0000b1b4                __multiply
+                0x0000af4c                __d2b
+                0x0000adf8                __copybits
+                0x0000ac74                __ulp
+                0x0000b004                __mdiff
+                0x0000abd0                __lo0bits
+                0x0000b2f8                __multadd
+                0x0000aeac                _Bfree
+ .text          0x0000b4bc      0x388 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
+                0x0000b4bc                _realloc_r
+ .text          0x0000b844       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
+                0x0000b844                __isinfd
+ .text          0x0000b86c       0x1c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
+                0x0000b86c                __isnand
+ .text          0x0000b888       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
+                0x0000b888                _sbrk_r
+ .text          0x0000b8b0       0x94 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-stdio.o)
+                0x0000b8bc                __sseek
+                0x0000b920                __sread
+                0x0000b8b0                __sclose
+                0x0000b8e4                __swrite
+ .text          0x0000b944      0x1dc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
+                0x0000b944                strcmp
+ .text          0x0000bb20       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-writer.o)
+                0x0000bb20                _write_r
+ .text          0x0000bb4c       0x5c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
+                0x0000bb4c                _calloc_r
+ .text          0x0000bba8       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-closer.o)
+                0x0000bba8                _close_r
+ .text          0x0000bbd0       0xcc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fclose.o)
+                0x0000bbd0                _fclose_r
+                0x0000bc88                fclose
+ .text          0x0000bc9c       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-fstatr.o)
+                0x0000bc9c                _fstat_r
+ .text          0x0000bcc8       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-isattyr.o)
+                0x0000bcc8                _isatty_r
+ .text          0x0000bcf0       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-lseekr.o)
+                0x0000bcf0                _lseek_r
+ .text          0x0000bd1c       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-readr.o)
+                0x0000bd1c                _read_r
  .text.initialise_monitor_handles
-                0x0000bda8       0xbc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
- .text._sbrk    0x0000be64       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000be64                _sbrk
+                0x0000bd48       0xbc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+ .text._sbrk    0x0000be04       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000be04                _sbrk
  .text._swilseek
-                0x0000bee0       0xdc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000bee0                _swilseek
- .text._lseek   0x0000bfbc        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000bfbc                _lseek
- .text._isatty  0x0000bfc4       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000bfc4                _isatty
- .text._close   0x0000c024       0x9c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000c024                _close
- .text._read    0x0000c0c0       0x84 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000c0c0                _read
- .text._write   0x0000c144       0xa8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000c144                _write
- .text._fstat   0x0000c1ec       0x80 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000c1ec                _fstat
- .text          0x0000c26c      0x110 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpdf2.o)
-                0x0000c340                __aeabi_dcmple
-                0x0000c27c                __cmpdf2
-                0x0000c27c                __eqdf2
-                0x0000c26c                __gtdf2
-                0x0000c308                __aeabi_cdcmple
-                0x0000c2f8                __aeabi_cdrcmple
-                0x0000c274                __ltdf2
-                0x0000c32c                __aeabi_dcmplt
-                0x0000c274                __ledf2
-                0x0000c368                __aeabi_dcmpgt
-                0x0000c354                __aeabi_dcmpge
-                0x0000c27c                __nedf2
-                0x0000c318                __aeabi_dcmpeq
-                0x0000c308                __aeabi_cdcmpeq
-                0x0000c26c                __gedf2
- .text          0x0000c37c       0x50 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_fixdfsi.o)
-                0x0000c37c                __fixdfsi
-                0x0000c37c                __aeabi_d2iz
- .text          0x0000c3cc        0xc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-errno.o)
-                0x0000c3cc                __errno
+                0x0000be80       0xdc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000be80                _swilseek
+ .text._lseek   0x0000bf5c        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000bf5c                _lseek
+ .text._isatty  0x0000bf64       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000bf64                _isatty
+ .text._close   0x0000bfc4       0x9c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000bfc4                _close
+ .text._read    0x0000c060       0x84 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000c060                _read
+ .text._write   0x0000c0e4       0xa8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000c0e4                _write
+ .text._fstat   0x0000c18c       0x80 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000c18c                _fstat
+ .text          0x0000c20c      0x110 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpdf2.o)
+                0x0000c2e0                __aeabi_dcmple
+                0x0000c21c                __cmpdf2
+                0x0000c21c                __eqdf2
+                0x0000c20c                __gtdf2
+                0x0000c2a8                __aeabi_cdcmple
+                0x0000c298                __aeabi_cdrcmple
+                0x0000c214                __ltdf2
+                0x0000c2cc                __aeabi_dcmplt
+                0x0000c214                __ledf2
+                0x0000c308                __aeabi_dcmpgt
+                0x0000c2f4                __aeabi_dcmpge
+                0x0000c21c                __nedf2
+                0x0000c2b8                __aeabi_dcmpeq
+                0x0000c2a8                __aeabi_cdcmpeq
+                0x0000c20c                __gedf2
+ .text          0x0000c31c       0x50 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_fixdfsi.o)
+                0x0000c31c                __fixdfsi
+                0x0000c31c                __aeabi_d2iz
+ .text          0x0000c36c        0xc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-errno.o)
+                0x0000c36c                __errno
  *(.rodata .rodata.*)
- .rodata        0x0000c3d8      0x10c ./src/main.o
-                0x0000c3de                RESET_PIN
-                0x0000c3e8                ACC_THRESHOLD
-                0x0000c3f0                notes
-                0x0000c3e4                TEMP_UPPER_LIMIT
-                0x0000c3ec                FREQ_UPDATE_PERIOD_MS
-                0x0000c3e0                LIGHT_PORT
-                0x0000c3d8                CALIBRATED_PORT
-                0x0000c428                tempStateStringMap
-                0x0000c3dc                RESET_PORT
-                0x0000c3da                CALIBRATED_PIN
-                0x0000c443                radiationStateStringMap
-                0x0000c3e6                ACC_UPDATE_PERIOD_MS
-                0x0000c3e2                LIGHT_PIN
- .rodata        0x0000c4e4        0x4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .rodata        0x0000c4e8       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .rodata        0x0000c500       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .rodata        0x0000c518       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
- .rodata        0x0000c530       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
- .rodata        0x0000c548      0x100 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_clz.o)
-                0x0000c548                __clz_tab
- .rodata        0x0000c648       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+ .rodata        0x0000c378      0x1a8 ./src/main.o
+                0x0000c37e                RESET_PIN
+                0x0000c388                ACC_THRESHOLD
+                0x0000c410                notes
+                0x0000c384                TEMP_UPPER_LIMIT
+                0x0000c38c                FREQ_UPDATE_PERIOD_MS
+                0x0000c380                LIGHT_PORT
+                0x0000c378                CALIBRATED_PORT
+                0x0000c448                tempStateStringMap
+                0x0000c37c                RESET_PORT
+                0x0000c37a                CALIBRATED_PIN
+                0x0000c463                radiationStateStringMap
+                0x0000c386                ACC_UPDATE_PERIOD_MS
+                0x0000c382                LIGHT_PIN
+ .rodata        0x0000c520        0x4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .rodata        0x0000c524       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .rodata        0x0000c53c       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .rodata        0x0000c554       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .rodata        0x0000c56c       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .rodata        0x0000c584      0x100 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_clz.o)
+                0x0000c584                __clz_tab
+ .rodata        0x0000c684       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
  .rodata.str1.4
-                0x0000c668       0x5e c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+                0x0000c6a4       0x5e c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
                                  0x60 (size before relaxing)
- .rodata        0x0000c6c6       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-vfprintf.o)
+ .rodata        0x0000c702       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-vfprintf.o)
  .rodata.str1.4
                 0x00000000       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-vfprintf.o)
- *fill*         0x0000c6e6        0x2 00
+ *fill*         0x0000c722        0x2 00
  .rodata.str1.4
-                0x0000c6e8       0x10 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
+                0x0000c724       0x10 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
                                  0x14 (size before relaxing)
- .rodata        0x0000c6f8       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-findfp.o)
-                0x0000c738                __sf_fake_stderr
-                0x0000c6f8                __sf_fake_stdin
-                0x0000c718                __sf_fake_stdout
- .rodata        0x0000c758        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
-                0x0000c758                _global_impure_ptr
+ .rodata        0x0000c734       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-findfp.o)
+                0x0000c774                __sf_fake_stderr
+                0x0000c734                __sf_fake_stdin
+                0x0000c754                __sf_fake_stdout
+ .rodata        0x0000c794        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
+                0x0000c794                _global_impure_ptr
  .rodata.str1.4
-                0x0000c75c        0x2 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
+                0x0000c798        0x2 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
                                   0x4 (size before relaxing)
- *fill*         0x0000c75e        0x2 00
- .rodata        0x0000c760       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+ *fill*         0x0000c79a        0x2 00
+ .rodata        0x0000c79c       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
  .rodata.str1.4
-                0x0000c794        0xf c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+                0x0000c7d0        0xf c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
                                  0x18 (size before relaxing)
- *fill*         0x0000c7a3        0x5 00
- .rodata        0x0000c7a8      0x128 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
-                0x0000c8a8                __mprec_tinytens
-                0x0000c7a8                __mprec_tens
-                0x0000c880                __mprec_bigtens
+ *fill*         0x0000c7df        0x1 00
+ .rodata        0x0000c7e0      0x128 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
+                0x0000c8e0                __mprec_tinytens
+                0x0000c7e0                __mprec_tens
+                0x0000c8b8                __mprec_bigtens
  .rodata.str1.4
-                0x0000c8d0        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000c8d4                . = ALIGN (0x4)
+                0x0000c908        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000c90c                . = ALIGN (0x4)
 
-.glue_7         0x0000c8d4        0x0
+.glue_7         0x0000c90c        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x0000c8d4        0x0
+.glue_7t        0x0000c90c        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x0000c8d4        0x0
+.vfp11_veneer   0x0000c90c        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0000c8d4        0x0
+.v4_bx          0x0000c90c        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0000c8d4                __exidx_start = .
+                0x0000c90c                __exidx_start = .
 
-.ARM.exidx      0x0000c8d4        0x8
+.ARM.exidx      0x0000c90c        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x0000c8d4        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
- .ARM.exidx     0x0000c8dc        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
+ .ARM.exidx     0x0000c90c        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
+ .ARM.exidx     0x0000c914        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
                                   0x8 (size before relaxing)
-                0x0000c8dc                __exidx_end = .
-                0x0000c8dc                _etext = .
+                0x0000c914                __exidx_end = .
+                0x0000c914                _etext = .
 
-.data_RAM2      0x2007c000        0x0 load address 0x0000c8dc
+.data_RAM2      0x2007c000        0x0 load address 0x0000c914
  FILL mask 0xff
  *(.data.$RAM2*)
  *(.data.$RamAHB32*)
                 0x2007c000                . = ALIGN (0x4)
 
-.data_RAM3      0x40038000        0x0 load address 0x0000c8dc
+.data_RAM3      0x40038000        0x0 load address 0x0000c914
  FILL mask 0xff
  *(.data.$RAM3*)
  *(.data.$CANAccFilterRAM*)
@@ -1328,30 +1327,38 @@ END GROUP
 .uninit_RESERVED
  *(.bss.$RESERVED*)
 
-.data           0x10000000      0x56c load address 0x0000c8dc
+.data           0x10000000      0x590 load address 0x0000c914
  FILL mask 0xff
                 0x10000000                _data = .
  *(vtable)
  *(.data*)
- .data          0x10000000        0xa ./src/main.o
-                0x10000006                REPORTING_PERIOD_MS
-                0x10000004                UNSAFE_UPPER_HZ
-                0x10000002                UNSAFE_LOWER_HZ
-                0x10000000                TIME_WINDOW_MS
-                0x10000008                radiationState
- *fill*         0x1000000a        0x2 00
- .data          0x1000000c        0x4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
-                0x1000000c                SystemCoreClock
- .data          0x10000010       0x50 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
- .data          0x10000060        0x8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
- .data          0x10000068       0xf4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
-                0x10000068                _impure_ptr
- .data          0x1000015c      0x410 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
-                0x10000564                __malloc_sbrk_base
-                0x1000015c                __malloc_av_
-                0x10000568                __malloc_trim_threshold
-                0x1000056c                . = ALIGN (0x4)
-                0x1000056c                _edata = .
+ .data          0x10000000       0x30 ./src/main.o
+                0x1000002a                REPORTING_PERIOD_MS
+                0x10000028                UNSAFE_UPPER_HZ
+                0x10000014                REPLY_ACK
+                0x10000000                MESSAGE_READY
+                0x10000026                UNSAFE_LOWER_HZ
+                0x10000020                CMD_RESET_TO_STDBY
+                0x10000024                TIME_WINDOW_MS
+                0x1000000c                MESSAGE_CONFIRM_ENTER_STDBY
+                0x10000018                REPLY_NOT_ACK
+                0x10000010                MESSAGE_REPORT_TEMPLATE
+                0x1000002c                radiationState
+                0x1000001c                CMD_RESET_TO_CALIB
+                0x10000008                MESSAGE_CONFIRM_ENTER_CALIB
+                0x10000004                MESSAGE_HANDSHAKE_CONFIRM
+ .data          0x10000030        0x4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+                0x10000030                SystemCoreClock
+ .data          0x10000034       0x50 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+ .data          0x10000084        0x8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+ .data          0x1000008c       0xf4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
+                0x1000008c                _impure_ptr
+ .data          0x10000180      0x410 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
+                0x10000588                __malloc_sbrk_base
+                0x10000180                __malloc_av_
+                0x1000058c                __malloc_trim_threshold
+                0x10000590                . = ALIGN (0x4)
+                0x10000590                _edata = .
 
 .bss_RAM2       0x2007c000        0x0
  *(.bss.$RAM2*)
@@ -1363,174 +1370,174 @@ END GROUP
  *(.bss.$CANAccFilterRAM*)
                 0x40038000                . = ALIGN (0x4)
 
-.bss            0x1000056c      0x474
-                0x1000056c                _bss = .
+.bss            0x10000590      0x470
+                0x10000590                _bss = .
  *(.bss*)
- .bss           0x1000056c       0xa4 ./src/main.o
-                0x1000057c                temp_i
-                0x10000604                accTick
-                0x1000058c                accValues
-                0x10000587                accXOffset
-                0x100005fa                setWarningToStop
-                0x100005fc                setWarningToStart
-                0x10000586                accZ
-                0x100005ec                hasCrossedAccThreshold
-                0x1000056c                countDownStarted
-                0x10000570                currentCountValue
-                0x1000058a                accZValToRemove
-                0x100005f8                isWarningOn
-                0x100005e4                currentAccZFilteredValue
-                0x10000608                warningTick
-                0x10000600                oneSecondTick
-                0x10000580                temp_pointer
-                0x100005f4                currentFrequency
-                0x100005dc                curNumOfAccValues
-                0x100005e8                prevAccZFilteredValue
-                0x10000578                temp_t2
-                0x10000574                temp_t1
-                0x100005e0                currentAccIdx
-                0x100005f0                currentFreqCounter
-                0x10000589                accZOffset
-                0x100005b4                accValuesSorted
-                0x10000585                accY
-                0x10000588                accYOffset
-                0x10000584                accX
- .bss           0x10000610      0x300 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .bss           0x10000910        0x6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- *fill*         0x10000916        0x2 00
- .bss           0x10000918       0x24 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .bss           0x1000093c       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .bss           0x10000954       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
-                0x10000954                __malloc_top_pad
-                0x10000980                __malloc_max_sbrked_mem
-                0x10000958                __malloc_current_mallinfo
-                0x10000984                __malloc_max_total_mem
+ .bss           0x10000590       0xa0 ./src/main.o
+                0x100005a0                temp_i
+                0x10000624                accTick
+                0x100005b0                accValues
+                0x100005ab                accXOffset
+                0x1000061a                setWarningToStop
+                0x1000061c                setWarningToStart
+                0x100005aa                accZ
+                0x1000061e                sendReport
+                0x1000060c                hasCrossedAccThreshold
+                0x10000590                countDownStarted
+                0x10000594                currentCountValue
+                0x100005ae                accZValToRemove
+                0x10000618                isWarningOn
+                0x10000604                currentAccZFilteredValue
+                0x10000628                warningTick
+                0x10000620                oneSecondTick
+                0x100005a4                temp_pointer
+                0x10000614                currentFrequency
+                0x10000608                prevAccZFilteredValue
+                0x1000059c                temp_t2
+                0x10000598                temp_t1
+                0x10000600                currentAccIdx
+                0x10000610                currentFreqCounter
+                0x100005ad                accZOffset
+                0x100005d8                accValuesSorted
+                0x100005a9                accY
+                0x100005ac                accYOffset
+                0x100005a8                accX
+ .bss           0x10000630      0x300 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .bss           0x10000930        0x6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ *fill*         0x10000936        0x2 00
+ .bss           0x10000938       0x24 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .bss           0x1000095c       0x18 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .bss           0x10000974       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
+                0x10000974                __malloc_top_pad
+                0x100009a0                __malloc_max_sbrked_mem
+                0x10000978                __malloc_current_mallinfo
+                0x100009a4                __malloc_max_total_mem
  .bss.monitor_stdout
-                0x10000988        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x100009a8        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
  .bss.initialized.2363
-                0x1000098c        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x100009ac        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
  .bss.heap_end.2542
-                0x10000990        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x100009b0        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
  .bss.monitor_stdin
-                0x10000994        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x100009b4        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
  .bss.heap_base.2543
-                0x10000998        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x100009b8        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
  .bss.monitor_stderr
-                0x1000099c        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x100009bc        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
  .bss.openfiles
-                0x100009a0       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x100009c0       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
  *(COMMON)
- COMMON         0x100009c8       0x11 ./src/main.o
-                0x100009c8                currentTemperatureReading
-                0x100009cc                buzzerState
-                0x100009cd                currentState
-                0x100009ce                handShakeState
-                0x100009cf                accMode
-                0x100009d0                flutterState
-                0x100009d4                msTicks
-                0x100009d8                temperatureState
- *fill*         0x100009d9        0x3 00
- COMMON         0x100009dc        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reent.o)
-                0x100009dc                errno
-                0x100009e0                . = ALIGN (0x4)
-                0x100009e0                _ebss = .
-                0x100009e0                PROVIDE (end, .)
-                0x100009e0                PROVIDE (_pvHeapStart, .)
+ COMMON         0x100009e8       0x11 ./src/main.o
+                0x100009e8                currentTemperatureReading
+                0x100009ec                buzzerState
+                0x100009ed                currentState
+                0x100009ee                handShakeState
+                0x100009ef                accMode
+                0x100009f0                flutterState
+                0x100009f4                msTicks
+                0x100009f8                temperatureState
+ *fill*         0x100009f9        0x3 00
+ COMMON         0x100009fc        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reent.o)
+                0x100009fc                errno
+                0x10000a00                . = ALIGN (0x4)
+                0x10000a00                _ebss = .
+                0x10000a00                PROVIDE (end, .)
+                0x10000a00                PROVIDE (_pvHeapStart, .)
                 0x10008000                PROVIDE (_vStackTop, (__top_RamLoc32 - 0x0))
 OUTPUT(Assignment2.axf elf32-littlearm)
 
-.debug_abbrev   0x00000000     0x194a
+.debug_abbrev   0x00000000     0x1957
  .debug_abbrev  0x00000000       0xbd ./src/cr_startup_lpc17.o
- .debug_abbrev  0x000000bd      0x290 ./src/main.o
- .debug_abbrev  0x0000034d       0xc6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
- .debug_abbrev  0x00000413      0x165 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
- .debug_abbrev  0x00000578      0x151 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
- .debug_abbrev  0x000006c9      0x1c6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
- .debug_abbrev  0x0000088f      0x1ed C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .debug_abbrev  0x00000a7c      0x1b3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .debug_abbrev  0x00000c2f       0x97 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
- .debug_abbrev  0x00000cc6       0x54 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
- .debug_abbrev  0x00000d1a      0x18e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
- .debug_abbrev  0x00000ea8      0x253 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .debug_abbrev  0x000010fb      0x113 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
- .debug_abbrev  0x0000120e      0x1dc C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .debug_abbrev  0x000013ea      0x1a8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
- .debug_abbrev  0x00001592      0x23b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
- .debug_abbrev  0x000017cd      0x17d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+ .debug_abbrev  0x000000bd      0x29d ./src/main.o
+ .debug_abbrev  0x0000035a       0xc6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+ .debug_abbrev  0x00000420      0x165 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+ .debug_abbrev  0x00000585      0x151 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+ .debug_abbrev  0x000006d6      0x1c6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+ .debug_abbrev  0x0000089c      0x1ed C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .debug_abbrev  0x00000a89      0x1b3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .debug_abbrev  0x00000c3c       0x97 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+ .debug_abbrev  0x00000cd3       0x54 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+ .debug_abbrev  0x00000d27      0x18e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+ .debug_abbrev  0x00000eb5      0x253 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .debug_abbrev  0x00001108      0x113 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+ .debug_abbrev  0x0000121b      0x1dc C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .debug_abbrev  0x000013f7      0x1a8 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .debug_abbrev  0x0000159f      0x23b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .debug_abbrev  0x000017da      0x17d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
-.debug_info     0x00000000     0x8a64
+.debug_info     0x00000000     0x8b55
  .debug_info    0x00000000      0x1ec ./src/cr_startup_lpc17.o
- .debug_info    0x000001ec     0x1cf6 ./src/main.o
- .debug_info    0x00001ee2      0x334 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
- .debug_info    0x00002216      0x526 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
- .debug_info    0x0000273c      0x26b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
- .debug_info    0x000029a7      0x74c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
- .debug_info    0x000030f3      0x954 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .debug_info    0x00003a47      0x62b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .debug_info    0x00004072       0xd9 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
- .debug_info    0x0000414b       0x61 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
- .debug_info    0x000041ac      0xb8a C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
- .debug_info    0x00004d36      0xcad C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .debug_info    0x000059e3      0x49b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
- .debug_info    0x00005e7e      0x85c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .debug_info    0x000066da      0x8d9 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
- .debug_info    0x00006fb3     0x149e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
- .debug_info    0x00008451      0x613 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+ .debug_info    0x000001ec     0x1de7 ./src/main.o
+ .debug_info    0x00001fd3      0x334 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+ .debug_info    0x00002307      0x526 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+ .debug_info    0x0000282d      0x26b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+ .debug_info    0x00002a98      0x74c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+ .debug_info    0x000031e4      0x954 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .debug_info    0x00003b38      0x62b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .debug_info    0x00004163       0xd9 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+ .debug_info    0x0000423c       0x61 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+ .debug_info    0x0000429d      0xb8a C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+ .debug_info    0x00004e27      0xcad C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .debug_info    0x00005ad4      0x49b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+ .debug_info    0x00005f6f      0x85c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .debug_info    0x000067cb      0x8d9 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .debug_info    0x000070a4     0x149e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .debug_info    0x00008542      0x613 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
-.debug_line     0x00000000     0x5f5e
+.debug_line     0x00000000     0x5f62
  .debug_line    0x00000000      0x2a6 ./src/cr_startup_lpc17.o
- .debug_line    0x000002a6      0xd71 ./src/main.o
- .debug_line    0x00001017      0x36d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
- .debug_line    0x00001384      0x534 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
- .debug_line    0x000018b8      0x4af C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
- .debug_line    0x00001d67      0x5df C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
- .debug_line    0x00002346      0x6d0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .debug_line    0x00002a16      0x5a2 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .debug_line    0x00002fb8      0x493 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
- .debug_line    0x0000344b       0xdd C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
- .debug_line    0x00003528      0x5ca C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
- .debug_line    0x00003af2      0x727 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .debug_line    0x00004219      0x45b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
- .debug_line    0x00004674      0x65d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .debug_line    0x00004cd1      0x5e6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
- .debug_line    0x000052b7      0x812 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
- .debug_line    0x00005ac9      0x495 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+ .debug_line    0x000002a6      0xd75 ./src/main.o
+ .debug_line    0x0000101b      0x36d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+ .debug_line    0x00001388      0x534 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+ .debug_line    0x000018bc      0x4af C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+ .debug_line    0x00001d6b      0x5df C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+ .debug_line    0x0000234a      0x6d0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .debug_line    0x00002a1a      0x5a2 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .debug_line    0x00002fbc      0x493 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+ .debug_line    0x0000344f       0xdd C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+ .debug_line    0x0000352c      0x5ca C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+ .debug_line    0x00003af6      0x727 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .debug_line    0x0000421d      0x45b C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+ .debug_line    0x00004678      0x65d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .debug_line    0x00004cd5      0x5e6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .debug_line    0x000052bb      0x812 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .debug_line    0x00005acd      0x495 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
-.debug_macinfo  0x00000000    0x7f985
+.debug_macinfo  0x00000000    0x7f99c
  .debug_macinfo
                 0x00000000     0x151f ./src/cr_startup_lpc17.o
  .debug_macinfo
-                0x0000151f     0xcf2d ./src/main.o
+                0x0000151f     0xcf44 ./src/main.o
  .debug_macinfo
-                0x0000e44c     0x6d5c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+                0x0000e463     0x6d5c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
  .debug_macinfo
-                0x000151a8     0x787f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x000151bf     0x787f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .debug_macinfo
-                0x0001ca27     0x8007 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+                0x0001ca3e     0x8007 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
  .debug_macinfo
-                0x00024a2e     0x779e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00024a45     0x779e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .debug_macinfo
-                0x0002c1cc     0x8aa7 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x0002c1e3     0x8aa7 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .debug_macinfo
-                0x00034c73     0x77bd C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00034c8a     0x77bd C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
  .debug_macinfo
-                0x0003c430     0x6eb0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+                0x0003c447     0x6eb0 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
  .debug_macinfo
-                0x000432e0     0x1cb1 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+                0x000432f7     0x1cb1 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
  .debug_macinfo
-                0x00044f91     0x701c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00044fa8     0x701c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
  .debug_macinfo
-                0x0004bfad     0x8f3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x0004bfc4     0x8f3c C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .debug_macinfo
-                0x00054ee9     0x7137 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00054f00     0x7137 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
  .debug_macinfo
-                0x0005c020     0x9234 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x0005c037     0x9234 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
  .debug_macinfo
-                0x00065254     0x8e31 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x0006526b     0x8e31 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
  .debug_macinfo
-                0x0006e085     0x99a3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x0006e09c     0x99a3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
  .debug_macinfo
-                0x00077a28     0x7f5d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x00077a3f     0x7f5d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
 .debug_frame    0x00000000     0x2c78
  .debug_frame   0x00000000      0x120 ./src/cr_startup_lpc17.o
@@ -1594,60 +1601,60 @@ OUTPUT(Assignment2.axf elf32-littlearm)
  .debug_frame   0x00002bf4       0x64 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reent.o)
  .debug_frame   0x00002c58       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-errno.o)
 
-.debug_loc      0x00000000     0x3425
+.debug_loc      0x00000000     0x3427
  .debug_loc     0x00000000      0x1e5 ./src/cr_startup_lpc17.o
- .debug_loc     0x000001e5      0xa2d ./src/main.o
- .debug_loc     0x00000c12       0x56 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
- .debug_loc     0x00000c68      0x1e7 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
- .debug_loc     0x00000e4f       0x62 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
- .debug_loc     0x00000eb1      0x368 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
- .debug_loc     0x00001219      0x331 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .debug_loc     0x0000154a      0x2c3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .debug_loc     0x0000180d       0x62 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
- .debug_loc     0x0000186f      0x4ba C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
- .debug_loc     0x00001d29      0x4cd C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .debug_loc     0x000021f6      0x14a C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
- .debug_loc     0x00002340      0x434 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .debug_loc     0x00002774      0x3a7 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
- .debug_loc     0x00002b1b      0x757 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
- .debug_loc     0x00003272      0x1b3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+ .debug_loc     0x000001e5      0xa2f ./src/main.o
+ .debug_loc     0x00000c14       0x56 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+ .debug_loc     0x00000c6a      0x1e7 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+ .debug_loc     0x00000e51       0x62 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+ .debug_loc     0x00000eb3      0x368 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+ .debug_loc     0x0000121b      0x331 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .debug_loc     0x0000154c      0x2c3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .debug_loc     0x0000180f       0x62 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+ .debug_loc     0x00001871      0x4ba C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+ .debug_loc     0x00001d2b      0x4cd C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .debug_loc     0x000021f8      0x14a C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+ .debug_loc     0x00002342      0x434 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .debug_loc     0x00002776      0x3a7 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .debug_loc     0x00002b1d      0x757 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .debug_loc     0x00003274      0x1b3 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
 .debug_pubnames
-                0x00000000     0x16cf
+                0x00000000     0x17a2
  .debug_pubnames
                 0x00000000       0xfd ./src/cr_startup_lpc17.o
  .debug_pubnames
-                0x000000fd      0x799 ./src/main.o
+                0x000000fd      0x86c ./src/main.o
  .debug_pubnames
-                0x00000896       0x4f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+                0x00000969       0x4f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
  .debug_pubnames
-                0x000008e5       0x4d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x000009b8       0x4d C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .debug_pubnames
-                0x00000932       0x37 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+                0x00000a05       0x37 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
  .debug_pubnames
-                0x00000969      0x107 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00000a3c      0x107 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .debug_pubnames
-                0x00000a70       0xa9 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00000b43       0xa9 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .debug_pubnames
-                0x00000b19       0xef C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00000bec       0xef C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
  .debug_pubnames
-                0x00000c08       0x2f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+                0x00000cdb       0x2f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
  .debug_pubnames
-                0x00000c37       0x1e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+                0x00000d0a       0x1e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
  .debug_pubnames
-                0x00000c55      0x196 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00000d28      0x196 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
  .debug_pubnames
-                0x00000deb      0x165 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00000ebe      0x165 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .debug_pubnames
-                0x00000f50       0xa6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00001023       0xa6 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
  .debug_pubnames
-                0x00000ff6      0x17f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000010c9      0x17f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
  .debug_pubnames
-                0x00001175      0x17a C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00001248      0x17a C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
  .debug_pubnames
-                0x000012ef      0x325 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x000013c2      0x325 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
  .debug_pubnames
-                0x00001614       0xbb C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x000016e7       0xbb C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
 .debug_aranges  0x00000000      0x978
  .debug_aranges
@@ -1701,40 +1708,40 @@ OUTPUT(Assignment2.axf elf32-littlearm)
  .debug_ranges  0x00000778      0x128 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
  .debug_ranges  0x000008a0       0x58 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
-.debug_str      0x00000000     0x3353
+.debug_str      0x00000000     0x340b
  .debug_str     0x00000000      0x1e8 ./src/cr_startup_lpc17.o
                                 0x222 (size before relaxing)
- .debug_str     0x000001e8     0x112e ./src/main.o
-                               0x12b1 (size before relaxing)
- .debug_str     0x00001316       0xe5 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+ .debug_str     0x000001e8     0x11ef ./src/main.o
+                               0x137f (size before relaxing)
+ .debug_str     0x000013d7       0xe5 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
                                 0x2ab (size before relaxing)
- .debug_str     0x000013fb      0x234 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+ .debug_str     0x000014bc      0x234 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
                                 0x3a6 (size before relaxing)
- .debug_str     0x0000162f       0x95 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+ .debug_str     0x000016f0       0x95 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
                                 0x212 (size before relaxing)
- .debug_str     0x000016c4      0x204 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+ .debug_str     0x00001785      0x204 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
                                 0x50b (size before relaxing)
- .debug_str     0x000018c8      0x1ad C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .debug_str     0x00001989      0x1ad C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
                                 0x3c3 (size before relaxing)
- .debug_str     0x00001a75      0x12e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .debug_str     0x00001b36      0x12e C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
                                 0x3fd (size before relaxing)
- .debug_str     0x00001ba3       0x22 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+ .debug_str     0x00001c64       0x22 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
                                 0x167 (size before relaxing)
- .debug_str     0x00001bc5       0x11 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+ .debug_str     0x00001c86       0x11 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
                                  0xd1 (size before relaxing)
- .debug_str     0x00001bd6      0x3d4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+ .debug_str     0x00001c97      0x3d4 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
                                 0x48f (size before relaxing)
- .debug_str     0x00001faa      0x319 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .debug_str     0x0000206b      0x319 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
                                 0x81b (size before relaxing)
- .debug_str     0x000022c3      0x201 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+ .debug_str     0x00002384      0x201 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
                                 0x3b1 (size before relaxing)
- .debug_str     0x000024c4      0x219 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .debug_str     0x00002585      0x219 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
                                 0x4a2 (size before relaxing)
- .debug_str     0x000026dd      0x283 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .debug_str     0x0000279e      0x283 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
                                 0x5d8 (size before relaxing)
- .debug_str     0x00002960      0x928 C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .debug_str     0x00002a21      0x91f C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
                                 0xc5f (size before relaxing)
- .debug_str     0x00003288       0xcb C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+ .debug_str     0x00003340       0xcb C:\Users\thyagesh93\Documents\NUS\IVLEDrive\EE2024 PROGRAMMING FOR COMPUTER INTERFACES\PROGRAMMING FOR COMPUTER INTERFACES\Assignment 2\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
                                 0x3a8 (size before relaxing)
 
 .comment        0x00000000      0x305
