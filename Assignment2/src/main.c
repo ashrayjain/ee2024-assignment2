@@ -171,6 +171,7 @@ void initAllPeripherals	(void);
 static	void init_ssp	(void);
 static	void init_i2c	(void);
 static	void init_GPIO	(void);
+static  void init_UART  (void);
 		void init_buzzer(void);
 		void init_timer (void);
 		void init_temp_interrupt(int32_t *var);
@@ -246,7 +247,7 @@ void initAllPeripherals() {
 	init_GPIO();
     init_i2c();
     init_ssp();
-    init_uart();
+    init_UART();
 
     pca9532_init();
     pca9532_setLeds(0, 0xffff);
@@ -379,17 +380,13 @@ void init_buzzer() {
 	GPIO_ClearValue(2, 1<<13); //LM4811-shutdn
 }
 
-void init_uart() {
+static void init_UART(void) {
 	UART_CFG_Type uartCfg;
 	uartCfg.Baud_rate = 115200;
 	uartCfg.Databits = UART_DATABIT_8;
 	uartCfg.Parity = UART_PARITY_NONE;
 	uartCfg.Stopbits = UART_STOPBIT_1;
-	//pin select for uart3;
-	//pinsel_uart3();
-	//supply power & setup working par.s for uart3
 	UART_Init(LPC_UART3, &uartCfg);
-	//enable transmit for uart3
 	UART_TxCmd(LPC_UART3, ENABLE);
 }
 
@@ -459,6 +456,9 @@ void init_temp_interrupt(int32_t *var) {
 
 void init_handShake (void) {
 	// enable UART interrupts to send/receive
+	LPC_UART3->IER |= UART_IER_RBRINT_EN;
+	LPC_UART3->IER |= UART_IER_THREINT_EN;
+	NVIC_EnableIRQ(UART3_IRQn);
 }
 
 //-----------------------------------------------------------
