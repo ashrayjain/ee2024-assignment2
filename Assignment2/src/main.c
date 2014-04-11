@@ -147,9 +147,10 @@ int8_t accZOffset = 0;
 int8_t accZValToRemove = 0;
 
 int accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+int accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG] = {0};
 int currentAccIdx = 0;
-float currentAccZAvgValue = 0.0;
-float prevAccZAvgValue = 0.0;
+float currentAccZFilteredValue = 0.0;
+float prevAccZFilteredValue = 0.0;
 uint8_t hasCrossedAccThreshold = 0;
 
 int currentFreqCounter = 0;
@@ -840,20 +841,47 @@ void updateFreqCounter() {
 	accZValToRemove = accValues[currentAccIdx];
 	accValues[currentAccIdx] = accZ;
 	currentAccIdx = (++currentAccIdx) % NUM_OF_ACC_VALUES_TO_AVG;
-	currentAccZAvgValue = (prevAccZAvgValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
 
+	// mean filter:
+	//currentAccZFilteredValue = (prevAccZFilteredValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
+
+	// median filter
+
+	int tempIdx = 0;
+
+	while(accValuesSorted[tempIdx++] != accZValToRemove);
+
+	accValuesSorted[tempIdx] = accZ;
+
+	if(accZValToRemove > accZ) {
+		while ((--tempIdx) && accValuesSorted[tempIdx] < accZ) {
+			accValuesSorted[tempIdx] ^= accZ;
+			accZ ^= accValuesSorted[tempIdx];
+			accValuesSorted[tempIdx] ^= accZ;
+		}
+	} else {
+		while (((++tempIdx) < NUM_OF_ACC_VALUES_TO_AVG) && (accValuesSorted[tempIdx] > accZ)) {
+			accValuesSorted[tempIdx] ^= accZ;
+			accZ ^= accValuesSorted[tempIdx];
+			accValuesSorted[tempIdx] ^= accZ;
+		}
+	}
+
+	currentAccZFilteredValue = NUM_OF_ACC_VALUES_TO_AVG % 2 == 0 ? accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] :
+	 		(accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] + accValuesSorted[(NUM_OF_ACC_VALUES_TO_AVG+1)/2])/2;
+	 		
 	if (hasCrossedAccThreshold == 1) {
-		if ((prevAccZAvgValue < 0 && currentAccZAvgValue > 0) || (prevAccZAvgValue > 0 && currentAccZAvgValue < 0)) {
+		if ((prevAccZFilteredValue < 0 && currentAccZFilteredValue > 0) || (prevAccZFilteredValue > 0 && currentAccZFilteredValue < 0)) {
 			currentFreqCounter ++;
 			hasCrossedAccThreshold = 0;
 		}
 	}
 
-	if (currentAccZAvgValue <= -1 * ACC_THRESHOLD || currentAccZAvgValue >= ACC_THRESHOLD) {
+	if (currentAccZFilteredValue <= -1 * ACC_THRESHOLD || currentAccZFilteredValue >= ACC_THRESHOLD) {
 		hasCrossedAccThreshold = 1;
 	}
 
-	prevAccZAvgValue = currentAccZAvgValue;
+	prevAccZFilteredValue = currentAccZFilteredValue;
 }
 
 //-----------------------------------------------------------
