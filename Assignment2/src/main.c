@@ -145,10 +145,11 @@ int8_t accYOffset = 0;
 int8_t accZOffset = 0;
 int8_t accZValToRemove = 0;
 
-int accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
-int currentAccIdx = 0;
-float currentAccZAvgValue = 0.0;
-float prevAccZAvgValue = 0.0;
+int8_t accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+int8_t accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+int8_t currentAccIdx = 0;
+float currentAccZFilteredValue = 0.0;
+float prevAccZFilteredValue = 0.0;
 uint8_t hasCrossedAccThreshold = 0;
 
 int currentFreqCounter = 0;
@@ -414,7 +415,7 @@ void init_timer() {
 	int preScaleValue2 = 10000;
 	int preScaleValue3 = 100000;
 
-	// configure Timer2 for acc reading
+	// configure Timer2 for acc reading and freq updating
 
 	TIM_TIMERCFG_Type TimerConfigStruct;
 	TIM_MATCHCFG_Type TimerMatcher;
@@ -432,29 +433,23 @@ void init_timer() {
 	TIM_Init(LPC_TIM2, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM2, &TimerMatcher);
 
-	// configure Timer1 for frequency calculations
+	// configure Timer1 for reporting
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
 	TimerConfigStruct.PrescaleValue = preScaleValue1;
 
 	TimerMatcher.MatchChannel = 0;
-	TimerMatcher.MatchValue = (TIME_WINDOW_MS * 1000) / preScaleValue1;
+	TimerMatcher.MatchValue = (REPORTING_PERIOD_MS * 1000) / preScaleValue1;
 
 	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
-
-	// configure Timer1 for reporting
-
-	//TimerMatcher.MatchChannel = 1;
-	//TimerMatcher.MatchValue = (REPORTING_PERIOD_MS * 1000) / preScaleValue1;
-
-	//TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
 
 	//configure timer3 for uart
 
 	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
 	TimerConfigStruct.PrescaleValue = preScaleValue3;
 
+	TimerMatcher.ResetOnMatch = TRUE;
 	TimerMatcher.MatchChannel = 0;
 	TimerMatcher.MatchValue = 50;
 
@@ -463,7 +458,7 @@ void init_timer() {
 
 	//Configure NVIC
 
-	NVIC_SetPriority(TIMER2_IRQn, ((0x01<<3)|0x01));
+	NVIC_SetPriority(TIMER2_IRQn, ((0x11<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER2_IRQn);
 	NVIC_EnableIRQ(TIMER2_IRQn);
 
@@ -616,6 +611,18 @@ void SysTick_Handler(void) {
 			}
 			currentFreqCounter = 0;
 		}
+		if (msTicks - warningTick >= TIME_WINDOW_MS) {
+			warningTick = msTicks;
+			if (flutterState == NON_RESONANT) {
+				if (isWarningOn) {
+					setWarningToStop = 1;
+				}
+			} else {
+				if (!isWarningOn) {
+					setWarningToStart = 1;
+				}
+			}
+		}
 		break;
 	default:
 		break;
@@ -670,18 +677,6 @@ void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
 
-		if (flutterState == NON_RESONANT) {
-			if (isWarningOn) {
-				setWarningToStop = 1;
-			}
-		} else {
-			if (!isWarningOn) {
-				setWarningToStart = 1;
-			}
-		}
-	} else if (LPC_TIM1->IR & (1<<1)) {
-		TIM_ClearIntPending(LPC_TIM1,TIM_MR1_INT);
-
 		newReport[0] = '\0';
 		sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
 		reportBytesLeftToSend = strlen(newReport);
@@ -690,7 +685,6 @@ void TIMER1_IRQHandler (void) {
 
 		if(reportBytesLeftToSend > 0) {
 				UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
-
 		}
 	}
 }
@@ -861,20 +855,48 @@ void updateFreqCounter() {
 	accZValToRemove = accValues[currentAccIdx];
 	accValues[currentAccIdx] = accZ;
 	currentAccIdx = (++currentAccIdx) % NUM_OF_ACC_VALUES_TO_AVG;
-	currentAccZAvgValue = (prevAccZAvgValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
 
+	// mean filter:
+	//currentAccZFilteredValue = (prevAccZFilteredValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
+
+	// median filter
+
+	int tempIdx = 0;
+	int tempVal = 0;
+
+	while(accValuesSorted[tempIdx++] != accZValToRemove);
+
+	accValuesSorted[tempIdx] = accZ;
+
+	if(accZValToRemove > accZ) {
+		while ((--tempIdx) && accValuesSorted[tempIdx] < accZ) {
+			tempVal = accZ;
+			accZ = accValuesSorted[tempIdx];
+			accValuesSorted[tempIdx] = tempVal;
+		}
+	} else {
+		while (((++tempIdx) < NUM_OF_ACC_VALUES_TO_AVG) && (accValuesSorted[tempIdx] > accZ)) {
+			tempVal = accZ;
+			accZ = accValuesSorted[tempIdx];
+			accValuesSorted[tempIdx] = tempVal;
+		}
+	}
+
+	currentAccZFilteredValue = NUM_OF_ACC_VALUES_TO_AVG % 2 == 0 ? accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] :
+	 		(accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] + accValuesSorted[(NUM_OF_ACC_VALUES_TO_AVG+1)/2])/2;
+	 		
 	if (hasCrossedAccThreshold == 1) {
-		if ((prevAccZAvgValue < 0 && currentAccZAvgValue > 0) || (prevAccZAvgValue > 0 && currentAccZAvgValue < 0)) {
+		if ((prevAccZFilteredValue < 0 && currentAccZFilteredValue > 0) || (prevAccZFilteredValue > 0 && currentAccZFilteredValue < 0)) {
 			currentFreqCounter ++;
 			hasCrossedAccThreshold = 0;
 		}
 	}
 
-	if (currentAccZAvgValue <= -1 * ACC_THRESHOLD || currentAccZAvgValue >= ACC_THRESHOLD) {
+	if (currentAccZFilteredValue <= -1 * ACC_THRESHOLD || currentAccZFilteredValue >= ACC_THRESHOLD) {
 		hasCrossedAccThreshold = 1;
 	}
 
-	prevAccZAvgValue = currentAccZAvgValue;
+	prevAccZFilteredValue = currentAccZFilteredValue;
 }
 
 //-----------------------------------------------------------
