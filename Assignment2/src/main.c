@@ -162,6 +162,9 @@ short setWarningToStart = 0;
 
 BUZZER_STATE buzzerState;
 
+char newReport[20] = "";
+short reportBytesLeftToSend = 0;
+
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
 volatile uint32_t accTick = 0;
@@ -401,7 +404,6 @@ void init_uart() {
 
 	// enable UART interrupts to send/receive
 	LPC_UART3->IER |= UART_IER_RBRINT_EN;
-	//LPC_UART3->IER |= UART_IER_THREINT_EN;
 	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
 	NVIC_EnableIRQ(UART3_IRQn);
 }
@@ -653,13 +655,6 @@ void EINT3_IRQHandler(void) {
 	}
 }
 
-void TIMER2_IRQHandler(void) {
-	if(LPC_TIM2->IR & (1 << 0)) {
-		TIM_ClearIntPending(LPC_TIM2,TIM_MR0_INT);
-		updateFreqCounter();
-	}
-}
-
 void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
@@ -673,6 +668,23 @@ void TIMER1_IRQHandler (void) {
 				setWarningToStart = 1;
 			}
 		}
+	} else if (LPC_TIM3->IR & (1<<1)) {
+		newReport[0] = '\0';
+		sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
+		reportBytesLeftToSend = strlen(newReport);
+
+		reportBytesLeftToSend -= UART_Send (LPC_UART3, newReport, reportBytesLeftToSend, NONE_BLOCKING);
+
+		if(reportBytesLeftToSend > 0) {
+			LPC_UART3->IER |= UART_IER_THREINT_EN;
+		}
+	}
+}
+
+void TIMER2_IRQHandler(void) {
+	if(LPC_TIM2->IR & (1 << 0)) {
+		TIM_ClearIntPending(LPC_TIM2,TIM_MR0_INT);
+		updateFreqCounter();
 	}
 }
 
@@ -717,9 +729,12 @@ void UART3_IRQHandler (void) {
 			printf("%s\n", stationCommand);
 		}
 	if ((LPC_UART3->IIR & UART_IIR_INTID_THRE) == UART_IIR_INTID_THRE) {
-		int a = 01;
-		a += 12;
+		reportBytesLeftToSend -= UART_Send(LPC_UART3, (newReport + strlen(newReport) - reportBytesLeftToSend), reportBytesLeftToSend, NONE_BLOCKING);
 
+		if(reportBytesLeftToSend == 0) {
+			LPC_UART3->IER &= ~UART_IER_THREINT_EN;
+			newReport[0] = '\0';
+		}
 	}
 }
 
