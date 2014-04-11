@@ -122,7 +122,7 @@ const char REPLY_NOT_ACK[7] = "RNACK\r";
 const char CMD_RESET_TO_CALIB[7] = "RSTC\r";
 const char CMD_RESET_TO_STDBY[7] = "RSTS\r";
 
-char stationCommand[10] = "";
+char stationCommand[7] = "";
 
 short countDownStarted = 0;
 int currentCountValue = 0;
@@ -403,8 +403,9 @@ void init_uart() {
 	UART_Init(LPC_UART3, &uartCfg);
 	UART_TxCmd(LPC_UART3, ENABLE);
 
+	UART_IntConfig(LPC_UART3, UART_INTCFG_RBR, ENABLE);
 	// enable UART interrupts to send/receive
-	LPC_UART3->IER |= UART_IER_RBRINT_EN;
+	//LPC_UART3->IER |= UART_IER_THREINT_EN;
 	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
 	NVIC_EnableIRQ(UART3_IRQn);
 }
@@ -443,6 +444,12 @@ void init_timer() {
 	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
 
+	// configure Timer1 for reporting
+
+	//TimerMatcher.MatchChannel = 1;
+	//TimerMatcher.MatchValue = (REPORTING_PERIOD_MS * 1000) / preScaleValue1;
+
+	//TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
 
 	//configure timer3 for uart
 
@@ -529,7 +536,7 @@ void stdbyEnvTestingHandler() {
 		updateReadings();
 		writeStatesToOled();
 		writeTempToOled();
-		if (temperatureState == NORMAL && radiationState == SAFE && handShakeState == HANDSHAKE_DONE) {
+		if (temperatureState == NORMAL && radiationState == SAFE) {// && handShakeState == HANDSHAKE_DONE) {
 			currentState = FFS_ACTIVE;
 		}
 	}
@@ -669,7 +676,9 @@ void TIMER1_IRQHandler (void) {
 				setWarningToStart = 1;
 			}
 		}
-	} else if (LPC_TIM3->IR & (1<<1)) {
+	} else if (LPC_TIM1->IR & (1<<1)) {
+		TIM_ClearIntPending(LPC_TIM1,TIM_MR1_INT);
+
 		newReport[0] = '\0';
 		sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
 		reportBytesLeftToSend = strlen(newReport);
@@ -677,7 +686,8 @@ void TIMER1_IRQHandler (void) {
 		reportBytesLeftToSend -= UART_Send (LPC_UART3, newReport, reportBytesLeftToSend, NONE_BLOCKING);
 
 		if(reportBytesLeftToSend > 0) {
-			LPC_UART3->IER |= UART_IER_THREINT_EN;
+				UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
+
 		}
 	}
 }
@@ -699,41 +709,49 @@ void TIMER3_IRQHandler(void) {
 }
 
 void UART3_IRQHandler (void) {
-	if ((LPC_UART3->IIR & UART_IIR_INTID_CTI) == UART_IIR_INTID_CTI) {
+	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_RDA) {
+		if(strlen(stationCommand) != 0) {
+			stationCommand[0] = '\0';
+		}
+
+		UART_Receive(LPC_UART3, stationCommand, 4, BLOCKING);
+		if(stationCommand[3] == '\r') {
+			hasNewCommand = 1;
+		}
+
+		//char data[5];
+		//UART_Receive(LPC_UART3, data, 4, BLOCKING);
+		//data[4] = '\0';
+		//printf("%s\n", data);
+
+		stationCommand[4] = '\0';
+		//printf("RDA: %s\n", stationCommand);
+	}
+
+	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_CTI) {
 		int currentlen = strlen(stationCommand);
-		UART_Receive(LPC_UART3, stationCommand+currentlen, 1, BLOCKING);
-		if (1 || stationCommand[currentlen] == '\r')
+		if (currentlen == 6)
 		{
-			stationCommand[currentlen+1] = '\0';
+			memset(stationCommand,0,strlen(stationCommand));
+			currentlen = 0;
+		}
+		UART_Receive(LPC_UART3, stationCommand+currentlen, 1, BLOCKING);
+		if (stationCommand[currentlen] == '\r')
+		{
+			stationCommand[currentlen] = '\0';
 			hasNewCommand = 1;
 			printf("%s\n", stationCommand);
+			memset(stationCommand,0,strlen(stationCommand));
 		}
+		else
 		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
-	if ((LPC_UART3->IIR & UART_IIR_INTID_RDA) == UART_IIR_INTID_RDA) {
-			if(strlen(stationCommand) != 0) {
-				stationCommand[0] = '\0';
-			}
 
-			UART_Receive(LPC_UART3, stationCommand, 4, BLOCKING);
-
-			if(stationCommand[3] == '\r') {
-				hasNewCommand = 1;
-			}
-
-			//char data[5];
-			//UART_Receive(LPC_UART3, data, 4, BLOCKING);
-			//data[4] = '\0';
-			//printf("%s\n", data);
-
-			stationCommand[4] = '\0';
-			printf("%s\n", stationCommand);
-		}
 	if ((LPC_UART3->IIR & UART_IIR_INTID_THRE) == UART_IIR_INTID_THRE) {
 		reportBytesLeftToSend -= UART_Send(LPC_UART3, (newReport + strlen(newReport) - reportBytesLeftToSend), reportBytesLeftToSend, NONE_BLOCKING);
 
 		if(reportBytesLeftToSend == 0) {
-			LPC_UART3->IER &= ~UART_IER_THREINT_EN;
+			UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, DISABLE);
 			newReport[0] = '\0';
 		}
 	}
