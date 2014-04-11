@@ -162,6 +162,9 @@ short setWarningToStart = 0;
 
 BUZZER_STATE buzzerState;
 
+char newReport[20] = "";
+short reportBytesLeftToSend = 0;
+
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
 volatile uint32_t accTick = 0;
@@ -401,9 +404,7 @@ void init_uart() {
 
 	UART_IntConfig(LPC_UART3, UART_INTCFG_RBR, ENABLE);
 	// enable UART interrupts to send/receive
-	//LPC_UART3->IER |= UART_IER_RBRINT_EN;
 	//LPC_UART3->IER |= UART_IER_THREINT_EN;
-	LPC_UART3->FCR |= 1;
 	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
 	NVIC_EnableIRQ(UART3_IRQn);
 }
@@ -442,6 +443,12 @@ void init_timer() {
 	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
 
+	// configure Timer1 for reporting
+
+	//TimerMatcher.MatchChannel = 1;
+	//TimerMatcher.MatchValue = (REPORTING_PERIOD_MS * 1000) / preScaleValue1;
+
+	//TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
 
 	//configure timer3 for uart
 
@@ -528,7 +535,7 @@ void stdbyEnvTestingHandler() {
 		updateReadings();
 		writeStatesToOled();
 		writeTempToOled();
-		if (temperatureState == NORMAL && radiationState == SAFE && handShakeState == HANDSHAKE_DONE) {
+		if (temperatureState == NORMAL && radiationState == SAFE) {// && handShakeState == HANDSHAKE_DONE) {
 			currentState = FFS_ACTIVE;
 		}
 	}
@@ -655,13 +662,6 @@ void EINT3_IRQHandler(void) {
 	}
 }
 
-void TIMER2_IRQHandler(void) {
-	if(LPC_TIM2->IR & (1 << 0)) {
-		TIM_ClearIntPending(LPC_TIM2,TIM_MR0_INT);
-		updateFreqCounter();
-	}
-}
-
 void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
@@ -675,6 +675,26 @@ void TIMER1_IRQHandler (void) {
 				setWarningToStart = 1;
 			}
 		}
+	} else if (LPC_TIM1->IR & (1<<1)) {
+		TIM_ClearIntPending(LPC_TIM1,TIM_MR1_INT);
+
+		newReport[0] = '\0';
+		sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
+		reportBytesLeftToSend = strlen(newReport);
+
+		reportBytesLeftToSend -= UART_Send (LPC_UART3, newReport, reportBytesLeftToSend, NONE_BLOCKING);
+
+		if(reportBytesLeftToSend > 0) {
+				UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
+
+		}
+	}
+}
+
+void TIMER2_IRQHandler(void) {
+	if(LPC_TIM2->IR & (1 << 0)) {
+		TIM_ClearIntPending(LPC_TIM2,TIM_MR0_INT);
+		updateFreqCounter();
 	}
 }
 
@@ -726,10 +746,13 @@ void UART3_IRQHandler (void) {
 		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
 
-	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_THRE) {
-		int a = 01;
-		a += 12;
+	if ((LPC_UART3->IIR & UART_IIR_INTID_THRE) == UART_IIR_INTID_THRE) {
+		reportBytesLeftToSend -= UART_Send(LPC_UART3, (newReport + strlen(newReport) - reportBytesLeftToSend), reportBytesLeftToSend, NONE_BLOCKING);
 
+		if(reportBytesLeftToSend == 0) {
+			UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, DISABLE);
+			newReport[0] = '\0';
+		}
 	}
 }
 
