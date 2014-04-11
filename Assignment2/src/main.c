@@ -107,8 +107,7 @@ const char radiationStateStringMap[3][7] = {
 
 SYSTEM_STATE currentState;
 
-HANDSHAKE_STATE handShakeState;
-short isHandShakeReady = 0;
+HANDSHAKE_STATE currentHandshakeState;
 short hasNewCommand = 0;
 
 const char MESSAGE_READY[20] = "RDY 013\r\n";
@@ -117,10 +116,10 @@ const char MESSAGE_CONFIRM_ENTER_CALIB[20] = "CACK\r\n";
 const char MESSAGE_CONFIRM_ENTER_STDBY[20] = "SACK\r\n";
 const char MESSAGE_REPORT_TEMPLATE[20] = "REPT 013 %02d%s\r\n";
 
-const char REPLY_ACK[7] = "RACK\r";
-const char REPLY_NOT_ACK[7] = "RNACK\r";
-const char CMD_RESET_TO_CALIB[7] = "RSTC\r";
-const char CMD_RESET_TO_STDBY[7] = "RSTS\r";
+const char REPLY_ACK[7] = "RACK";
+const char REPLY_NOT_ACK[7] = "RNACK";
+const char CMD_RESET_TO_CALIB[7] = "RSTC";
+const char CMD_RESET_TO_STDBY[7] = "RSTS";
 
 char stationCommand[7] = "";
 
@@ -240,6 +239,7 @@ void writeAccValueToOled();
 // uart related
 
 void sendUartReady();
+void processUartCommand();
 
 // helper functions
 static	void playNote		(uint32_t note, uint32_t durationMs);
@@ -521,7 +521,9 @@ void calibratingHandler() {
 
 void stdbyCountingDownHandler() {
 	enterStdByCountingDownState();
-	while(currentState == FFS_STDBY_COUNTING_DOWN){}
+	while(currentState == FFS_STDBY_COUNTING_DOWN){
+		processUartCommand();
+	}
 	leaveStdByCountingDownState();
 }
 
@@ -530,7 +532,8 @@ void stdbyEnvTestingHandler() {
 		updateReadings();
 		writeStatesToOled();
 		writeTempToOled();
-		if (temperatureState == NORMAL && radiationState == SAFE) {// && handShakeState == HANDSHAKE_DONE) {
+		processUartCommand();
+		if (temperatureState == NORMAL && radiationState == SAFE && currentHandshakeState == HANDSHAKE_DONE) {
 			currentState = FFS_ACTIVE;
 		}
 	}
@@ -545,6 +548,7 @@ void activeHandler() {
 		char freq[15] = "";
 		sprintf(freq, "%.1f", currentFrequency);
 		oled_putString(7, 40, freq, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+		processUartCommand();
 
 		// sanity check (due to reset interrupt which might have changed currentState)
 		if (currentState == FFS_ACTIVE && !(temperatureState == NORMAL && radiationState == SAFE)) {
@@ -695,7 +699,7 @@ void TIMER2_IRQHandler(void) {
 void TIMER3_IRQHandler(void) {
 	if(LPC_TIM3->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM3,TIM_MR0_INT);
-		if (handShakeState != HANDSHAKE_DONE) {
+		if (currentHandshakeState != HANDSHAKE_DONE) {
 			sendUartReady();
 		}
 	}
@@ -734,7 +738,6 @@ void UART3_IRQHandler (void) {
 			stationCommand[currentlen] = '\0';
 			hasNewCommand = 1;
 			printf("%s\n", stationCommand);
-			memset(stationCommand,0,strlen(stationCommand));
 		}
 		else
 		NVIC_ClearPendingIRQ(UART3_IRQn);
@@ -781,7 +784,7 @@ void enterStdByCountingDownState() {
 	acc_setMode(ACC_MODE_STANDBY);
 	light_setHiThreshold(800);
 	init_temp_interrupt(&currentTemperatureReading);
-	handShakeState = HANDSHAKE_NOT_DONE;
+	currentHandshakeState = HANDSHAKE_NOT_DONE;
 	init_handShake();
 }
 
@@ -961,7 +964,7 @@ void writeHeaderToOled(char *str) {
 	oled_putString(7, 8, str, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	if (currentState != FFS_CALIBRATING) {
 		char handShakeStr[15] = "              ";
-		handShakeStr[13] = (handShakeState == HANDSHAKE_DONE)?(char)(HANDSHAKE_SYMBOL_ASCII):(char)(NOT_HANDSHAKE_SYMBOL_ASCII);
+		handShakeStr[13] = (currentHandshakeState == HANDSHAKE_DONE)?(char)(HANDSHAKE_SYMBOL_ASCII):(char)(NOT_HANDSHAKE_SYMBOL_ASCII);
 		oled_putString(7, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	}
 }
@@ -1013,6 +1016,37 @@ void sendUartReady() {
 	UART_Send(LPC_UART3, MESSAGE_READY, strlen(MESSAGE_READY), NONE_BLOCKING);
 }
 
+void processUartCommand() {
+	if (hasNewCommand)
+	{
+		hasNewCommand = 0;
+		if (strcmpi(stationCommand, REPLY_ACK) ==0 && 
+			(currentState == FFS_STDBY_COUNTING_DOWN || currentState == FFS_STDBY_ENV_TESTING))
+		{
+			currentHandshakeState = HANDSHAKE_DONE;
+			// send hshk
+			
+		}
+		else if (strcmpi(stationCommand, REPLY_NOT_ACK)==0 && 
+			(currentState == FFS_STDBY_COUNTING_DOWN || currentState == FFS_STDBY_ENV_TESTING))
+		{
+			init_handShake();
+		}
+		else if (strcmpi(stationCommand, CMD_RESET_TO_CALIB)==0 && currentHandshakeState == HANDSHAKE_DONE)
+		{
+			currentState = FFS_CALIBRATING;
+			currentHandshakeState = HANDSHAKE_NOT_DONE;
+			// send CACK;
+		}
+		else if (strcmpi(stationCommand, CMD_RESET_TO_STDBY)==0 && currentState == FFS_ACTIVE)
+		{
+			currentState = FFS_STDBY_COUNTING_DOWN;
+			currentHandshakeState = HANDSHAKE_NOT_DONE;
+			// send SACK
+		}
+		memset(stationCommand,0,strlen(stationCommand));
+	}
+}
 //-----------------------------------------------------------
 //-------------------- Helper Functions ---------------------
 //-----------------------------------------------------------
