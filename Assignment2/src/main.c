@@ -146,9 +146,9 @@ int8_t accYOffset = 0;
 int8_t accZOffset = 0;
 int8_t accZValToRemove = 0;
 
-int accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
-int accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG] = {0};
-int currentAccIdx = 0;
+int8_t accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+int8_t accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+int8_t currentAccIdx = 0;
 float currentAccZFilteredValue = 0.0;
 float prevAccZFilteredValue = 0.0;
 uint8_t hasCrossedAccThreshold = 0;
@@ -848,6 +848,7 @@ void updateFreqCounter() {
 	// median filter
 
 	int tempIdx = 0;
+	int tempVal = 0;
 
 	while(accValuesSorted[tempIdx++] != accZValToRemove);
 
@@ -855,15 +856,15 @@ void updateFreqCounter() {
 
 	if(accZValToRemove > accZ) {
 		while ((--tempIdx) && accValuesSorted[tempIdx] < accZ) {
-			accValuesSorted[tempIdx] ^= accZ;
-			accZ ^= accValuesSorted[tempIdx];
-			accValuesSorted[tempIdx] ^= accZ;
+			tempVal = accZ;
+			accZ = accValuesSorted[tempIdx];
+			accValuesSorted[tempIdx] = tempVal;
 		}
 	} else {
 		while (((++tempIdx) < NUM_OF_ACC_VALUES_TO_AVG) && (accValuesSorted[tempIdx] > accZ)) {
-			accValuesSorted[tempIdx] ^= accZ;
-			accZ ^= accValuesSorted[tempIdx];
-			accValuesSorted[tempIdx] ^= accZ;
+			tempVal = accZ;
+			accZ = accValuesSorted[tempIdx];
+			accValuesSorted[tempIdx] = tempVal;
 		}
 	}
 
