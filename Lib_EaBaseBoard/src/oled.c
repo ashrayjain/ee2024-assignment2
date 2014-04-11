@@ -793,7 +793,7 @@ uint8_t oled_putChar(uint8_t x, uint8_t y, uint8_t ch, oled_color_t fb, oled_col
         return 0;
     }
 
-    if( (ch < 0x20) || (ch > 0x7f) )
+    if( (ch < 0x20) || (ch > 0x82) )
     {
         ch = 0x20;      /* unknown character will be set to blank */
     }

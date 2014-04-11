@@ -34,6 +34,10 @@
 #define TEMP_SCALAR_DIV10 1
 #define TEMP_NUM_HALF_PERIODS 340
 #define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
+#define CELSIUS_SYMBOL_ASCII 128
+#define HANDSHAKE_SYMBOL_ASCII 129
+#define NOT_HANDSHAKE_SYMBOL_ASCII 130
+
 
 // ##################################### //
 // ######  Variable Definitions   ###### //
@@ -105,17 +109,20 @@ SYSTEM_STATE currentState;
 
 HANDSHAKE_STATE handShakeState;
 short isHandShakeReady = 0;
+short hasNewCommand = 0;
 
-const char MESSAGE_READY[20] = "RDY DEL_ASSET_TAG_ID\r\n";
-const char MESSAGE_HANDSHAKE_CONFIRM[20] = "HSHK DEL_ASSET_TAG_ID\r\n";
+const char MESSAGE_READY[20] = "RDY 013\r\n";
+const char MESSAGE_HANDSHAKE_CONFIRM[20] = "HSHK 013\r\n";
 const char MESSAGE_CONFIRM_ENTER_CALIB[20] = "CACK\r\n";
 const char MESSAGE_CONFIRM_ENTER_STDBY[20] = "SACK\r\n";
-const char MESSAGE_REPORT_TEMPLATE[20] = "REPT DEL_ASSET_TAG_ID %02d%s\r\n";
+const char MESSAGE_REPORT_TEMPLATE[20] = "REPT 013 %02d%s\r\n";
 
 const char REPLY_ACK[7] = "RACK\r";
 const char REPLY_NOT_ACK[7] = "RNACK\r";
 const char CMD_RESET_TO_CALIB[7] = "RSTC\r";
 const char CMD_RESET_TO_STDBY[7] = "RSTS\r";
+
+char stationCommand[10] = "";
 
 short countDownStarted = 0;
 int currentCountValue = 0;
@@ -225,6 +232,10 @@ void writeHeaderToOled	(char *str);
 void writeStatesToOled	();
 void writeTempToOled	();
 void writeAccValueToOled();
+
+// uart related
+
+void sendUartReady();
 
 // helper functions
 static	void playNote		(uint32_t note, uint32_t durationMs);
@@ -384,17 +395,21 @@ void init_uart() {
 	uartCfg.Databits = UART_DATABIT_8;
 	uartCfg.Parity = UART_PARITY_NONE;
 	uartCfg.Stopbits = UART_STOPBIT_1;
-	//pin select for uart3;
-	//pinsel_uart3();
-	//supply power & setup working par.s for uart3
+
 	UART_Init(LPC_UART3, &uartCfg);
-	//enable transmit for uart3
 	UART_TxCmd(LPC_UART3, ENABLE);
+
+	// enable UART interrupts to send/receive
+	LPC_UART3->IER |= UART_IER_RBRINT_EN;
+	//LPC_UART3->IER |= UART_IER_THREINT_EN;
+	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
+	NVIC_EnableIRQ(UART3_IRQn);
 }
 
 void init_timer() {
-	int preScaleValue2 = 10000;
 	int preScaleValue1 = 100000;
+	int preScaleValue2 = 10000;
+	int preScaleValue3 = 100000;
 
 	// configure Timer2 for acc reading
 
@@ -426,6 +441,17 @@ void init_timer() {
 	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
 
 
+	//configure timer3 for uart
+
+	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
+	TimerConfigStruct.PrescaleValue = preScaleValue3;
+
+	TimerMatcher.MatchChannel = 0;
+	TimerMatcher.MatchValue = 50;
+
+	TIM_Init(LPC_TIM3, TIM_TIMER_MODE, &TimerConfigStruct);
+	TIM_ConfigMatch (LPC_TIM3, &TimerMatcher);
+
 	//Configure NVIC
 
 	NVIC_SetPriority(TIMER2_IRQn, ((0x01<<3)|0x01));
@@ -435,6 +461,10 @@ void init_timer() {
 	NVIC_SetPriority(TIMER1_IRQn, ((0x01<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER1_IRQn);
 	NVIC_EnableIRQ(TIMER1_IRQn);
+
+	NVIC_SetPriority(TIMER3_IRQn, ((0x01<<3)|0x01));
+	NVIC_ClearPendingIRQ(TIMER3_IRQn);
+	NVIC_EnableIRQ(TIMER3_IRQn);
 }
 
 void init_temp_interrupt(int32_t *var) {
@@ -463,11 +493,9 @@ void disable_temp_interrupt() {
 }
 
 void init_handShake (void) {
-	// enable UART interrupts to send/receive
-	LPC_UART3->IER |= UART_IER_RBRINT_EN;
-	LPC_UART3->IER |= UART_IER_THREINT_EN;
-	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
-	NVIC_EnableIRQ(UART3_IRQn);
+	sendUartReady();
+	TIM_ResetCounter(LPC_TIM3);
+	TIM_Cmd(LPC_TIM3, ENABLE);
 }
 
 //-----------------------------------------------------------
@@ -488,7 +516,6 @@ void calibratingHandler() {
 }
 
 void stdbyCountingDownHandler() {
-
 	enterStdByCountingDownState();
 	while(currentState == FFS_STDBY_COUNTING_DOWN){}
 	leaveStdByCountingDownState();
@@ -499,7 +526,7 @@ void stdbyEnvTestingHandler() {
 		updateReadings();
 		writeStatesToOled();
 		writeTempToOled();
-		if (temperatureState == NORMAL && radiationState == SAFE) {
+		if (temperatureState == NORMAL && radiationState == SAFE && handShakeState == HANDSHAKE_DONE) {
 			currentState = FFS_ACTIVE;
 		}
 	}
@@ -649,17 +676,49 @@ void TIMER1_IRQHandler (void) {
 	}
 }
 
+void TIMER3_IRQHandler(void) {
+	if(LPC_TIM3->IR & (1 << 0)) {
+		TIM_ClearIntPending(LPC_TIM3,TIM_MR0_INT);
+		if (handShakeState != HANDSHAKE_DONE) {
+			sendUartReady();
+		}
+	}
+}
+
 void UART3_IRQHandler (void) {
-	if (LPC_UART3->IIR & UART_IIR_INTID_RDA) {
-		char data[5];
-		UART_Receive(LPC_UART3, data, 4, BLOCKING);
-		data[4] = '\0';
-		printf("%s\n", data);
+	if ((LPC_UART3->IIR & UART_IIR_INTID_CTI) == UART_IIR_INTID_CTI) {
+		int currentlen = strlen(stationCommand);
+		UART_Receive(LPC_UART3, stationCommand+currentlen, 1, BLOCKING);
+		if (1 || stationCommand[currentlen] == '\r')
+		{
+			stationCommand[currentlen+1] = '\0';
+			hasNewCommand = 1;
+			printf("%s\n", stationCommand);
+		}
+		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
-	if (LPC_UART3->IIR & UART_IIR_INTID_CTI) {
-		
-	}
-	if (LPC_UART3->IIR & UART_IIR_INTID_THRE) {
+	if ((LPC_UART3->IIR & UART_IIR_INTID_RDA) == UART_IIR_INTID_RDA) {
+			if(strlen(stationCommand) != 0) {
+				stationCommand[0] = '\0';
+			}
+
+			UART_Receive(LPC_UART3, stationCommand, 4, BLOCKING);
+
+			if(stationCommand[3] == '\r') {
+				hasNewCommand = 1;
+			}
+
+			//char data[5];
+			//UART_Receive(LPC_UART3, data, 4, BLOCKING);
+			//data[4] = '\0';
+			//printf("%s\n", data);
+
+			stationCommand[4] = '\0';
+			printf("%s\n", stationCommand);
+		}
+	if ((LPC_UART3->IIR & UART_IIR_INTID_THRE) == UART_IIR_INTID_THRE) {
+		int a = 01;
+		a += 12;
 
 	}
 }
@@ -695,6 +754,8 @@ void enterStdByCountingDownState() {
 	acc_setMode(ACC_MODE_STANDBY);
 	light_setHiThreshold(800);
 	init_temp_interrupt(&currentTemperatureReading);
+	handShakeState = HANDSHAKE_NOT_DONE;
+	init_handShake();
 }
 
 void enterActiveState() {
@@ -843,6 +904,11 @@ void writeHeaderToOled(char *str) {
 	oled_clearScreen(OLED_COLOR_BLACK);
 	oled_fillRect(0,0,96,23, OLED_COLOR_WHITE);
 	oled_putString(7, 8, str, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+	if (currentState != FFS_CALIBRATING) {
+		char handShakeStr[15] = "              ";
+		handShakeStr[13] = (handShakeState == HANDSHAKE_DONE)?(char)(HANDSHAKE_SYMBOL_ASCII):(char)(NOT_HANDSHAKE_SYMBOL_ASCII);
+		oled_putString(7, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+	}
 }
 
 void writeStatesToOled() {
@@ -885,6 +951,14 @@ void writeAccValueToOled() {
 }
 
 //-----------------------------------------------------------
+//-------------------- UART Related Functions ---------------------
+//-----------------------------------------------------------
+
+void sendUartReady() {
+	UART_Send(LPC_UART3, MESSAGE_READY, strlen(MESSAGE_READY), NONE_BLOCKING);
+}
+
+//-----------------------------------------------------------
 //-------------------- Helper Functions ---------------------
 //-----------------------------------------------------------
 
@@ -918,7 +992,7 @@ void tempToString(char *str) {
 	char tempStr[5] = "";
 	toStringDouble(tempStr, currentTemperatureReading/10.0);
 	strcat(str, tempStr);
-	char unitStr[4] = {	(char)(128), 'C', ' ' };
+	char unitStr[4] = {	(char)(CELSIUS_SYMBOL_ASCII), 'C', ' ' };
 	strcat(str, unitStr);
 }
 
