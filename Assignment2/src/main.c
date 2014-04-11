@@ -1014,13 +1014,13 @@ void processUartCommand() {
 		{
 			currentState = FFS_CALIBRATING;
 			currentHandshakeState = HANDSHAKE_NOT_DONE;
-			// send CACK;
+			UART_Send(LPC_UART3, MESSAGE_CONFIRM_ENTER_CALIB, strlen(MESSAGE_CONFIRM_ENTER_CALIB), NONE_BLOCKING);
 		}
 		else if (strcmpi(stationCommand, CMD_RESET_TO_STDBY)==0 && currentState == FFS_ACTIVE)
 		{
 			currentState = FFS_STDBY_COUNTING_DOWN;
 			currentHandshakeState = HANDSHAKE_NOT_DONE;
-			// send SACK
+			UART_Send(LPC_UART3, MESSAGE_CONFIRM_ENTER_STDBY, strlen(MESSAGE_CONFIRM_ENTER_STDBY), NONE_BLOCKING);
 		}
 		memset(stationCommand,0,strlen(stationCommand));
 	}
