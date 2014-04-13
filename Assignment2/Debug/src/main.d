@@ -9,6 +9,7 @@ src/main.d src/main.o: ../src/main.c \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_ssp.h \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_timer.h \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_uart.h \
+  C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_adc.h \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/joystick.h \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/pca9532.h \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/acc.h \
@@ -38,6 +39,8 @@ C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_ssp.h:
 C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_timer.h:
 
 C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_uart.h:
+
+C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_adc.h:
 
 C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/joystick.h:
 

@@ -13,6 +13,7 @@
 #include "lpc17xx_ssp.h"
 #include "lpc17xx_timer.h"
 #include "lpc17xx_uart.h"
+#include "lpc17xx_adc.h"
 
 #include "joystick.h"
 #include "pca9532.h"
@@ -29,7 +30,7 @@
 #include "helpers.h"
 
 #define DEL_ASSET_TAG_ID 013
-#define COUNT_DOWN_START 1
+#define COUNT_DOWN_START 5
 #define NOTE_PIN_HIGH() GPIO_SetValue(0, 1<<26);
 #define NOTE_PIN_LOW()  GPIO_ClearValue(0, 1<<26);
 #define NUM_OF_ACC_VALUES_TO_AVG 10
@@ -63,7 +64,8 @@
  const unsigned short LIGHT_PORT = 2;
  const unsigned short LIGHT_PIN = 5;
 
- const unsigned short TEMP_UPPER_LIMIT = 340;
+ unsigned short TEMP_UPPER_LIMIT = 260;
+ unsigned short RAD_UPPER_LIMIT = 800;
 
  const unsigned short ACC_UPDATE_PERIOD_MS = 20;
  const float ACC_THRESHOLD = 3;
@@ -165,6 +167,8 @@
  char newReport[20] = "";
  short reportBytesLeftToSend = 0;
 
+ short isTempChangeSelected = 1;
+
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
 volatile uint32_t handShakeSymbolTick = 0;
@@ -186,6 +190,7 @@ void init_uart	(void);
 void init_xBee	(void);
 void init_temp_interrupt(int32_t *var);
 void init_handShake(void);
+void init_trimpot();
 
 //// handlers ////
 
@@ -237,6 +242,7 @@ void writeHeaderToOled	(char *str);
 void writeStatesToOled	();
 void writeTempToOled	();
 void writeAccValueToOled();
+void writeChoicesToOled();
 
 // uart related
 
@@ -287,6 +293,8 @@ void initAllPeripherals() {
 	light_clearIrqStatus();
 
 	init_buzzer();
+
+	init_trimpot();
 
 	NVIC_SetPriority(EINT3_IRQn, ((2<<3)|0x00));
 	NVIC_ClearPendingIRQ(EINT3_IRQn);
@@ -350,6 +358,17 @@ void init_ssp(void) {
 		I2C_Cmd(LPC_I2C2, ENABLE);
 	}
 
+	void init_trimpot() {
+		PINSEL_CFG_Type PinCfg;
+
+		PinCfg.Funcnum = 1;
+		PinCfg.Pinnum = 23;
+		PinCfg.Portnum = 0;
+		PinCfg.Pinmode = 0;
+		PinCfg.OpenDrain = 0;
+		PINSEL_ConfigPin(&PinCfg);
+	}
+
 	void init_GPIO(void) {
 	// Initialize button
 		PINSEL_CFG_Type PinCfg;
@@ -385,6 +404,12 @@ void init_ssp(void) {
 		PINSEL_ConfigPin(&PinCfg);
 		PinCfg.Pinnum = 1;
 		PINSEL_ConfigPin(&PinCfg);
+
+		PinCfg.Funcnum = 0;
+		PinCfg.Pinnum = 17;
+		PinCfg.Portnum = 0;
+		PINSEL_ConfigPin(&PinCfg);
+		GPIO_SetDir(0, (1<<17), 0);
 	}
 
 	void init_buzzer() {
@@ -571,8 +596,19 @@ void calibratingHandler() {
 	enterCalibratingState();
 	while(currentState == FFS_CALIBRATING) {
 		writeAccValueToOled();
+		writeChoicesToOled();
 		if (((GPIO_ReadValue(CALIBRATED_PORT) >> CALIBRATED_PIN) & 0x01) == 0) {
 			currentState = FFS_STDBY_COUNTING_DOWN;
+		}
+		
+		if (isTempChangeSelected)
+		{	
+
+			TEMP_UPPER_LIMIT = ((ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_0))/100) * 10;
+		}
+		else
+		{
+			RAD_UPPER_LIMIT = 50 * ((ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_0))/100) + 200;
 		}
 	}
 	leaveCalibratingState();
@@ -702,12 +738,12 @@ void EINT3_IRQHandler(void) {
 	if ((LPC_GPIOINT->IO2IntStatF >> 5) & 0x1) {
 		if(radiationState == RISKY) {
 			radiationState = SAFE;
-			light_setHiThreshold(800);
+			light_setHiThreshold(RAD_UPPER_LIMIT);
 			light_setLoThreshold(0);
 		} else {
 			radiationState = RISKY;
 			light_setHiThreshold(62271);
-			light_setLoThreshold(800);
+			light_setLoThreshold(RAD_UPPER_LIMIT);
 		}
 		light_clearIrqStatus();
 		LPC_GPIOINT->IO2IntClr |= (1 << 5);
@@ -734,6 +770,9 @@ void EINT3_IRQHandler(void) {
 			}
 		}
 		LPC_GPIOINT->IO0IntClr |= (1 << 2);
+	} else if ((LPC_GPIOINT->IO0IntStatF >> 17) & 0x1) {
+		isTempChangeSelected = !isTempChangeSelected;
+		LPC_GPIOINT->IO0IntClr |= (1 << 17);
 	}
 }
 
@@ -835,6 +874,12 @@ void enterCalibratingState() {
 	rgb_setLeds(0);
 	led7seg_setChar('-', 0);
 	disable_temp_interrupt();
+
+	LPC_GPIOINT->IO0IntEnF |= (1 << 17);
+	ADC_Init(LPC_ADC, 200000);
+	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, ENABLE);
+	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
+  	ADC_BurstCmd(LPC_ADC, ENABLE);
 }
 
 void enterStdByCountingDownState() {
@@ -869,6 +914,11 @@ void leaveCalibratingState() {
 	accXOffset = accX;
 	accYOffset = accY;
 	accZOffset = accZ;
+
+	LPC_GPIOINT->IO0IntEnF &= ~(1 << 17);
+	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, DISABLE);
+	ADC_BurstCmd(LPC_ADC, DISABLE);
+	ADC_PowerdownCmd(LPC_ADC, DISABLE);
 }
 
 void leaveStdByCountingDownState() {
@@ -1020,14 +1070,32 @@ void writeTempToOled() {
 
 void writeAccValueToOled() {
 	char str[15] = "";
-	strcat(str, " GRAVITY:");
-	char val[5] = "";
+	strcat(str, " GRAVITY: ");
+	char val[4] = "";
 	toStringInt(val, accZ);
 	strcat(str, val);
-	strcat(str, "   ");
-	oled_putString(7, 40, (uint8_t *)str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	oled_putString(7, 32, (uint8_t *)str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 }
 
+void writeChoicesToOled() {
+	if (currentState == FFS_CALIBRATING)
+	{
+		char str[15] = "";
+		tempToString(TEMP_UPPER_LIMIT, str);
+		oled_putString(7, 43, (uint8_t *)str, isTempChangeSelected?OLED_COLOR_BLACK:OLED_COLOR_WHITE,
+			isTempChangeSelected?OLED_COLOR_WHITE:OLED_COLOR_BLACK);
+
+		char rstr[15] = "";
+		strcat(rstr, " RAD: ");
+		char val[5] = "";
+		toStringInt(val, RAD_UPPER_LIMIT);
+		strcat(rstr, val);
+		strcat(rstr, " LUX");
+		oled_putString(7, 54, (uint8_t *)rstr, isTempChangeSelected?OLED_COLOR_WHITE:OLED_COLOR_BLACK,
+			isTempChangeSelected?OLED_COLOR_BLACK:OLED_COLOR_WHITE);
+	}
+
+}
 //-----------------------------------------------------------
 //-------------------- UART Related Functions ---------------------
 //-----------------------------------------------------------
@@ -1168,6 +1236,7 @@ int main (void) {
 
 	while (1)
 	{
+
 		switch(currentState)
 		{
 			case FFS_CALIBRATING:
