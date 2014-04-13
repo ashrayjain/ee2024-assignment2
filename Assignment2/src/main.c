@@ -35,6 +35,9 @@
 #define TEMP_NUM_HALF_PERIODS 340
 #define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
 #define CELSIUS_SYMBOL_ASCII 128
+#define HANDSHAKE_SYMBOL_ASCII 129
+#define NOT_HANDSHAKE_SYMBOL_ASCII 130
+
 
 
 // ##################################### //
@@ -1057,11 +1060,6 @@ void writeStatesToOled() {
 		strcat(stateStrings, tempStateStringMap[temperatureState]);
 		strcat(stateStrings, radiationStateStringMap[radiationState]);
 		oled_putString(7, 32, stateStrings, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
-	}
-	if (currentState != FFS_CALIBRATING) {
-		char handShakeStr[2] = "";
-		handShakeStr[0] = (currentHandshakeState == HANDSHAKE_DONE)?'H':handShakeSymbol;
-		oled_putString(5, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	}
 }
 
