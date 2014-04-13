@@ -404,9 +404,12 @@ void init_uart() {
 	UART_TxCmd(LPC_UART3, ENABLE);
 
 	UART_IntConfig(LPC_UART3, UART_INTCFG_RBR, ENABLE);
+
 	// enable UART interrupts to send/receive
-	//LPC_UART3->IER |= UART_IER_THREINT_EN;
+	LPC_UART3->IER |= UART_IER_THREINT_EN;
 	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
+
+	NVIC_ClearPendingIRQ(UART3_IRQn);
 	NVIC_EnableIRQ(UART3_IRQn);
 }
 
@@ -603,8 +606,10 @@ void SysTick_Handler(void) {
 			int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
 
 			if (flutterState == RESONANT && isNonResonant) {
+				warningTick = msTicks;
 				flutterState = NON_RESONANT;
 			} else if(flutterState == NON_RESONANT && !isNonResonant) {
+				warningTick = msTicks;
 				flutterState = RESONANT;
 			}
 			currentFreqCounter = 0;
@@ -704,6 +709,15 @@ void TIMER3_IRQHandler(void) {
 }
 
 void UART3_IRQHandler (void) {
+	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_THRE) {
+		reportBytesLeftToSend -= UART_Send(LPC_UART3, (newReport + strlen(newReport) - reportBytesLeftToSend), reportBytesLeftToSend, NONE_BLOCKING);
+
+		if(reportBytesLeftToSend == 0) {
+			UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, DISABLE);
+			memset(newReport, 0, strlen(newReport));
+		}
+	}
+
 	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_RDA) {
 		if(strlen(stationCommand) != 0) {
 			stationCommand[0] = '\0';
@@ -731,24 +745,19 @@ void UART3_IRQHandler (void) {
 			currentlen = 0;
 		}
 		UART_Receive(LPC_UART3, stationCommand+currentlen, 1, BLOCKING);
-		if (stationCommand[currentlen] == '\r')
+		if (currentState == FFS_CALIBRATING) {
+			stationCommand[currentlen] = '\0';
+		}
+		else if (stationCommand[currentlen] == '\r')
 		{
 			stationCommand[currentlen] = '\0';
 			hasNewCommand = 1;
 			printf("%s\n", stationCommand);
 		}
-		else
 		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
 
-	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_THRE) {
-		reportBytesLeftToSend -= UART_Send(LPC_UART3, (newReport + strlen(newReport) - reportBytesLeftToSend), reportBytesLeftToSend, NONE_BLOCKING);
-
-		if(reportBytesLeftToSend == 0) {
-			UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, DISABLE);
-			memset(newReport, 0, strlen(newReport));
-		}
-	}
+	
 }
 
 void oneSecondHandler() {
@@ -1025,7 +1034,7 @@ void processUartCommand() {
 		{
 			currentHandshakeState = HANDSHAKE_DONE;
 			UART_Send(LPC_UART3, MESSAGE_HANDSHAKE_CONFIRM, strlen(MESSAGE_HANDSHAKE_CONFIRM), NONE_BLOCKING);
-			
+			TIM_Cmd(LPC_TIM3, DISABLE);
 		}
 		else if (strcmpi(stationCommand, REPLY_NOT_ACK)==0 && 
 			(currentState == FFS_STDBY_COUNTING_DOWN || currentState == FFS_STDBY_ENV_TESTING))
