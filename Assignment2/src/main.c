@@ -603,10 +603,8 @@ void SysTick_Handler(void) {
 			int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
 
 			if (flutterState == RESONANT && isNonResonant) {
-				TIM_ResetCounter(LPC_TIM1);
 				flutterState = NON_RESONANT;
 			} else if(flutterState == NON_RESONANT && !isNonResonant) {
-				TIM_ResetCounter(LPC_TIM1);
 				flutterState = RESONANT;
 			}
 			currentFreqCounter = 0;
@@ -864,7 +862,9 @@ void updateFreqCounter() {
 	/*int tempIdx = 0;
 	int tempVal = 0;
 
-	while(accValuesSorted[tempIdx++] != accZValToRemove);
+	while(accValuesSorted[tempIdx] != accZValToRemove) {
+		tempIdx++;
+	}
 
 	accValuesSorted[tempIdx] = accZ;
 
