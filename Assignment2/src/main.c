@@ -132,10 +132,10 @@ const char REPLY_ACK[7] = "RACK";
 const char REPLY_NOT_ACK[7] = "RNACK";
 const char CMD_RESET_TO_CALIB[7] = "RSTC";
 const char CMD_RESET_TO_STDBY[7] = "RSTS";
-const char CMD_CHANGE_REPORTING_TIME[4] = "CRT";
-const char CMD_CHANGE_TIME_WINDOW[4] = "CTW";
-const char CMD_CHANGE_LOWER_THRESHOLD[4] = "CLT";
-const char CMD_CHANGE_UPPER_THRESHOLD[4] = "CUT";
+const char CMD_CHANGE_REPORTING_TIME[4] = "RT";
+const char CMD_CHANGE_TIME_WINDOW[4] = "TW";
+const char CMD_CHANGE_LOWER_THRESHOLD[4] = "LT";
+const char CMD_CHANGE_UPPER_THRESHOLD[4] = "UT";
 
 char stationCommand[7] = "";
 
@@ -180,7 +180,7 @@ BUZZER_STATE buzzerState;
 
 char newReport[20] = "";
 short reportBytesLeftToSend = 0;
-short sendReportFlag = 1;
+//short sendReportFlag = 1;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
@@ -759,7 +759,7 @@ void EINT3_IRQHandler(void) {
 void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
-		if (sendReportFlag) {
+		//if (sendReportFlag) {
 			newReport[0] = '\0';
 			sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
 			reportBytesLeftToSend = strlen(newReport);
@@ -769,7 +769,7 @@ void TIMER1_IRQHandler (void) {
 			if(reportBytesLeftToSend > 0) {
 					UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
 			}
-		}
+		//}
 	}
 }
 
@@ -1131,29 +1131,39 @@ void processUartCommand() {
 			currentHandshakeState = HANDSHAKE_NOT_DONE;
 			UART_Send(LPC_UART3, MESSAGE_CONFIRM_ENTER_STDBY, strlen(MESSAGE_CONFIRM_ENTER_STDBY), NONE_BLOCKING);
 		} else if (strncmpi(stationCommand, CMD_CHANGE_REPORTING_TIME, strlen(CMD_CHANGE_REPORTING_TIME)) == 0) {
-			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_REPORTING_TIME)+1) != -1) {
+
+			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_REPORTING_TIME)+1) != 0) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_RTIME, strlen(MESSAGE_CONFIRM_CHANGE_RTIME), NONE_BLOCKING);
 			} else {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_RTIME, strlen(MESSAGE_CONFIRM_NOT_CHANGE_RTIME), NONE_BLOCKING);
 			}
+
+
 		} else if (strncmpi(stationCommand, CMD_CHANGE_TIME_WINDOW, strlen(CMD_CHANGE_TIME_WINDOW)) == 0) {
-			if (changeTimeWindow(stationCommand+strlen(CMD_CHANGE_TIME_WINDOW)+1) != -1) {
+			
+			if (changeTimeWindow(stationCommand+strlen(CMD_CHANGE_TIME_WINDOW)+1) != 0) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_TWTIME, strlen(MESSAGE_CONFIRM_CHANGE_TWTIME), NONE_BLOCKING);
 			} else {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_TWTIME, strlen(MESSAGE_CONFIRM_NOT_CHANGE_TWTIME), NONE_BLOCKING);
 			}
+
+
 		} else if (strncmpi(stationCommand, CMD_CHANGE_UPPER_THRESHOLD, strlen(CMD_CHANGE_UPPER_THRESHOLD)) == 0) {
-			if (changeUpperThreshold(stationCommand+strlen(CMD_CHANGE_UPPER_THRESHOLD)+1) != -1) {
+			
+			if (changeUpperThreshold(stationCommand+strlen(CMD_CHANGE_UPPER_THRESHOLD)+1) != 0) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD), NONE_BLOCKING);
 			} else {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD, strlen(MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD), NONE_BLOCKING);
 			}
+
 		} else if (strncmpi(stationCommand, CMD_CHANGE_LOWER_THRESHOLD, strlen(CMD_CHANGE_LOWER_THRESHOLD)) == 0) {
-			if (changeLowerThreshold(stationCommand+strlen(CMD_CHANGE_LOWER_THRESHOLD)+1) != -1) {
+			
+			if (changeLowerThreshold(stationCommand+strlen(CMD_CHANGE_LOWER_THRESHOLD)+1) != 0) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD), NONE_BLOCKING);
 			} else {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD, strlen(MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD), NONE_BLOCKING);
 			}
+
 		}
 		memset(stationCommand,0,strlen(stationCommand));
 	}
@@ -1167,7 +1177,7 @@ int changeReportingTime(char *newTime) {
 	int newReportingTime = stringToInt(newTime);
 	if (newReportingTime > 0) {
 		REPORTING_PERIOD_MS = newReportingTime*1000;
-		sendReportFlag = 1;
+		//sendReportFlag = 1;
 
 		int preScaleValue1 = 100000;
 		TIM_MATCHCFG_Type TimerMatcher;
@@ -1184,11 +1194,14 @@ int changeReportingTime(char *newTime) {
 		TIM_ResetCounter(LPC_TIM1);
 		TIM_Cmd(LPC_TIM1, ENABLE);
 		return 1;
-	} else if (newReportingTime == 0) {
+	}
+	/*
+	 else if (newReportingTime == 0) {
 		sendReportFlag = 0;
 		TIM_Cmd(LPC_TIM1, DISABLE);
 		return 1;
 	}
+	*/
 	return 0;
 }
 int changeTimeWindow(char *newTime) {
