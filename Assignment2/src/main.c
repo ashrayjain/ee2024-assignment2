@@ -1024,7 +1024,7 @@ void processUartCommand() {
 			(currentState == FFS_STDBY_COUNTING_DOWN || currentState == FFS_STDBY_ENV_TESTING))
 		{
 			currentHandshakeState = HANDSHAKE_DONE;
-			// send hshk
+			UART_Send(LPC_UART3, MESSAGE_HANDSHAKE_CONFIRM, strlen(MESSAGE_HANDSHAKE_CONFIRM), NONE_BLOCKING);
 			
 		}
 		else if (strcmpi(stationCommand, REPLY_NOT_ACK)==0 && 
