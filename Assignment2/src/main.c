@@ -1056,7 +1056,7 @@ void writeStatesToOled() {
 	if (currentState != FFS_CALIBRATING) {
 		char handShakeStr[2] = "";
 		handShakeStr[0] = (currentHandshakeState == HANDSHAKE_DONE)?'H':handShakeSymbol;
-		oled_putString(2, 2, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+		oled_putString(5, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	}
 }
 
