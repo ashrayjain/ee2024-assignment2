@@ -116,10 +116,23 @@ const char MESSAGE_CONFIRM_ENTER_CALIB[20] = "CACK\r\n";
 const char MESSAGE_CONFIRM_ENTER_STDBY[20] = "SACK\r\n";
 const char MESSAGE_REPORT_TEMPLATE[20] = "REPT 013 %02d%s\r\n";
 
+const char MESSAGE_CONFIRM_CHANGE_RTIME[20] = "CRTACK\r\n";
+const char MESSAGE_CONFIRM_NOT_CHANGE_RTIME[20] = "CRTNACK\r\n";
+const char MESSAGE_CONFIRM_CHANGE_TWTIME[20] = "CTWACK\r\n";
+const char MESSAGE_CONFIRM_NOT_CHANGE_TWTIME[20] = "CTWNACK\r\n";
+const char MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD[20] = "CLTACK\r\n";
+const char MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD[20] = "CLTNACK\r\n";
+const char MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD[20] = "CUTACK\r\n";
+const char MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD[20] = "CUTNACK\r\n";
+
 const char REPLY_ACK[7] = "RACK";
 const char REPLY_NOT_ACK[7] = "RNACK";
 const char CMD_RESET_TO_CALIB[7] = "RSTC";
 const char CMD_RESET_TO_STDBY[7] = "RSTS";
+const char CMD_CHANGE_REPORTING_TIME[4] = "CRT";
+const char CMD_CHANGE_TIME_WINDOW[4] = "CTW";
+const char CMD_CHANGE_LOWER_THRESHOLD[4] = "CLT";
+const char CMD_CHANGE_UPPER_THRESHOLD[4] = "CUT";
 
 char stationCommand[7] = "";
 
@@ -164,6 +177,7 @@ BUZZER_STATE buzzerState;
 
 char newReport[20] = "";
 short reportBytesLeftToSend = 0;
+short sendReportFlag = 1;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
@@ -241,12 +255,20 @@ void writeAccValueToOled();
 void sendUartReady();
 void processUartCommand();
 
+// additional station command handlers
+
+int changeReportingTime();
+int changeTimeWindow();
+int changeLowerThreshold();
+int changeUpperThreshold();
+
 // helper functions
 static	void playNote		(uint32_t note, uint32_t durationMs);
 void rgb_setLeds_OledHack	(uint8_t ledMask);
 void tempToString			(char *str);
 void toStringInt			(char *str, int val);
 void toStringDouble			(char *str, float val);
+int stringToInt				(char *intString);
 
 // ########################### //
 // ##### Implementations ##### //
@@ -679,15 +701,16 @@ void EINT3_IRQHandler(void) {
 void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
+		if (sendReportFlag) {
+			newReport[0] = '\0';
+			sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
+			reportBytesLeftToSend = strlen(newReport);
 
-		newReport[0] = '\0';
-		sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
-		reportBytesLeftToSend = strlen(newReport);
+			reportBytesLeftToSend -= UART_Send (LPC_UART3, newReport, reportBytesLeftToSend, NONE_BLOCKING);
 
-		reportBytesLeftToSend -= UART_Send (LPC_UART3, newReport, reportBytesLeftToSend, NONE_BLOCKING);
-
-		if(reportBytesLeftToSend > 0) {
-				UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
+			if(reportBytesLeftToSend > 0) {
+					UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
+			}
 		}
 	}
 }
@@ -1052,10 +1075,93 @@ void processUartCommand() {
 			currentState = FFS_STDBY_COUNTING_DOWN;
 			currentHandshakeState = HANDSHAKE_NOT_DONE;
 			UART_Send(LPC_UART3, MESSAGE_CONFIRM_ENTER_STDBY, strlen(MESSAGE_CONFIRM_ENTER_STDBY), NONE_BLOCKING);
+		} else if (strncmpi(stationCommand, CMD_CHANGE_REPORTING_TIME, strlen(CMD_CHANGE_REPORTING_TIME)) == 0) {
+			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_REPORTING_TIME)+1) != -1) {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_RTIME, strlen(MESSAGE_CONFIRM_CHANGE_RTIME), NONE_BLOCKING);
+			} else {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_RTIME, strlen(MESSAGE_CONFIRM_NOT_CHANGE_RTIME), NONE_BLOCKING);
+			}
+		} else if (strncmpi(stationCommand, CMD_CHANGE_TIME_WINDOW, strlen(CMD_CHANGE_TIME_WINDOW)) == 0) {
+			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_TIME_WINDOW)+1) != -1) {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_TWTIME, strlen(MESSAGE_CONFIRM_CHANGE_TWTIME), NONE_BLOCKING);
+			} else {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_TWTIME, strlen(MESSAGE_CONFIRM_NOT_CHANGE_TWTIME), NONE_BLOCKING);
+			}
+		} else if (strncmpi(stationCommand, CMD_CHANGE_UPPER_THRESHOLD, strlen(CMD_CHANGE_UPPER_THRESHOLD)) == 0) {
+			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_UPPER_THRESHOLD)+1) != -1) {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD), NONE_BLOCKING);
+			} else {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD, strlen(MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD), NONE_BLOCKING);
+			}
+		} else if (strncmpi(stationCommand, CMD_CHANGE_LOWER_THRESHOLD, strlen(CMD_CHANGE_LOWER_THRESHOLD)) == 0) {
+			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_LOWER_THRESHOLD)+1) != -1) {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD), NONE_BLOCKING);
+			} else {
+				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD, strlen(MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD), NONE_BLOCKING);
+			}
 		}
 		memset(stationCommand,0,strlen(stationCommand));
 	}
 }
+
+//-----------------------------------------------------------
+//---------------- Station Command Handlers -----------------
+//-----------------------------------------------------------
+
+int changeReportingTime(char *newTime) {
+	int newReportingTime = stringToInt(newTime);
+	if (newReportingTime > 0) {
+		REPORTING_PERIOD_MS = newReportingTime;
+		sendReportFlag = 1;
+
+		int preScaleValue1 = 100000;
+		TIM_MATCHCFG_Type TimerMatcher;
+
+		TimerMatcher.MatchChannel = 0;
+		TimerMatcher.IntOnMatch = ENABLE;
+		TimerMatcher.ResetOnMatch = TRUE;
+		TimerMatcher.StopOnMatch = FALSE;
+		TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
+		TimerMatcher.MatchValue = (REPORTING_PERIOD_MS * 1000) / preScaleValue1;
+
+		TIM_Cmd(LPC_TIM1, DISABLE);
+		TIM_ConfigMatch(LPC_TIM1, &TimerMatcher);
+		TIM_ResetCounter(LPC_TIM1);
+		TIM_Cmd(LPC_TIM1, ENABLE);
+		return 1;
+	} else if (newReportingTime == 0) {
+		sendReportFlag = 0;
+		TIM_Cmd(LPC_TIM1, DISABLE);
+	}
+	return 0;
+}
+int changeTimeWindow(char *newTime) {
+	int newTimeWindow = stringToInt(newTime);
+	if (newTimeWindow != -1) {
+		TIME_WINDOW_MS = newTimeWindow;
+		return 1;
+	}
+	return 0;
+}
+
+int changeLowerThreshold(char *newThreshold) {
+	int newLowerThreshold = stringToInt(newThreshold);
+	if (newLowerThreshold != -1 && newLowerThreshold < UNSAFE_UPPER_HZ) {
+		UNSAFE_LOWER_HZ = newLowerThreshold;
+		return 1;
+	}
+	return 0;
+}
+
+int changeUpperThreshold(char *newThreshold) {
+	int newUpperThreshold = stringToInt(newThreshold);
+	if (newUpperThreshold != -1 && newUpperThreshold > UNSAFE_LOWER_HZ) {
+		UNSAFE_UPPER_HZ = newUpperThreshold;
+		return 1;
+	}
+	return 0;
+}
+
 //-----------------------------------------------------------
 //-------------------- Helper Functions ---------------------
 //-----------------------------------------------------------
@@ -1106,6 +1212,22 @@ void rgb_setLeds_OledHack(uint8_t ledMask) {
 	rgb_setLeds(ledMask | RGB_GREEN);
 }
 
+int stringToInt(char *intString) {
+	if (intString == NULL) return -1;
+
+	int len = strlen(intString);
+	int answer = 0;
+	int i = 0;
+
+	while(i < len) {
+		if (!isdigit(intString[i])) return -1;
+
+		answer = answer*10 + (intString[i] - '0');
+	}
+
+	return answer;
+}
+
 int main (void) {
 	// Setup SysTick Timer to interrupt at 1 msec intervals
 	if (SysTick_Config(SystemCoreClock / 1000)) {
@@ -1138,8 +1260,7 @@ int main (void) {
     }
 }
 
-void check_failed(uint8_t *file, uint32_t line)
-{
+void check_failed(uint8_t *file, uint32_t line) {
 	/* User can add his own implementation to report the file name and line number,
 	 ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
