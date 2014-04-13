@@ -613,7 +613,7 @@ void activeHandler() {
 		writeStatesToOled();
 		char freq[15] = "";
 		sprintf(freq, "%.1f", currentFrequency);
-		oled_putString(7, 40, freq, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+		oled_putString(7, 40, (uint8_t *)freq, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 		processUartCommand();
 
 		// sanity check (due to reset interrupt which might have changed currentState)
@@ -1001,11 +1001,11 @@ void decrementCount() {
 void writeHeaderToOled(char *str) {
 	oled_clearScreen(OLED_COLOR_BLACK);
 	oled_fillRect(0,0,96,23, OLED_COLOR_WHITE);
-	oled_putString(7, 8, str, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+	oled_putString(7, 8, (uint8_t *)str, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	if (currentState != FFS_CALIBRATING) {
 		char handShakeStr[15] = "";
 		handShakeStr[0] = (currentHandshakeState == HANDSHAKE_DONE)?(char)(HANDSHAKE_SYMBOL_ASCII):(char)(NOT_HANDSHAKE_SYMBOL_ASCII);
-		oled_putString(7, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+		oled_putString(7, 0, (uint8_t *)handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	}
 }
 
@@ -1014,24 +1014,24 @@ void writeStatesToOled() {
 		char stateStrings[15] = "";
 		strcat(stateStrings, tempStateStringMap[temperatureState]);
 		strcat(stateStrings, radiationStateStringMap[radiationState]);
-		oled_putString(7, 32, stateStrings, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+		oled_putString(7, 32, (uint8_t *)stateStrings, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 	}
 }
 
 void writeTempToOled() {
 	char str[15] = "";
 	tempToString(str);
-	oled_putString(7, 48, str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	oled_putString(7, 48, (uint8_t *)str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 }
 
 void writeAccValueToOled() {
 	char str[15] = "";
-	strcat(str, "  Z : ");
+	strcat(str, " GRAVITY:");
 	char val[5] = "";
 	toStringInt(val, accZ);
 	strcat(str, val);
 	strcat(str, "   ");
-	oled_putString(7, 40, str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	oled_putString(7, 40, (uint8_t *)str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 }
 
 //-----------------------------------------------------------
@@ -1186,7 +1186,7 @@ void toStringDouble(char *str, float val) {
 }
 
 int stringToInt(char *intString) {
-	if (intString == NULL || intString == "") return -1;
+	if (intString == NULL || strcmp(intString, "")==0) return -1;
 
 	int len = strlen(intString);
 	int answer = 0;

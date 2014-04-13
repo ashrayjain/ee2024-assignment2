@@ -70,6 +70,8 @@ c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../..
                               ./src/main.o (strcasecmp)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o)
                               ./src/main.o (strcat)
+c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
+                              ./src/main.o (strcmp)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
                               c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o) (strcpy)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
@@ -106,8 +108,6 @@ c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../..
                               c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o) (__isnand)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
                               c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o) (_sbrk_r)
-c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
-                              c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o) (strcmp)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
                               c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o) (_calloc_r)
 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reent.o)
@@ -429,6 +429,8 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcasecmp.o)
  .data          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o)
  .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o)
+ .data          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
+ .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
  .data          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
  .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
  .data          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
@@ -464,8 +466,6 @@ Discarded input sections
  .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
  .data          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
  .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
- .data          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
- .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
  .data          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
  .bss           0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
  .text          0x00000000        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reent.o)
@@ -551,7 +551,7 @@ END GROUP
                 0x20084000                __top_RamAHB32 = 0x20084000
                 0x40038800                __top_CANAccFilterRAM = 0x40038800
 
-.text           0x00000000     0xd080
+.text           0x00000000     0xd088
  FILL mask 0xff
  *(.isr_vector)
  .isr_vector    0x00000000       0xcc ./src/cr_startup_lpc17.o
@@ -559,13 +559,13 @@ END GROUP
                 0x000000cc                . = ALIGN (0x4)
                 0x000000cc                __section_table_start = .
                 0x000000cc                __data_section_table = .
-                0x000000cc        0x4 LONG 0xd088 LOADADDR (.data)
+                0x000000cc        0x4 LONG 0xd090 LOADADDR (.data)
                 0x000000d0        0x4 LONG 0x10000000 ADDR (.data)
                 0x000000d4        0x4 LONG 0x590 SIZEOF (.data)
-                0x000000d8        0x4 LONG 0xd088 LOADADDR (.data_RAM2)
+                0x000000d8        0x4 LONG 0xd090 LOADADDR (.data_RAM2)
                 0x000000dc        0x4 LONG 0x2007c000 ADDR (.data_RAM2)
                 0x000000e0        0x4 LONG 0x0 SIZEOF (.data_RAM2)
-                0x000000e4        0x4 LONG 0xd088 LOADADDR (.data_RAM3)
+                0x000000e4        0x4 LONG 0xd090 LOADADDR (.data_RAM3)
                 0x000000e8        0x4 LONG 0x40038000 ADDR (.data_RAM3)
                 0x000000ec        0x4 LONG 0x0 SIZEOF (.data_RAM3)
                 0x000000f0                __data_section_table_end = .
@@ -800,528 +800,528 @@ END GROUP
                 0x00002920       0x2c ./src/main.o
                 0x00002920                toStringDouble
  .text.stringToInt
-                0x0000294c       0xa8 ./src/main.o
+                0x0000294c       0xac ./src/main.o
                 0x0000294c                stringToInt
- .text.main     0x000029f4       0x70 ./src/main.o
-                0x000029f4                main
+ .text.main     0x000029f8       0x70 ./src/main.o
+                0x000029f8                main
  .text.SysTick_Config
-                0x00002a64       0x68 ./src/main.o
+                0x00002a68       0x68 ./src/main.o
  .text.check_failed
-                0x00002acc        0xc ./src/main.o
-                0x00002acc                check_failed
+                0x00002ad0        0xc ./src/main.o
+                0x00002ad0                check_failed
  .text.SystemInit
-                0x00002ad8      0x224 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
-                0x00002ad8                SystemInit
- .text.I2CRead  0x00002cfc       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002adc      0x224 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+                0x00002adc                SystemInit
+ .text.I2CRead  0x00002d00       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.I2CWrite
-                0x00002d60       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002d64       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.getStatus
-                0x00002dc4       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002dc8       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.getModeControl
-                0x00002e00       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002e04       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.setModeControl
-                0x00002e3c       0x30 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002e40       0x30 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
  .text.acc_init
-                0x00002e6c       0x10 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
-                0x00002e6c                acc_init
+                0x00002e70       0x10 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002e70                acc_init
  .text.acc_read
-                0x00002e7c       0xb4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
-                0x00002e7c                acc_read
+                0x00002e80       0xb4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002e80                acc_read
  .text.acc_setMode
-                0x00002f30       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
-                0x00002f30                acc_setMode
+                0x00002f34       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+                0x00002f34                acc_setMode
  .text.led7seg_init
-                0x00002f6c       0x24 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
-                0x00002f6c                led7seg_init
+                0x00002f70       0x24 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+                0x00002f70                led7seg_init
  .text.led7seg_setChar
-                0x00002f90       0x88 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
-                0x00002f90                led7seg_setChar
- .text.I2CRead  0x00003018       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00002f94       0x88 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+                0x00002f94                led7seg_setChar
+ .text.I2CRead  0x0000301c       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .text.I2CWrite
-                0x0000307c       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00003080       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .text.readControlReg
-                0x000030e0       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x000030e4       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
  .text.light_init
-                0x0000311c        0xc C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x0000311c                light_init
+                0x00003120        0xc C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00003120                light_init
  .text.light_enable
-                0x00003128       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x00003128                light_enable
+                0x0000312c       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x0000312c                light_enable
  .text.light_setRange
-                0x00003170       0xb0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x00003170                light_setRange
+                0x00003174       0xb0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00003174                light_setRange
  .text.light_setHiThreshold
-                0x00003220       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x00003220                light_setHiThreshold
+                0x00003224       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x00003224                light_setHiThreshold
  .text.light_setLoThreshold
-                0x00003278       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x00003278                light_setLoThreshold
+                0x0000327c       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x0000327c                light_setLoThreshold
  .text.light_clearIrqStatus
-                0x000032d0       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
-                0x000032d0                light_clearIrqStatus
+                0x000032d4       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+                0x000032d4                light_clearIrqStatus
  .text.writeCommand
-                0x0000330c       0x60 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00003310       0x60 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .text.writeData
-                0x0000336c       0x60 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00003370       0x60 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .text.writeDataLen
-                0x000033cc       0x90 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x000033d0       0x90 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .text.runInitSequence
-                0x0000345c      0x118 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .text.hLine    0x00003574       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .text.vLine    0x000035cc       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00003460      0x118 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .text.hLine    0x00003578       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .text.vLine    0x000035d0       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
  .text.oled_init
-                0x00003624       0x9c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x00003624                oled_init
+                0x00003628       0x9c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00003628                oled_init
  .text.oled_putPixel
-                0x000036c0      0x178 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x000036c0                oled_putPixel
+                0x000036c4      0x178 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x000036c4                oled_putPixel
  .text.oled_fillRect
-                0x00003838       0xb4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x00003838                oled_fillRect
+                0x0000383c       0xb4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x0000383c                oled_fillRect
  .text.oled_clearScreen
-                0x000038ec       0x74 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x000038ec                oled_clearScreen
+                0x000038f0       0x74 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x000038f0                oled_clearScreen
  .text.oled_putChar
-                0x00003960      0x100 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x00003960                oled_putChar
+                0x00003964      0x100 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00003964                oled_putChar
  .text.oled_putString
-                0x00003a60       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
-                0x00003a60                oled_putString
+                0x00003a64       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+                0x00003a64                oled_putString
  .text.I2CWrite
-                0x00003ab8       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00003abc       0x64 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
  .text.setLsStates
-                0x00003b1c       0xd0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .text.setLeds  0x00003bec       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00003b20       0xd0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .text.setLeds  0x00003bf0       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
  .text.pca9532_init
-                0x00003c90        0xc C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
-                0x00003c90                pca9532_init
+                0x00003c94        0xc C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00003c94                pca9532_init
  .text.pca9532_setLeds
-                0x00003c9c       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
-                0x00003c9c                pca9532_setLeds
+                0x00003ca0       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+                0x00003ca0                pca9532_setLeds
  .text.rgb_init
-                0x00003d40       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
-                0x00003d40                rgb_init
+                0x00003d44       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+                0x00003d44                rgb_init
  .text.rgb_setLeds
-                0x00003d78       0x88 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
-                0x00003d78                rgb_setLeds
+                0x00003d7c       0x88 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+                0x00003d7c                rgb_setLeds
  .text.GPIO_GetPointer
-                0x00003e00       0x78 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00003e04       0x78 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
  .text.GPIO_SetDir
-                0x00003e78       0x54 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
-                0x00003e78                GPIO_SetDir
+                0x00003e7c       0x54 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00003e7c                GPIO_SetDir
  .text.GPIO_SetValue
-                0x00003ecc       0x2c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
-                0x00003ecc                GPIO_SetValue
+                0x00003ed0       0x2c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00003ed0                GPIO_SetValue
  .text.GPIO_ClearValue
-                0x00003ef8       0x2c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
-                0x00003ef8                GPIO_ClearValue
+                0x00003efc       0x2c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00003efc                GPIO_ClearValue
  .text.GPIO_ReadValue
-                0x00003f24       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
-                0x00003f24                GPIO_ReadValue
+                0x00003f28       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+                0x00003f28                GPIO_ReadValue
  .text.I2C_getNum
-                0x00003f5c       0x60 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00003f60       0x60 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_Start
-                0x00003fbc       0x40 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00003fc0       0x40 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_Stop
-                0x00003ffc       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00004000       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_SendByte
-                0x00004034       0x50 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00004038       0x50 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_GetByte
-                0x00004084       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00004088       0x58 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_IntCmd
-                0x000040dc       0xa8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000040dc                I2C_IntCmd
+                0x000040e0       0xa8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000040e0                I2C_IntCmd
  .text.NVIC_EnableIRQ
-                0x00004184       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x00004188       0x38 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.NVIC_DisableIRQ
-                0x000041bc       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000041c0       0x3c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
  .text.I2C_MasterHandler
-                0x000041f8      0x410 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000041f8                I2C_MasterHandler
+                0x000041fc      0x410 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000041fc                I2C_MasterHandler
  .text.I2C_SetClock
-                0x00004608       0xc8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x00004608                I2C_SetClock
+                0x0000460c       0xc8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x0000460c                I2C_SetClock
  .text.I2C_Init
-                0x000046d0       0xd4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000046d0                I2C_Init
- .text.I2C_Cmd  0x000047a4       0x84 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x000047a4                I2C_Cmd
+                0x000046d4       0xd4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000046d4                I2C_Init
+ .text.I2C_Cmd  0x000047a8       0x84 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x000047a8                I2C_Cmd
  .text.I2C_MasterTransferData
-                0x00004828      0x374 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
-                0x00004828                I2C_MasterTransferData
+                0x0000482c      0x374 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+                0x0000482c                I2C_MasterTransferData
  .text.PINSEL_SetPinFunc
-                0x00004b9c       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00004b9c                PINSEL_SetPinFunc
+                0x00004ba0       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00004ba0                PINSEL_SetPinFunc
  .text.PINSEL_SetResistorMode
-                0x00004c40       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00004c40                PINSEL_SetResistorMode
+                0x00004c44       0xa4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00004c44                PINSEL_SetResistorMode
  .text.PINSEL_SetOpenDrainMode
-                0x00004ce4       0x84 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00004ce4                PINSEL_SetOpenDrainMode
+                0x00004ce8       0x84 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00004ce8                PINSEL_SetOpenDrainMode
  .text.PINSEL_ConfigPin
-                0x00004d68       0x4c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
-                0x00004d68                PINSEL_ConfigPin
+                0x00004d6c       0x4c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+                0x00004d6c                PINSEL_ConfigPin
  .text.SSP_getNum
-                0x00004db4       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00004db8       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
  .text.SSP_IntHandler
-                0x00004dfc      0x324 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00004dfc                SSP_IntHandler
+                0x00004e00      0x324 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00004e00                SSP_IntHandler
  .text.SSP_SetClock
-                0x00005120       0xf8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00005120                SSP_SetClock
+                0x00005124       0xf8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00005124                SSP_SetClock
  .text.SSP_Init
-                0x00005218      0x10c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00005218                SSP_Init
+                0x0000521c      0x10c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x0000521c                SSP_Init
  .text.SSP_ConfigStructInit
-                0x00005324       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00005324                SSP_ConfigStructInit
- .text.SSP_Cmd  0x0000536c       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x0000536c                SSP_Cmd
+                0x00005328       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00005328                SSP_ConfigStructInit
+ .text.SSP_Cmd  0x00005370       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00005370                SSP_Cmd
  .text.SSP_SendData
-                0x000053e8       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x000053e8                SSP_SendData
+                0x000053ec       0x48 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x000053ec                SSP_SendData
  .text.SSP_ReceiveData
-                0x00005430       0x44 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00005430                SSP_ReceiveData
+                0x00005434       0x44 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00005434                SSP_ReceiveData
  .text.SSP_ReadWrite
-                0x00005474      0x448 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
-                0x00005474                SSP_ReadWrite
+                0x00005478      0x448 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+                0x00005478                SSP_ReadWrite
  .text.TIM_GetPClock
-                0x000058bc       0x68 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x000058bc                TIM_GetPClock
+                0x000058c0       0x68 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x000058c0                TIM_GetPClock
  .text.TIM_ConverUSecToVal
-                0x00005924       0x68 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00005924                TIM_ConverUSecToVal
+                0x00005928       0x68 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00005928                TIM_ConverUSecToVal
  .text.TIM_ConverPtrToTimeNum
-                0x0000598c       0x74 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x0000598c                TIM_ConverPtrToTimeNum
+                0x00005990       0x74 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00005990                TIM_ConverPtrToTimeNum
  .text.TIM_ClearIntPending
-                0x00005a00       0xa8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00005a00                TIM_ClearIntPending
+                0x00005a04       0xa8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00005a04                TIM_ClearIntPending
  .text.TIM_Init
-                0x00005aa8      0x1cc C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00005aa8                TIM_Init
- .text.TIM_Cmd  0x00005c74       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00005c74                TIM_Cmd
+                0x00005aac      0x1cc C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00005aac                TIM_Init
+ .text.TIM_Cmd  0x00005c78       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00005c78                TIM_Cmd
  .text.TIM_ResetCounter
-                0x00005cf0       0x70 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00005cf0                TIM_ResetCounter
+                0x00005cf4       0x70 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00005cf4                TIM_ResetCounter
  .text.TIM_ConfigMatch
-                0x00005d60      0x1a0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
-                0x00005d60                TIM_ConfigMatch
+                0x00005d64      0x1a0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+                0x00005d64                TIM_ConfigMatch
  .text.uart_set_divisors
-                0x00005f00      0x26c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00005f00                uart_set_divisors
+                0x00005f04      0x26c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00005f04                uart_set_divisors
  .text.UART_Init
-                0x0000616c      0x360 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x0000616c                UART_Init
+                0x00006170      0x360 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00006170                UART_Init
  .text.UART_SendData
-                0x000064cc       0x78 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x000064cc                UART_SendData
+                0x000064d0       0x78 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x000064d0                UART_SendData
  .text.UART_ReceiveData
-                0x00006544       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00006544                UART_ReceiveData
+                0x00006548       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00006548                UART_ReceiveData
  .text.UART_IntConfig
-                0x000065c0      0x1d4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x000065c0                UART_IntConfig
+                0x000065c4      0x1d4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x000065c4                UART_IntConfig
  .text.UART_TxCmd
-                0x00006794       0xf0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00006794                UART_TxCmd
+                0x00006798       0xf0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00006798                UART_TxCmd
  .text.UART_Send
-                0x00006884      0x100 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00006884                UART_Send
+                0x00006888      0x100 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00006888                UART_Send
  .text.UART_Receive
-                0x00006984       0xc8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
-                0x00006984                UART_Receive
+                0x00006988       0xc8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+                0x00006988                UART_Receive
  .text.CLKPWR_SetPCLKDiv
-                0x00006a4c       0xd0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x00006a4c                CLKPWR_SetPCLKDiv
+                0x00006a50       0xd0 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x00006a50                CLKPWR_SetPCLKDiv
  .text.CLKPWR_GetPCLKSEL
-                0x00006b1c       0x54 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x00006b1c                CLKPWR_GetPCLKSEL
+                0x00006b20       0x54 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x00006b20                CLKPWR_GetPCLKSEL
  .text.CLKPWR_GetPCLK
-                0x00006b70       0x70 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x00006b70                CLKPWR_GetPCLK
+                0x00006b74       0x70 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x00006b74                CLKPWR_GetPCLK
  .text.CLKPWR_ConfigPPWR
-                0x00006be0       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
-                0x00006be0                CLKPWR_ConfigPPWR
- .text          0x00006c5c      0x370 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubdf3.o)
-                0x00006f70                __floatdidf
-                0x00006f00                __floatsidf
-                0x00006ee0                __aeabi_ui2d
-                0x00006c5c                __aeabi_drsub
-                0x00006f24                __extendsfdf2
-                0x00006c68                __adddf3
-                0x00006ee0                __floatunsidf
-                0x00006c68                __aeabi_dadd
-                0x00006f60                __aeabi_ul2d
-                0x00006c64                __aeabi_dsub
-                0x00006f60                __floatundidf
-                0x00006f00                __aeabi_i2d
-                0x00006f70                __aeabi_l2d
-                0x00006f24                __aeabi_f2d
-                0x00006c64                __subdf3
- .text          0x00006fcc      0x424 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_muldivdf3.o)
-                0x00007220                __aeabi_ddiv
-                0x00006fcc                __aeabi_dmul
-                0x00007220                __divdf3
-                0x00006fcc                __muldf3
- .text          0x000073f0       0xa0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_truncdfsf2.o)
-                0x000073f0                __aeabi_d2f
-                0x000073f0                __truncdfsf2
- .text          0x00007490      0x21c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubsf3.o)
-                0x0000749c                __aeabi_fadd
-                0x00007498                __subsf3
-                0x00007604                __aeabi_i2f
-                0x00007498                __aeabi_fsub
-                0x00007630                __floatdisf
-                0x00007604                __floatsisf
-                0x00007620                __floatundisf
-                0x000075fc                __aeabi_ui2f
-                0x00007630                __aeabi_l2f
-                0x00007620                __aeabi_ul2f
-                0x00007490                __aeabi_frsub
-                0x000075fc                __floatunsisf
-                0x0000749c                __addsf3
- .text          0x000076ac      0x2a0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_muldivsf3.o)
-                0x00007814                __divsf3
-                0x00007814                __aeabi_fdiv
-                0x000076ac                __mulsf3
-                0x000076ac                __aeabi_fmul
- .text          0x0000794c       0xec c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpsf2.o)
-                0x00007a24                __aeabi_fcmpgt
-                0x00007954                __lesf2
-                0x0000795c                __nesf2
-                0x00007a10                __aeabi_fcmpge
-                0x0000794c                __gtsf2
-                0x000079fc                __aeabi_fcmple
-                0x0000795c                __eqsf2
-                0x0000795c                __cmpsf2
-                0x00007954                __ltsf2
-                0x000079c4                __aeabi_cfcmple
-                0x0000794c                __gesf2
-                0x000079d4                __aeabi_fcmpeq
-                0x000079bc                __aeabi_cfrcmple
-                0x000079e8                __aeabi_fcmplt
-                0x000079c4                __aeabi_cfcmpeq
- .text          0x00007a38       0x4c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_fixsfsi.o)
-                0x00007a38                __fixsfsi
-                0x00007a38                __aeabi_f2iz
- .text          0x00007a84       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_aeabi_uldivmod.o)
-                0x00007a84                __aeabi_uldivmod
- .text          0x00007ab0       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(bpabi.o)
-                0x00007ab0                __gnu_uldivmod_helper
-                0x00007ae0                __gnu_ldivmod_helper
- .text          0x00007b10        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_dvmd_tls.o)
-                0x00007b10                __aeabi_ldiv0
-                0x00007b10                __aeabi_idiv0
- .text          0x00007b14      0x40c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
-                0x00007b14                __divdi3
- .text          0x00007f20      0x3cc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
-                0x00007f20                __udivdi3
- .text          0x000082ec       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivsi3.o)
-                0x000082ec                __udivsi3
-                0x000082ec                __aeabi_uidiv
-                0x00008364                __aeabi_uidivmod
- .text          0x00008378      0x12c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memcpy.o)
-                0x00008378                memcpy
- .text          0x000084a4       0xb0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memset.o)
-                0x000084a4                memset
- .text          0x00008554       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sprintf.o)
-                0x000085a0                _sprintf_r
-                0x00008554                sprintf
- .text          0x000085e0       0x80 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcasecmp.o)
-                0x000085e0                strcasecmp
- .text          0x00008660       0x48 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o)
-                0x00008660                strcat
- .text          0x000086a8       0xbc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
-                0x000086a8                strcpy
- .text          0x00008764       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
-                0x00008764                strlen
- .text          0x000087c4       0x88 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strncasecmp.o)
-                0x000087c4                strncasecmp
- .text          0x0000884c     0x1488 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
-                0x00008948                _svfprintf_r
- *fill*         0x00009cd4        0x4 00
- .text          0x00009cd8      0xf88 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
-                0x00009e08                _dtoa_r
- .text          0x0000ac60      0x238 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
-                0x0000ad0c                _free_r
-                0x0000ac60                _malloc_trim_r
- .text          0x0000ae98       0x74 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
-                0x0000aeb4                _setlocale_r
-                0x0000ae98                __locale_charset
-                0x0000aea4                _localeconv_r
-                0x0000aef4                setlocale
-                0x0000aeac                localeconv
- .text          0x0000af0c       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
-                0x0000af20                malloc
-                0x0000af0c                free
- .text          0x0000af34      0x530 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
-                0x0000af34                _malloc_r
- .text          0x0000b464       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
-                0x0000b464                memchr
- .text          0x0000b4e0       0xc0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
-                0x0000b4e0                memmove
- .text          0x0000b5a0        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
-                0x0000b5a4                __malloc_unlock
-                0x0000b5a0                __malloc_lock
- .text          0x0000b5a8      0x92c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
-                0x0000b7d4                _mprec_log10
-                0x0000b860                __any_on
-                0x0000b8f4                _Balloc
-                0x0000b780                __ratio
-                0x0000bcfc                __i2b
-                0x0000b6d4                __b2d
-                0x0000be40                __s2b
-                0x0000b64c                __mcmp
-                0x0000b5a8                __hi0bits
-                0x0000bd8c                __pow5mult
-                0x0000bb18                __lshift
-                0x0000bbcc                __multiply
-                0x0000b964                __d2b
-                0x0000b810                __copybits
-                0x0000b68c                __ulp
-                0x0000ba1c                __mdiff
-                0x0000b5e8                __lo0bits
-                0x0000bd10                __multadd
-                0x0000b8c4                _Bfree
- .text          0x0000bed4      0x388 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
-                0x0000bed4                _realloc_r
- .text          0x0000c25c       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
-                0x0000c25c                __isinfd
- .text          0x0000c284       0x1c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
-                0x0000c284                __isnand
- .text          0x0000c2a0       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
-                0x0000c2a0                _sbrk_r
- .text          0x0000c2c8      0x1dc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
-                0x0000c2c8                strcmp
- .text          0x0000c4a4       0x5c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
-                0x0000c4a4                _calloc_r
- .text._sbrk    0x0000c500       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
-                0x0000c500                _sbrk
- .text          0x0000c57c      0x110 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpdf2.o)
-                0x0000c650                __aeabi_dcmple
-                0x0000c58c                __cmpdf2
-                0x0000c58c                __eqdf2
-                0x0000c57c                __gtdf2
-                0x0000c618                __aeabi_cdcmple
-                0x0000c608                __aeabi_cdrcmple
-                0x0000c584                __ltdf2
-                0x0000c63c                __aeabi_dcmplt
-                0x0000c584                __ledf2
-                0x0000c678                __aeabi_dcmpgt
-                0x0000c664                __aeabi_dcmpge
-                0x0000c58c                __nedf2
-                0x0000c628                __aeabi_dcmpeq
-                0x0000c618                __aeabi_cdcmpeq
-                0x0000c57c                __gedf2
- .text          0x0000c68c       0x50 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_fixdfsi.o)
-                0x0000c68c                __fixdfsi
-                0x0000c68c                __aeabi_d2iz
- .text          0x0000c6dc        0xc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-errno.o)
-                0x0000c6dc                __errno
+                0x00006be4       0x7c C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+                0x00006be4                CLKPWR_ConfigPPWR
+ .text          0x00006c60      0x370 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubdf3.o)
+                0x00006f74                __floatdidf
+                0x00006f04                __floatsidf
+                0x00006ee4                __aeabi_ui2d
+                0x00006c60                __aeabi_drsub
+                0x00006f28                __extendsfdf2
+                0x00006c6c                __adddf3
+                0x00006ee4                __floatunsidf
+                0x00006c6c                __aeabi_dadd
+                0x00006f64                __aeabi_ul2d
+                0x00006c68                __aeabi_dsub
+                0x00006f64                __floatundidf
+                0x00006f04                __aeabi_i2d
+                0x00006f74                __aeabi_l2d
+                0x00006f28                __aeabi_f2d
+                0x00006c68                __subdf3
+ .text          0x00006fd0      0x424 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_muldivdf3.o)
+                0x00007224                __aeabi_ddiv
+                0x00006fd0                __aeabi_dmul
+                0x00007224                __divdf3
+                0x00006fd0                __muldf3
+ .text          0x000073f4       0xa0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_truncdfsf2.o)
+                0x000073f4                __aeabi_d2f
+                0x000073f4                __truncdfsf2
+ .text          0x00007494      0x21c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_addsubsf3.o)
+                0x000074a0                __aeabi_fadd
+                0x0000749c                __subsf3
+                0x00007608                __aeabi_i2f
+                0x0000749c                __aeabi_fsub
+                0x00007634                __floatdisf
+                0x00007608                __floatsisf
+                0x00007624                __floatundisf
+                0x00007600                __aeabi_ui2f
+                0x00007634                __aeabi_l2f
+                0x00007624                __aeabi_ul2f
+                0x00007494                __aeabi_frsub
+                0x00007600                __floatunsisf
+                0x000074a0                __addsf3
+ .text          0x000076b0      0x2a0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_muldivsf3.o)
+                0x00007818                __divsf3
+                0x00007818                __aeabi_fdiv
+                0x000076b0                __mulsf3
+                0x000076b0                __aeabi_fmul
+ .text          0x00007950       0xec c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpsf2.o)
+                0x00007a28                __aeabi_fcmpgt
+                0x00007958                __lesf2
+                0x00007960                __nesf2
+                0x00007a14                __aeabi_fcmpge
+                0x00007950                __gtsf2
+                0x00007a00                __aeabi_fcmple
+                0x00007960                __eqsf2
+                0x00007960                __cmpsf2
+                0x00007958                __ltsf2
+                0x000079c8                __aeabi_cfcmple
+                0x00007950                __gesf2
+                0x000079d8                __aeabi_fcmpeq
+                0x000079c0                __aeabi_cfrcmple
+                0x000079ec                __aeabi_fcmplt
+                0x000079c8                __aeabi_cfcmpeq
+ .text          0x00007a3c       0x4c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_fixsfsi.o)
+                0x00007a3c                __fixsfsi
+                0x00007a3c                __aeabi_f2iz
+ .text          0x00007a88       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_aeabi_uldivmod.o)
+                0x00007a88                __aeabi_uldivmod
+ .text          0x00007ab4       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(bpabi.o)
+                0x00007ab4                __gnu_uldivmod_helper
+                0x00007ae4                __gnu_ldivmod_helper
+ .text          0x00007b14        0x4 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_dvmd_tls.o)
+                0x00007b14                __aeabi_ldiv0
+                0x00007b14                __aeabi_idiv0
+ .text          0x00007b18      0x40c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
+                0x00007b18                __divdi3
+ .text          0x00007f24      0x3cc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
+                0x00007f24                __udivdi3
+ .text          0x000082f0       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivsi3.o)
+                0x000082f0                __udivsi3
+                0x000082f0                __aeabi_uidiv
+                0x00008368                __aeabi_uidivmod
+ .text          0x0000837c      0x12c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memcpy.o)
+                0x0000837c                memcpy
+ .text          0x000084a8       0xb0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memset.o)
+                0x000084a8                memset
+ .text          0x00008558       0x8c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sprintf.o)
+                0x000085a4                _sprintf_r
+                0x00008558                sprintf
+ .text          0x000085e4       0x80 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcasecmp.o)
+                0x000085e4                strcasecmp
+ .text          0x00008664       0x48 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o)
+                0x00008664                strcat
+ .text          0x000086ac      0x1dc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
+                0x000086ac                strcmp
+ .text          0x00008888       0xbc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
+                0x00008888                strcpy
+ .text          0x00008944       0x60 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
+                0x00008944                strlen
+ .text          0x000089a4       0x88 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strncasecmp.o)
+                0x000089a4                strncasecmp
+ .text          0x00008a2c     0x1488 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+                0x00008b28                _svfprintf_r
+ *fill*         0x00009eb4        0x4 00
+ .text          0x00009eb8      0xf88 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
+                0x00009fe8                _dtoa_r
+ .text          0x0000ae40      0x238 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
+                0x0000aeec                _free_r
+                0x0000ae40                _malloc_trim_r
+ .text          0x0000b078       0x74 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+                0x0000b094                _setlocale_r
+                0x0000b078                __locale_charset
+                0x0000b084                _localeconv_r
+                0x0000b0d4                setlocale
+                0x0000b08c                localeconv
+ .text          0x0000b0ec       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
+                0x0000b100                malloc
+                0x0000b0ec                free
+ .text          0x0000b114      0x530 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
+                0x0000b114                _malloc_r
+ .text          0x0000b644       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
+                0x0000b644                memchr
+ .text          0x0000b6c0       0xc0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
+                0x0000b6c0                memmove
+ .text          0x0000b780        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
+                0x0000b784                __malloc_unlock
+                0x0000b780                __malloc_lock
+ .text          0x0000b788      0x92c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
+                0x0000b9b4                _mprec_log10
+                0x0000ba40                __any_on
+                0x0000bad4                _Balloc
+                0x0000b960                __ratio
+                0x0000bedc                __i2b
+                0x0000b8b4                __b2d
+                0x0000c020                __s2b
+                0x0000b82c                __mcmp
+                0x0000b788                __hi0bits
+                0x0000bf6c                __pow5mult
+                0x0000bcf8                __lshift
+                0x0000bdac                __multiply
+                0x0000bb44                __d2b
+                0x0000b9f0                __copybits
+                0x0000b86c                __ulp
+                0x0000bbfc                __mdiff
+                0x0000b7c8                __lo0bits
+                0x0000bef0                __multadd
+                0x0000baa4                _Bfree
+ .text          0x0000c0b4      0x388 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
+                0x0000c0b4                _realloc_r
+ .text          0x0000c43c       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
+                0x0000c43c                __isinfd
+ .text          0x0000c464       0x1c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
+                0x0000c464                __isnand
+ .text          0x0000c480       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
+                0x0000c480                _sbrk_r
+ .text          0x0000c4a8       0x5c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
+                0x0000c4a8                _calloc_r
+ .text._sbrk    0x0000c504       0x7c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libcr_newlib_semihost.a(syscalls.o)
+                0x0000c504                _sbrk
+ .text          0x0000c580      0x110 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_cmpdf2.o)
+                0x0000c654                __aeabi_dcmple
+                0x0000c590                __cmpdf2
+                0x0000c590                __eqdf2
+                0x0000c580                __gtdf2
+                0x0000c61c                __aeabi_cdcmple
+                0x0000c60c                __aeabi_cdrcmple
+                0x0000c588                __ltdf2
+                0x0000c640                __aeabi_dcmplt
+                0x0000c588                __ledf2
+                0x0000c67c                __aeabi_dcmpgt
+                0x0000c668                __aeabi_dcmpge
+                0x0000c590                __nedf2
+                0x0000c62c                __aeabi_dcmpeq
+                0x0000c61c                __aeabi_cdcmpeq
+                0x0000c580                __gedf2
+ .text          0x0000c690       0x50 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_arm_fixdfsi.o)
+                0x0000c690                __fixdfsi
+                0x0000c690                __aeabi_d2iz
+ .text          0x0000c6e0        0xc c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-errno.o)
+                0x0000c6e0                __errno
  *(.rodata .rodata.*)
- .rodata        0x0000c6e8      0x220 ./src/main.o
-                0x0000c80c                MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD
-                0x0000c834                REPLY_ACK
-                0x0000c854                CMD_CHANGE_REPORTING_TIME
-                0x0000c7e4                MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD
-                0x0000c6ee                RESET_PIN
-                0x0000c6f8                ACC_THRESHOLD
-                0x0000c85c                CMD_CHANGE_LOWER_THRESHOLD
-                0x0000c860                CMD_CHANGE_UPPER_THRESHOLD
-                0x0000c6f4                TEMP_UPPER_LIMIT
-                0x0000c7bc                MESSAGE_CONFIRM_CHANGE_TWTIME
-                0x0000c730                MESSAGE_READY
-                0x0000c6fc                FREQ_UPDATE_PERIOD_MS
-                0x0000c84c                CMD_RESET_TO_STDBY
-                0x0000c6f0                LIGHT_PORT
-                0x0000c6e8                CALIBRATED_PORT
-                0x0000c700                tempStateStringMap
-                0x0000c76c                MESSAGE_CONFIRM_ENTER_STDBY
-                0x0000c7a8                MESSAGE_CONFIRM_NOT_CHANGE_RTIME
-                0x0000c6ec                RESET_PORT
-                0x0000c6ea                CALIBRATED_PIN
-                0x0000c71b                radiationStateStringMap
-                0x0000c83c                REPLY_NOT_ACK
-                0x0000c780                MESSAGE_REPORT_TEMPLATE
-                0x0000c820                MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD
-                0x0000c844                CMD_RESET_TO_CALIB
-                0x0000c6f6                ACC_UPDATE_PERIOD_MS
-                0x0000c6f2                LIGHT_PIN
-                0x0000c7d0                MESSAGE_CONFIRM_NOT_CHANGE_TWTIME
-                0x0000c858                CMD_CHANGE_TIME_WINDOW
-                0x0000c794                MESSAGE_CONFIRM_CHANGE_RTIME
-                0x0000c758                MESSAGE_CONFIRM_ENTER_CALIB
-                0x0000c744                MESSAGE_HANDSHAKE_CONFIRM
-                0x0000c7f8                MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD
- .rodata        0x0000c908        0x8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .rodata        0x0000c910        0x4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .rodata        0x0000c914      0x308 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
-                0x0000c914                font5x7
- .rodata        0x0000cc1c       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .rodata        0x0000cc34       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .rodata        0x0000cc4c       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
- .rodata        0x0000cc64       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
- .rodata        0x0000cc7c      0x100 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_clz.o)
-                0x0000cc7c                __clz_tab
- .rodata        0x0000cd7c      0x101 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-ctype_.o)
-                0x0000cd7c                _ctype_
- .rodata        0x0000ce7d       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
- *fill*         0x0000ce9d        0x3 00
+ .rodata        0x0000c6ec      0x224 ./src/main.o
+                0x0000c810                MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD
+                0x0000c838                REPLY_ACK
+                0x0000c858                CMD_CHANGE_REPORTING_TIME
+                0x0000c7e8                MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD
+                0x0000c6f2                RESET_PIN
+                0x0000c6fc                ACC_THRESHOLD
+                0x0000c860                CMD_CHANGE_LOWER_THRESHOLD
+                0x0000c864                CMD_CHANGE_UPPER_THRESHOLD
+                0x0000c6f8                TEMP_UPPER_LIMIT
+                0x0000c7c0                MESSAGE_CONFIRM_CHANGE_TWTIME
+                0x0000c734                MESSAGE_READY
+                0x0000c700                FREQ_UPDATE_PERIOD_MS
+                0x0000c850                CMD_RESET_TO_STDBY
+                0x0000c6f4                LIGHT_PORT
+                0x0000c6ec                CALIBRATED_PORT
+                0x0000c704                tempStateStringMap
+                0x0000c770                MESSAGE_CONFIRM_ENTER_STDBY
+                0x0000c7ac                MESSAGE_CONFIRM_NOT_CHANGE_RTIME
+                0x0000c6f0                RESET_PORT
+                0x0000c6ee                CALIBRATED_PIN
+                0x0000c71f                radiationStateStringMap
+                0x0000c840                REPLY_NOT_ACK
+                0x0000c784                MESSAGE_REPORT_TEMPLATE
+                0x0000c824                MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD
+                0x0000c848                CMD_RESET_TO_CALIB
+                0x0000c6fa                ACC_UPDATE_PERIOD_MS
+                0x0000c6f6                LIGHT_PIN
+                0x0000c7d4                MESSAGE_CONFIRM_NOT_CHANGE_TWTIME
+                0x0000c85c                CMD_CHANGE_TIME_WINDOW
+                0x0000c798                MESSAGE_CONFIRM_CHANGE_RTIME
+                0x0000c75c                MESSAGE_CONFIRM_ENTER_CALIB
+                0x0000c748                MESSAGE_HANDSHAKE_CONFIRM
+                0x0000c7fc                MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD
+ .rodata        0x0000c910        0x8 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .rodata        0x0000c918        0x4 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .rodata        0x0000c91c      0x308 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+                0x0000c91c                font5x7
+ .rodata        0x0000cc24       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .rodata        0x0000cc3c       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .rodata        0x0000cc54       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .rodata        0x0000cc6c       0x18 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .rodata        0x0000cc84      0x100 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_clz.o)
+                0x0000cc84                __clz_tab
+ .rodata        0x0000cd84      0x101 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-ctype_.o)
+                0x0000cd84                _ctype_
+ .rodata        0x0000ce85       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+ *fill*         0x0000cea5        0x3 00
  .rodata.str1.4
-                0x0000cea0       0x5e c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+                0x0000cea8       0x5e c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
                                  0x60 (size before relaxing)
- *fill*         0x0000cefe        0x2 00
+ *fill*         0x0000cf06        0x2 00
  .rodata.str1.4
-                0x0000cf00       0x10 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
+                0x0000cf08       0x10 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
                                  0x14 (size before relaxing)
  .rodata.str1.4
-                0x0000cf10        0x2 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
+                0x0000cf18        0x2 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
                                   0x4 (size before relaxing)
- *fill*         0x0000cf12        0x2 00
- .rodata        0x0000cf14       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+ *fill*         0x0000cf1a        0x2 00
+ .rodata        0x0000cf1c       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
  .rodata.str1.4
-                0x0000cf48       0x10 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+                0x0000cf50       0x10 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
                                  0x18 (size before relaxing)
- .rodata        0x0000cf58      0x128 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
-                0x0000d058                __mprec_tinytens
-                0x0000cf58                __mprec_tens
-                0x0000d030                __mprec_bigtens
-                0x0000d080                . = ALIGN (0x4)
+ .rodata        0x0000cf60      0x128 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
+                0x0000d060                __mprec_tinytens
+                0x0000cf60                __mprec_tens
+                0x0000d038                __mprec_bigtens
+                0x0000d088                . = ALIGN (0x4)
 
-.glue_7         0x0000d080        0x0
+.glue_7         0x0000d088        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x0000d080        0x0
+.glue_7t        0x0000d088        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x0000d080        0x0
+.vfp11_veneer   0x0000d088        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0000d080        0x0
+.v4_bx          0x0000d088        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0000d080                __exidx_start = .
+                0x0000d088                __exidx_start = .
 
-.ARM.exidx      0x0000d080        0x8
+.ARM.exidx      0x0000d088        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x0000d080        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
- .ARM.exidx     0x0000d088        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
+ .ARM.exidx     0x0000d088        0x8 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_divdi3.o)
+ .ARM.exidx     0x0000d090        0x0 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/thumb2\libgcc.a(_udivdi3.o)
                                   0x8 (size before relaxing)
-                0x0000d088                __exidx_end = .
-                0x0000d088                _etext = .
+                0x0000d090                __exidx_end = .
+                0x0000d090                _etext = .
 
-.data_RAM2      0x2007c000        0x0 load address 0x0000d088
+.data_RAM2      0x2007c000        0x0 load address 0x0000d090
  FILL mask 0xff
  *(.data.$RAM2*)
  *(.data.$RamAHB32*)
                 0x2007c000                . = ALIGN (0x4)
 
-.data_RAM3      0x40038000        0x0 load address 0x0000d088
+.data_RAM3      0x40038000        0x0 load address 0x0000d090
  FILL mask 0xff
  *(.data.$RAM3*)
  *(.data.$CANAccFilterRAM*)
@@ -1330,7 +1330,7 @@ END GROUP
 .uninit_RESERVED
  *(.bss.$RESERVED*)
 
-.data           0x10000000      0x590 load address 0x0000d088
+.data           0x10000000      0x590 load address 0x0000d090
  FILL mask 0xff
                 0x10000000                _data = .
  *(vtable)
@@ -1476,24 +1476,24 @@ OUTPUT(Assignment2.axf elf32-littlearm)
  .debug_info    0x000073a5     0x149e C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
  .debug_info    0x00008843      0x613 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
-.debug_line     0x00000000     0x532b
+.debug_line     0x00000000     0x532c
  .debug_line    0x00000000      0x24c ./src/cr_startup_lpc17.o
- .debug_line    0x0000024c      0xd8b ./src/main.o
- .debug_line    0x00000fd7      0x313 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
- .debug_line    0x000012ea      0x426 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
- .debug_line    0x00001710      0x3a1 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
- .debug_line    0x00001ab1      0x4d1 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
- .debug_line    0x00001f82      0x5c2 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
- .debug_line    0x00002544      0x494 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
- .debug_line    0x000029d8      0x386 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
- .debug_line    0x00002d5e       0x83 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
- .debug_line    0x00002de1      0x516 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
- .debug_line    0x000032f7      0x673 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
- .debug_line    0x0000396a      0x3a7 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
- .debug_line    0x00003d11      0x5a9 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
- .debug_line    0x000042ba      0x532 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
- .debug_line    0x000047ec      0x75e C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
- .debug_line    0x00004f4a      0x3e1 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
+ .debug_line    0x0000024c      0xd8c ./src/main.o
+ .debug_line    0x00000fd8      0x313 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_CMSISv1p30_LPC17xx\Debug\libCMSISv1p30_LPC17xx.a(system_LPC17xx.o)
+ .debug_line    0x000012eb      0x426 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(acc.o)
+ .debug_line    0x00001711      0x3a1 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(led7seg.o)
+ .debug_line    0x00001ab2      0x4d1 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(light.o)
+ .debug_line    0x00001f83      0x5c2 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(oled.o)
+ .debug_line    0x00002545      0x494 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(pca9532.o)
+ .debug_line    0x000029d9      0x386 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(rgb.o)
+ .debug_line    0x00002d5f       0x83 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_EaBaseBoard\Debug\libLib_EaBaseBoard.a(font5x7.o)
+ .debug_line    0x00002de2      0x516 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_gpio.o)
+ .debug_line    0x000032f8      0x673 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_i2c.o)
+ .debug_line    0x0000396b      0x3a7 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_pinsel.o)
+ .debug_line    0x00003d12      0x5a9 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_ssp.o)
+ .debug_line    0x000042bb      0x532 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_timer.o)
+ .debug_line    0x000047ed      0x75e C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_uart.o)
+ .debug_line    0x00004f4b      0x3e1 C:\Users\Ashray Jain\Desktop\EE2024 Workspace\Lib_MCU\Debug\libLib_MCU.a(lpc17xx_clkpwr.o)
 
 .debug_macinfo  0x00000000    0x7fdc0
  .debug_macinfo
@@ -1557,24 +1557,24 @@ OUTPUT(Assignment2.axf elf32-littlearm)
  .debug_frame   0x0000216c       0x58 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sprintf.o)
  .debug_frame   0x000021c4       0x30 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcasecmp.o)
  .debug_frame   0x000021f4       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o)
- .debug_frame   0x0000221c       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
- .debug_frame   0x0000223c       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
- .debug_frame   0x0000225c       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strncasecmp.o)
- .debug_frame   0x00002290       0x64 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
- .debug_frame   0x000022f4       0x64 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
- .debug_frame   0x00002358       0x50 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
- .debug_frame   0x000023a8       0x74 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
- .debug_frame   0x0000241c       0x40 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
- .debug_frame   0x0000245c       0x38 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
- .debug_frame   0x00002494       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
- .debug_frame   0x000024bc       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
- .debug_frame   0x000024e8       0x30 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
- .debug_frame   0x00002518      0x228 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
- .debug_frame   0x00002740       0x38 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
- .debug_frame   0x00002778       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
- .debug_frame   0x000027a0       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
- .debug_frame   0x000027c0       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
- .debug_frame   0x000027ec       0x30 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
+ .debug_frame   0x0000221c       0x30 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
+ .debug_frame   0x0000224c       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
+ .debug_frame   0x0000226c       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
+ .debug_frame   0x0000228c       0x34 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strncasecmp.o)
+ .debug_frame   0x000022c0       0x64 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+ .debug_frame   0x00002324       0x64 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
+ .debug_frame   0x00002388       0x50 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
+ .debug_frame   0x000023d8       0x74 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+ .debug_frame   0x0000244c       0x40 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
+ .debug_frame   0x0000248c       0x38 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
+ .debug_frame   0x000024c4       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
+ .debug_frame   0x000024ec       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
+ .debug_frame   0x00002518       0x30 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
+ .debug_frame   0x00002548      0x228 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
+ .debug_frame   0x00002770       0x38 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
+ .debug_frame   0x000027a8       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
+ .debug_frame   0x000027d0       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
+ .debug_frame   0x000027f0       0x2c c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
  .debug_frame   0x0000281c       0x28 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
  .debug_frame   0x00002844       0x64 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reent.o)
  .debug_frame   0x000028a8       0x20 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-errno.o)
@@ -1819,43 +1819,43 @@ OUTPUT(Assignment2.axf elf32-littlearm)
  .ARM.attributes
                 0x00000586       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcat.o)
  .ARM.attributes
-                0x000005ad       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
+                0x000005ad       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
  .ARM.attributes
-                0x000005d4       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
+                0x000005d4       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcpy.o)
  .ARM.attributes
-                0x000005fb       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strncasecmp.o)
+                0x000005fb       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strlen.o)
  .ARM.attributes
-                0x00000622       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
+                0x00000622       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strncasecmp.o)
  .ARM.attributes
-                0x00000649       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
+                0x00000649       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-svfprintf.o)
  .ARM.attributes
-                0x00000670       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
+                0x00000670       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-dtoa.o)
  .ARM.attributes
-                0x00000697       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
+                0x00000697       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-freer.o)
  .ARM.attributes
-                0x000006be       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
+                0x000006be       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-impure.o)
  .ARM.attributes
-                0x000006e5       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
+                0x000006e5       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-locale.o)
  .ARM.attributes
-                0x0000070c       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
+                0x0000070c       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-malloc.o)
  .ARM.attributes
-                0x00000733       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
+                0x00000733       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mallocr.o)
  .ARM.attributes
-                0x0000075a       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
+                0x0000075a       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memchr.o)
  .ARM.attributes
-                0x00000781       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
+                0x00000781       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-memmove.o)
  .ARM.attributes
-                0x000007a8       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
+                0x000007a8       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mlock.o)
  .ARM.attributes
-                0x000007cf       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
+                0x000007cf       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-mprec.o)
  .ARM.attributes
-                0x000007f6       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
+                0x000007f6       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-reallocr.o)
  .ARM.attributes
-                0x0000081d       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
+                0x0000081d       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isinfd.o)
  .ARM.attributes
-                0x00000844       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
+                0x00000844       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-s_isnand.o)
  .ARM.attributes
-                0x0000086b       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-strcmp.o)
+                0x0000086b       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-sbrkr.o)
  .ARM.attributes
                 0x00000892       0x27 c:/nxp/lpcxpresso_3.6.3_317/tools/bin/../lib/gcc/arm-none-eabi/4.3.3/../../../../arm-none-eabi/lib/thumb2\libc.a(lib_a-callocr.o)
  .ARM.attributes
