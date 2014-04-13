@@ -854,12 +854,12 @@ void enterCalibratingState() {
 
 void enterStdByCountingDownState() {
 	TIM_Cmd(LPC_TIM2, DISABLE);
+	currentHandshakeState = HANDSHAKE_NOT_DONE;
 	writeHeaderToOled("   STAND-BY   ");
 	countDownFrom(COUNT_DOWN_START);
 	acc_setMode(ACC_MODE_STANDBY);
 	light_setHiThreshold(800);
 	init_temp_interrupt(&currentTemperatureReading);
-	currentHandshakeState = HANDSHAKE_NOT_DONE;
 	init_handShake();
 }
 
@@ -1040,8 +1040,8 @@ void writeHeaderToOled(char *str) {
 	oled_fillRect(0,0,96,23, OLED_COLOR_WHITE);
 	oled_putString(7, 8, str, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	if (currentState != FFS_CALIBRATING) {
-		char handShakeStr[15] = "              ";
-		handShakeStr[13] = (currentHandshakeState == HANDSHAKE_DONE)?(char)(HANDSHAKE_SYMBOL_ASCII):(char)(NOT_HANDSHAKE_SYMBOL_ASCII);
+		char handShakeStr[15] = "";
+		handShakeStr[0] = (currentHandshakeState == HANDSHAKE_DONE)?(char)(HANDSHAKE_SYMBOL_ASCII):(char)(NOT_HANDSHAKE_SYMBOL_ASCII);
 		oled_putString(7, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
 	}
 }
