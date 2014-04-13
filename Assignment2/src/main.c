@@ -169,7 +169,6 @@ volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
 volatile uint32_t accTick = 0;
 volatile uint32_t warningTick = 0;
-static 	 char* msg = NULL;
 
 // #################################### //
 // #####  Function Declarations   ##### //
@@ -177,13 +176,15 @@ static 	 char* msg = NULL;
 
 //// Initializers ////
 void initAllPeripherals();
-static	void init_ssp	(void);
-static	void init_i2c	(void);
-static	void init_GPIO	(void);
-		void init_buzzer(void);
-		void init_timer (void);
-		void init_temp_interrupt(int32_t *var);
-		void init_handShake(void);
+void init_ssp	(void);
+void init_i2c	(void);
+void init_GPIO	(void);
+void init_buzzer(void);
+void init_timer (void);
+void init_uart	(void);
+void init_xBee	(void);
+void init_temp_interrupt(int32_t *var);
+void init_handShake(void);
 
 //// handlers ////
 
@@ -260,7 +261,10 @@ void initAllPeripherals() {
 	init_GPIO();
     init_i2c();
     init_ssp();
+
     init_uart();
+
+    //init_xBee();
 
     pca9532_init();
     pca9532_setLeds(0, 0xffff);
@@ -289,7 +293,7 @@ void initAllPeripherals() {
     NVIC_EnableIRQ(EINT0_IRQn);
 }
 
-static void init_ssp(void) {
+void init_ssp(void) {
 	SSP_CFG_Type SSP_ConfigStruct;
 	PINSEL_CFG_Type PinCfg;
 
@@ -324,7 +328,7 @@ static void init_ssp(void) {
 	SSP_Cmd(LPC_SSP1, ENABLE);
 }
 
-static void init_i2c(void) {
+void init_i2c(void) {
 	PINSEL_CFG_Type PinCfg;
 
 	/* Initialize I2C2 pin connect */
@@ -342,7 +346,7 @@ static void init_i2c(void) {
 	I2C_Cmd(LPC_I2C2, ENABLE);
 }
 
-static void init_GPIO(void) {
+void init_GPIO(void) {
 	// Initialize button
 	PINSEL_CFG_Type PinCfg;
 
@@ -411,6 +415,47 @@ void init_uart() {
 
 	NVIC_ClearPendingIRQ(UART3_IRQn);
 	NVIC_EnableIRQ(UART3_IRQn);
+}
+
+void xBee_checkOk() {
+	char buf[4] = "";
+	UART_Receive(LPC_UART3, buf, 3, BLOCKING);
+}
+
+void init_xBee() {
+
+	UART_DeInit(LPC_UART3);
+
+ 	UART_CFG_Type uartCfg;
+	uartCfg.Baud_rate = 9600;
+	uartCfg.Databits = UART_DATABIT_8;
+	uartCfg.Parity = UART_PARITY_NONE;
+	uartCfg.Stopbits = UART_STOPBIT_1;
+
+	UART_Init(LPC_UART3, &uartCfg);
+	UART_TxCmd(LPC_UART3, ENABLE);
+   	
+   	
+   	Timer0_Wait(1000);
+ 	UART_SendString(LPC_UART3, (uint8_t*) "+++");
+   	Timer0_Wait(1000);
+   	xBee_checkOk();
+   	UART_SendString(LPC_UART3, (uint8_t*) "ATBD7\r");
+	xBee_checkOk();
+
+   	// configure xBee source and destination addresses
+	UART_SendString(LPC_UART3, (uint8_t*) "ATMY35b\r");
+	xBee_checkOk();
+	UART_SendString(LPC_UART3, (uint8_t*) "ATDL35a\r");
+	xBee_checkOk();
+	UART_SendString(LPC_UART3, (uint8_t*) "ATWR\r");
+	xBee_checkOk();
+	UART_SendString(LPC_UART3, (uint8_t*) "ATCN\r");
+	xBee_checkOk();
+
+	UART_DeInit(LPC_UART3);
+
+	init_uart();
 }
 
 void init_timer() {
@@ -752,7 +797,7 @@ void UART3_IRQHandler (void) {
 		{
 			stationCommand[currentlen] = '\0';
 			hasNewCommand = 1;
-			printf("%s\n", stationCommand);
+			//printf("%s\n", stationCommand);
 		}
 		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
