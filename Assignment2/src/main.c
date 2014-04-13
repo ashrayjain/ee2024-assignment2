@@ -1111,7 +1111,7 @@ void processUartCommand() {
 int changeReportingTime(char *newTime) {
 	int newReportingTime = stringToInt(newTime);
 	if (newReportingTime > 0) {
-		REPORTING_PERIOD_MS = newReportingTime;
+		REPORTING_PERIOD_MS = newReportingTime*1000;
 		sendReportFlag = 1;
 
 		int preScaleValue1 = 100000;
@@ -1138,7 +1138,7 @@ int changeReportingTime(char *newTime) {
 int changeTimeWindow(char *newTime) {
 	int newTimeWindow = stringToInt(newTime);
 	if (newTimeWindow != -1) {
-		TIME_WINDOW_MS = newTimeWindow;
+		TIME_WINDOW_MS = newTimeWindow*1000;
 		return 1;
 	}
 	return 0;
@@ -1213,7 +1213,7 @@ void rgb_setLeds_OledHack(uint8_t ledMask) {
 }
 
 int stringToInt(char *intString) {
-	if (intString == NULL) return -1;
+	if (intString == NULL || intString == "") return -1;
 
 	int len = strlen(intString);
 	int answer = 0;
