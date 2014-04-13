@@ -743,12 +743,12 @@ void UART3_IRQHandler (void) {
 		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
 
-	if ((LPC_UART3->IIR & UART_IIR_INTID_THRE) == UART_IIR_INTID_THRE) {
+	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_THRE) {
 		reportBytesLeftToSend -= UART_Send(LPC_UART3, (newReport + strlen(newReport) - reportBytesLeftToSend), reportBytesLeftToSend, NONE_BLOCKING);
 
 		if(reportBytesLeftToSend == 0) {
 			UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, DISABLE);
-			newReport[0] = '\0';
+			memset(newReport, 0, strlen(newReport));
 		}
 	}
 }
@@ -857,11 +857,11 @@ void updateFreqCounter() {
 	currentAccIdx = (++currentAccIdx) % NUM_OF_ACC_VALUES_TO_AVG;
 
 	// mean filter:
-	//currentAccZFilteredValue = (prevAccZFilteredValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
+	currentAccZFilteredValue = (prevAccZFilteredValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
 
 	// median filter
 
-	int tempIdx = 0;
+	/*int tempIdx = 0;
 	int tempVal = 0;
 
 	while(accValuesSorted[tempIdx++] != accZValToRemove);
@@ -884,7 +884,7 @@ void updateFreqCounter() {
 
 	currentAccZFilteredValue = NUM_OF_ACC_VALUES_TO_AVG % 2 == 0 ? accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] :
 	 		(accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] + accValuesSorted[(NUM_OF_ACC_VALUES_TO_AVG+1)/2])/2;
-	 		
+	 		*/
 	if (hasCrossedAccThreshold == 1) {
 		if ((prevAccZFilteredValue < 0 && currentAccZFilteredValue > 0) || (prevAccZFilteredValue > 0 && currentAccZFilteredValue < 0)) {
 			currentFreqCounter ++;
