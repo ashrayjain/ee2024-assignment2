@@ -1134,19 +1134,19 @@ void processUartCommand() {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_RTIME, strlen(MESSAGE_CONFIRM_NOT_CHANGE_RTIME), NONE_BLOCKING);
 			}
 		} else if (strncmpi(stationCommand, CMD_CHANGE_TIME_WINDOW, strlen(CMD_CHANGE_TIME_WINDOW)) == 0) {
-			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_TIME_WINDOW)+1) != -1) {
+			if (changeTimeWindow(stationCommand+strlen(CMD_CHANGE_TIME_WINDOW)+1) != -1) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_TWTIME, strlen(MESSAGE_CONFIRM_CHANGE_TWTIME), NONE_BLOCKING);
 			} else {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_TWTIME, strlen(MESSAGE_CONFIRM_NOT_CHANGE_TWTIME), NONE_BLOCKING);
 			}
 		} else if (strncmpi(stationCommand, CMD_CHANGE_UPPER_THRESHOLD, strlen(CMD_CHANGE_UPPER_THRESHOLD)) == 0) {
-			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_UPPER_THRESHOLD)+1) != -1) {
+			if (changeUpperThreshold(stationCommand+strlen(CMD_CHANGE_UPPER_THRESHOLD)+1) != -1) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD), NONE_BLOCKING);
 			} else {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD, strlen(MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD), NONE_BLOCKING);
 			}
 		} else if (strncmpi(stationCommand, CMD_CHANGE_LOWER_THRESHOLD, strlen(CMD_CHANGE_LOWER_THRESHOLD)) == 0) {
-			if (changeReportingTime(stationCommand+strlen(CMD_CHANGE_LOWER_THRESHOLD)+1) != -1) {
+			if (changeLowerThreshold(stationCommand+strlen(CMD_CHANGE_LOWER_THRESHOLD)+1) != -1) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD), NONE_BLOCKING);
 			} else {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD, strlen(MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD), NONE_BLOCKING);
@@ -1184,6 +1184,7 @@ int changeReportingTime(char *newTime) {
 	} else if (newReportingTime == 0) {
 		sendReportFlag = 0;
 		TIM_Cmd(LPC_TIM1, DISABLE);
+		return 1;
 	}
 	return 0;
 }
