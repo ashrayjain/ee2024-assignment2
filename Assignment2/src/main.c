@@ -25,6 +25,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #define DEL_ASSET_TAG_ID 013
 #define COUNT_DOWN_START 1
@@ -44,143 +45,125 @@
 // ######  Variable Definitions   ###### //
 // ##################################### //
 
-typedef enum {FFS_CALIBRATING, FFS_STDBY_COUNTING_DOWN, FFS_STDBY_ENV_TESTING, FFS_ACTIVE} SYSTEM_STATE;
-typedef enum {UNKNOWN_TEMPERATURE, NORMAL, HOT} TEMPERATURE_STATE;
-typedef enum {UNKNOWN_RADIATION, SAFE, RISKY} RADIATION_STATE;
-typedef enum {NON_RESONANT, RESONANT} FLUTTER_STATE;
-typedef enum {STDBY_MODE, ACTIVE_MODE} ACC_MODE;
-typedef enum {EINT0, EINT1, ENT2, ENT3} EXTERNAL_INTERRUPT;
-typedef enum {BUZZER_LOW, BUZZER_HIGH} BUZZER_STATE;
-typedef enum {HANDSHAKE_NOT_DONE, HANDSHAKE_DONE} HANDSHAKE_STATE;
+ typedef enum {FFS_CALIBRATING, FFS_STDBY_COUNTING_DOWN, FFS_STDBY_ENV_TESTING, FFS_ACTIVE} SYSTEM_STATE;
+ typedef enum {UNKNOWN_TEMPERATURE, NORMAL, HOT} TEMPERATURE_STATE;
+ typedef enum {UNKNOWN_RADIATION, SAFE, RISKY} RADIATION_STATE;
+ typedef enum {NON_RESONANT, RESONANT} FLUTTER_STATE;
+ typedef enum {STDBY_MODE, ACTIVE_MODE} ACC_MODE;
+ typedef enum {EINT0, EINT1, ENT2, ENT3} EXTERNAL_INTERRUPT;
+ typedef enum {BUZZER_LOW, BUZZER_HIGH} BUZZER_STATE;
+ typedef enum {HANDSHAKE_NOT_DONE, HANDSHAKE_DONE} HANDSHAKE_STATE;
 
-const unsigned short CALIBRATED_PORT = 1;
-const unsigned short CALIBRATED_PIN = 31;
+ const unsigned short CALIBRATED_PORT = 1;
+ const unsigned short CALIBRATED_PIN = 31;
 
-const unsigned short RESET_PORT = 0;
-const unsigned short RESET_PIN = 4;
+ const unsigned short RESET_PORT = 0;
+ const unsigned short RESET_PIN = 4;
 
-const unsigned short LIGHT_PORT = 2;
-const unsigned short LIGHT_PIN = 5;
+ const unsigned short LIGHT_PORT = 2;
+ const unsigned short LIGHT_PIN = 5;
 
-const unsigned short TEMP_UPPER_LIMIT = 340;
+ const unsigned short TEMP_UPPER_LIMIT = 340;
 
-const unsigned short ACC_UPDATE_PERIOD_MS = 20;
-const float ACC_THRESHOLD = 3;
-const int FREQ_UPDATE_PERIOD_MS = 500;
+ const unsigned short ACC_UPDATE_PERIOD_MS = 20;
+ const float ACC_THRESHOLD = 3;
+ const int FREQ_UPDATE_PERIOD_MS = 500;
 
-unsigned short TIME_WINDOW_MS = 3000;
-unsigned short UNSAFE_LOWER_HZ = 2;
-unsigned short UNSAFE_UPPER_HZ = 10;
-unsigned short REPORTING_PERIOD_MS = 1000;
+ unsigned short TIME_WINDOW_MS = 3000;
+ unsigned short UNSAFE_LOWER_HZ = 2;
+ unsigned short UNSAFE_UPPER_HZ = 10;
+ unsigned short REPORTING_PERIOD_MS = 1000;
 
-char handShakeSymbol = 'H';
+ char handShakeSymbol = 'H';
 
-const uint32_t notes[] = {
-        2272, // A - 440 Hz
-        2024, // B - 494 Hz
-        3816, // C - 262 Hz
-        3401, // D - 294 Hz
-        3030, // E - 330 Hz
-        2865, // F - 349 Hz
-        2551, // G - 392 Hz
-        1136, // a - 880 Hz
-        1012, // b - 988 Hz
-        1912, // c - 523 Hz
-        1703, // d - 587 Hz
-        1517, // e - 659 Hz
-        1432, // f - 698 Hz
-        1275, // g - 784 Hz
-};
+ const char tempStateStringMap[3][9] = {
+ 	"        ",
+ 	" NORMAL ",
+ 	"  HOT   "
+ };
 
-const char tempStateStringMap[3][9] = {
-		"        ",
-		" NORMAL ",
-		"  HOT   "
-};
-
-const char radiationStateStringMap[3][7] = {
-		"      ",
-		"SAFE  ",
-		"RISKY "
-};
+ const char radiationStateStringMap[3][7] = {
+ 	"      ",
+ 	"SAFE  ",
+ 	"RISKY "
+ };
 
 // #################################### //
 // #####  Variable Declarations   ##### //
 // #################################### //
 
-SYSTEM_STATE currentState;
+ SYSTEM_STATE currentState;
 
-HANDSHAKE_STATE currentHandshakeState;
-short hasNewCommand = 0;
+ HANDSHAKE_STATE currentHandshakeState;
+ short hasNewCommand = 0;
 
-const char MESSAGE_READY[20] = "RDY 013\r\n";
-const char MESSAGE_HANDSHAKE_CONFIRM[20] = "HSHK 013\r\n";
-const char MESSAGE_CONFIRM_ENTER_CALIB[20] = "CACK\r\n";
-const char MESSAGE_CONFIRM_ENTER_STDBY[20] = "SACK\r\n";
-const char MESSAGE_REPORT_TEMPLATE[20] = "REPT 013 %02d%s\r\n";
+ const char MESSAGE_READY[20] = "RDY 013\r\n";
+ const char MESSAGE_HANDSHAKE_CONFIRM[20] = "HSHK 013\r\n";
+ const char MESSAGE_CONFIRM_ENTER_CALIB[20] = "CACK\r\n";
+ const char MESSAGE_CONFIRM_ENTER_STDBY[20] = "SACK\r\n";
+ const char MESSAGE_REPORT_TEMPLATE[20] = "REPT 013 %02d%s\r\n";
 
-const char MESSAGE_CONFIRM_CHANGE_RTIME[20] = "CRTACK\r\n";
-const char MESSAGE_CONFIRM_NOT_CHANGE_RTIME[20] = "CRTNACK\r\n";
-const char MESSAGE_CONFIRM_CHANGE_TWTIME[20] = "CTWACK\r\n";
-const char MESSAGE_CONFIRM_NOT_CHANGE_TWTIME[20] = "CTWNACK\r\n";
-const char MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD[20] = "CLTACK\r\n";
-const char MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD[20] = "CLTNACK\r\n";
-const char MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD[20] = "CUTACK\r\n";
-const char MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD[20] = "CUTNACK\r\n";
+ const char MESSAGE_CONFIRM_CHANGE_RTIME[20] = "CRTACK\r\n";
+ const char MESSAGE_CONFIRM_NOT_CHANGE_RTIME[20] = "CRTNACK\r\n";
+ const char MESSAGE_CONFIRM_CHANGE_TWTIME[20] = "CTWACK\r\n";
+ const char MESSAGE_CONFIRM_NOT_CHANGE_TWTIME[20] = "CTWNACK\r\n";
+ const char MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD[20] = "CLTACK\r\n";
+ const char MESSAGE_CONFIRM_NOT_CHANGE_LOWER_THRESHOLD[20] = "CLTNACK\r\n";
+ const char MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD[20] = "CUTACK\r\n";
+ const char MESSAGE_CONFIRM_NOT_CHANGE_UPPER_THRESHOLD[20] = "CUTNACK\r\n";
 
-const char REPLY_ACK[7] = "RACK";
-const char REPLY_NOT_ACK[7] = "RNACK";
-const char CMD_RESET_TO_CALIB[7] = "RSTC";
-const char CMD_RESET_TO_STDBY[7] = "RSTS";
-const char CMD_CHANGE_REPORTING_TIME[4] = "RT";
-const char CMD_CHANGE_TIME_WINDOW[4] = "TW";
-const char CMD_CHANGE_LOWER_THRESHOLD[4] = "LT";
-const char CMD_CHANGE_UPPER_THRESHOLD[4] = "UT";
+ const char REPLY_ACK[7] = "RACK";
+ const char REPLY_NOT_ACK[7] = "RNACK";
+ const char CMD_RESET_TO_CALIB[7] = "RSTC";
+ const char CMD_RESET_TO_STDBY[7] = "RSTS";
+ const char CMD_CHANGE_REPORTING_TIME[4] = "RT";
+ const char CMD_CHANGE_TIME_WINDOW[4] = "TW";
+ const char CMD_CHANGE_LOWER_THRESHOLD[4] = "LT";
+ const char CMD_CHANGE_UPPER_THRESHOLD[4] = "UT";
 
-char stationCommand[7] = "";
+ char stationCommand[7] = "";
 
-short countDownStarted = 0;
-int currentCountValue = 0;
+ short countDownStarted = 0;
+ int currentCountValue = 0;
 
-TEMPERATURE_STATE temperatureState;
-int32_t currentTemperatureReading;
+ TEMPERATURE_STATE temperatureState;
+ int32_t currentTemperatureReading;
 
-uint32_t temp_t1 = 0;
-uint32_t temp_t2 = 0;
-int temp_i = 0;
-int32_t *temp_pointer = 0;
+ uint32_t temp_t1 = 0;
+ uint32_t temp_t2 = 0;
+ int temp_i = 0;
+ int32_t *temp_pointer = 0;
 
-RADIATION_STATE radiationState = SAFE;
+ RADIATION_STATE radiationState = SAFE;
 
-ACC_MODE accMode;
-int8_t accX = 0;
-int8_t accY = 0;
-int8_t accZ = 0;
-int8_t accXOffset = 0;
-int8_t accYOffset = 0;
-int8_t accZOffset = 0;
-int8_t accZValToRemove = 0;
+ ACC_MODE accMode;
+ int8_t accX = 0;
+ int8_t accY = 0;
+ int8_t accZ = 0;
+ int8_t accXOffset = 0;
+ int8_t accYOffset = 0;
+ int8_t accZOffset = 0;
+ int8_t accZValToRemove = 0;
 
-int8_t accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
-int8_t accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG] = {0};
-int8_t currentAccIdx = 0;
-float currentAccZFilteredValue = 0.0;
-float prevAccZFilteredValue = 0.0;
-uint8_t hasCrossedAccThreshold = 0;
+ int8_t accValues[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+ int8_t accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG] = {0};
+ int8_t currentAccIdx = 0;
+ float currentAccZFilteredValue = 0.0;
+ float prevAccZFilteredValue = 0.0;
+ uint8_t hasCrossedAccThreshold = 0;
 
-int currentFreqCounter = 0;
-float currentFrequency = 0;
+ int currentFreqCounter = 0;
+ float currentFrequency = 0;
 
-FLUTTER_STATE flutterState;
-short isWarningOn = 0;
-short setWarningToStop = 0;
-short setWarningToStart = 0;
+ FLUTTER_STATE flutterState;
+ short isWarningOn = 0;
+ short setWarningToStop = 0;
+ short setWarningToStart = 0;
 
-BUZZER_STATE buzzerState;
+ BUZZER_STATE buzzerState;
 
-char newReport[20] = "";
-short reportBytesLeftToSend = 0;
-//short sendReportFlag = 1;
+ char newReport[20] = "";
+ short reportBytesLeftToSend = 0;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
@@ -268,8 +251,6 @@ int changeLowerThreshold();
 int changeUpperThreshold();
 
 // helper functions
-static	void playNote		(uint32_t note, uint32_t durationMs);
-void rgb_setLeds_OledHack	(uint8_t ledMask);
 void tempToString			(char *str);
 void toStringInt			(char *str, int val);
 void toStringDouble			(char *str, float val);
@@ -285,38 +266,41 @@ int stringToInt				(char *intString);
 
 void initAllPeripherals() {
 	init_GPIO();
-    init_i2c();
-    init_ssp();
+	init_i2c();
+	init_ssp();
 
-    init_uart();
+	init_uart();
 
     //init_xBee();
 
-    pca9532_init();
-    pca9532_setLeds(0, 0xffff);
+	pca9532_init();
+	pca9532_setLeds(0, 0xffff);
 
-    acc_init();
+	acc_init();
 
 	rgb_init();
-	rgb_setLeds_OledHack(0);
+	rgb_setLeds(0);
 
 	led7seg_init();
 	led7seg_setChar('-', 0);
 
-    oled_init();
-    oled_clearScreen(OLED_COLOR_BLACK);
+	oled_init();
+	oled_clearScreen(OLED_COLOR_BLACK);
 
-    light_init();
-    light_enable();
-    light_setRange(LIGHT_RANGE_64000);
-    light_clearIrqStatus();
+	light_init();
+	light_enable();
+	light_setRange(LIGHT_RANGE_64000);
+	light_clearIrqStatus();
 
-    init_buzzer();
+	init_buzzer();
 
-    NVIC_ClearPendingIRQ(EINT3_IRQn);
-    NVIC_ClearPendingIRQ(EINT0_IRQn);
-    NVIC_EnableIRQ(EINT3_IRQn);
-    NVIC_EnableIRQ(EINT0_IRQn);
+	NVIC_SetPriority(EINT3_IRQn, ((2<<3)|0x00));
+	NVIC_ClearPendingIRQ(EINT3_IRQn);
+	NVIC_EnableIRQ(EINT3_IRQn);
+	
+	NVIC_SetPriority(EINT0_IRQn, ((0<<3)|0x00));
+	NVIC_ClearPendingIRQ(EINT0_IRQn);
+	NVIC_EnableIRQ(EINT0_IRQn);
 }
 
 void init_ssp(void) {
@@ -330,93 +314,93 @@ void init_ssp(void) {
 	 * P0.9 - MOSI
 	 * P2.2 - SSEL - used as GPIO
 	 */
-	PinCfg.Funcnum = 2;
-	PinCfg.OpenDrain = 0;
-	PinCfg.Pinmode = 0;
-	PinCfg.Portnum = 0;
-	PinCfg.Pinnum = 7;
-	PINSEL_ConfigPin(&PinCfg);
-	PinCfg.Pinnum = 8;
-	PINSEL_ConfigPin(&PinCfg);
-	PinCfg.Pinnum = 9;
-	PINSEL_ConfigPin(&PinCfg);
-	PinCfg.Funcnum = 0;
-	PinCfg.Portnum = 2;
-	PinCfg.Pinnum = 2;
-	PINSEL_ConfigPin(&PinCfg);
+	 PinCfg.Funcnum = 2;
+	 PinCfg.OpenDrain = 0;
+	 PinCfg.Pinmode = 0;
+	 PinCfg.Portnum = 0;
+	 PinCfg.Pinnum = 7;
+	 PINSEL_ConfigPin(&PinCfg);
+	 PinCfg.Pinnum = 8;
+	 PINSEL_ConfigPin(&PinCfg);
+	 PinCfg.Pinnum = 9;
+	 PINSEL_ConfigPin(&PinCfg);
+	 PinCfg.Funcnum = 0;
+	 PinCfg.Portnum = 2;
+	 PinCfg.Pinnum = 2;
+	 PINSEL_ConfigPin(&PinCfg);
 
-	SSP_ConfigStructInit(&SSP_ConfigStruct);
+	 SSP_ConfigStructInit(&SSP_ConfigStruct);
 
 	// Initialize SSP peripheral with parameter given in structure above
-	SSP_Init(LPC_SSP1, &SSP_ConfigStruct);
+	 SSP_Init(LPC_SSP1, &SSP_ConfigStruct);
 
 	// Enable SSP peripheral
-	SSP_Cmd(LPC_SSP1, ENABLE);
-}
+	 SSP_Cmd(LPC_SSP1, ENABLE);
+	}
 
-void init_i2c(void) {
-	PINSEL_CFG_Type PinCfg;
+	void init_i2c(void) {
+		PINSEL_CFG_Type PinCfg;
 
 	/* Initialize I2C2 pin connect */
-	PinCfg.Funcnum = 2;
-	PinCfg.Pinnum = 10;
-	PinCfg.Portnum = 0;
-	PINSEL_ConfigPin(&PinCfg);
-	PinCfg.Pinnum = 11;
-	PINSEL_ConfigPin(&PinCfg);
+		PinCfg.Funcnum = 2;
+		PinCfg.Pinnum = 10;
+		PinCfg.Portnum = 0;
+		PINSEL_ConfigPin(&PinCfg);
+		PinCfg.Pinnum = 11;
+		PINSEL_ConfigPin(&PinCfg);
 
 	// Initialize I2C peripheral
-	I2C_Init(LPC_I2C2, 100000);
+		I2C_Init(LPC_I2C2, 100000);
 
 	/* Enable I2C1 operation */
-	I2C_Cmd(LPC_I2C2, ENABLE);
-}
+		I2C_Cmd(LPC_I2C2, ENABLE);
+	}
 
-void init_GPIO(void) {
+	void init_GPIO(void) {
 	// Initialize button
-	PINSEL_CFG_Type PinCfg;
+		PINSEL_CFG_Type PinCfg;
 
-	PinCfg.Funcnum = 1;
-	PinCfg.Pinnum = 10;
-	PinCfg.Portnum = 2;
-	PinCfg.Pinmode = 0;
-	PinCfg.OpenDrain = 0;
-	PINSEL_ConfigPin(&PinCfg);
+		PinCfg.Funcnum = 1;
+		PinCfg.Pinnum = 10;
+		PinCfg.Portnum = 2;
+		PinCfg.Pinmode = 0;
+		PinCfg.OpenDrain = 0;
+		PINSEL_ConfigPin(&PinCfg);
 
 
-	PinCfg.Funcnum = 0;
-	PinCfg.Pinnum = CALIBRATED_PIN;
-	PinCfg.Portnum = CALIBRATED_PORT;
-	PinCfg.Pinmode = 0;
-	PinCfg.OpenDrain = 0;
-	PINSEL_ConfigPin(&PinCfg);
-	GPIO_SetDir(CALIBRATED_PORT, (1<<CALIBRATED_PIN), 0);
+		PinCfg.Funcnum = 0;
+		PinCfg.Pinnum = CALIBRATED_PIN;
+		PinCfg.Portnum = CALIBRATED_PORT;
+		PinCfg.Pinmode = 0;
+		PinCfg.OpenDrain = 0;
+		PINSEL_ConfigPin(&PinCfg);
+		GPIO_SetDir(CALIBRATED_PORT, (1<<CALIBRATED_PIN), 0);
 
-	PinCfg.Funcnum = 0;
-	PinCfg.Pinnum = 5;
-	PinCfg.Portnum = 2;
-	PinCfg.Pinmode = 0;
-	PinCfg.OpenDrain = 0;
-	PINSEL_ConfigPin(&PinCfg);
-	GPIO_SetDir(2, (1<<5), 0);
-	LPC_GPIOINT->IO2IntEnF |= (1 << 5);
+		PinCfg.Funcnum = 0;
+		PinCfg.Pinnum = 5;
+		PinCfg.Portnum = 2;
+		PinCfg.Pinmode = 0;
+		PinCfg.OpenDrain = 0;
+		PINSEL_ConfigPin(&PinCfg);
+		GPIO_SetDir(2, (1<<5), 0);
+		LPC_GPIOINT->IO2IntEnF |= (1 << 5);
 
-	PinCfg.Funcnum = 2;
-	PinCfg.Pinnum = 0;
-	PinCfg.Portnum = 0;
-	PINSEL_ConfigPin(&PinCfg);
-	PinCfg.Pinnum = 1;
-	PINSEL_ConfigPin(&PinCfg);
-}
+		PinCfg.Funcnum = 2;
+		PinCfg.Pinnum = 0;
+		PinCfg.Portnum = 0;
+		PINSEL_ConfigPin(&PinCfg);
+		PinCfg.Pinnum = 1;
+		PINSEL_ConfigPin(&PinCfg);
+	}
 
-void init_buzzer() {
-	GPIO_SetDir(2, 1<<0, 1);
-	GPIO_SetDir(2, 1<<1, 1);
+	void init_buzzer() {
+		GPIO_SetDir(2, 1<<0, 1);
+		GPIO_SetDir(2, 1<<1, 1);
 
-	GPIO_SetDir(0, 1<<27, 1);
-	GPIO_SetDir(0, 1<<28, 1);
-	GPIO_SetDir(2, 1<<13, 1);
-	GPIO_SetDir(0, 1<<26, 1);
+		GPIO_SetDir(0, 1<<27, 1);
+		GPIO_SetDir(0, 1<<28, 1);
+		GPIO_SetDir(2, 1<<13, 1);
+		GPIO_SetDir(0, 1<<26, 1);
 
 	GPIO_ClearValue(0, 1<<27); //LM4811-clk
 	GPIO_ClearValue(0, 1<<28); //LM4811-up/dn
@@ -439,6 +423,7 @@ void init_uart() {
 	LPC_UART3->IER |= UART_IER_THREINT_EN;
 	LPC_UART3->FCR |= UART_FCR_TRG_LEV1;
 
+	NVIC_SetPriority(UART3_IRQn, ((3<<3)|0x00));
 	NVIC_ClearPendingIRQ(UART3_IRQn);
 	NVIC_EnableIRQ(UART3_IRQn);
 }
@@ -452,7 +437,7 @@ void init_xBee() {
 
 	UART_DeInit(LPC_UART3);
 
- 	UART_CFG_Type uartCfg;
+	UART_CFG_Type uartCfg;
 	uartCfg.Baud_rate = 9600;
 	uartCfg.Databits = UART_DATABIT_8;
 	uartCfg.Parity = UART_PARITY_NONE;
@@ -460,13 +445,13 @@ void init_xBee() {
 
 	UART_Init(LPC_UART3, &uartCfg);
 	UART_TxCmd(LPC_UART3, ENABLE);
-   	
-   	
-   	Timer0_Wait(1000);
- 	UART_SendString(LPC_UART3, (uint8_t*) "+++");
-   	Timer0_Wait(1000);
-   	xBee_checkOk();
-   	UART_SendString(LPC_UART3, (uint8_t*) "ATBD7\r");
+
+
+	Timer0_Wait(1000);
+	UART_SendString(LPC_UART3, (uint8_t*) "+++");
+	Timer0_Wait(1000);
+	xBee_checkOk();
+	UART_SendString(LPC_UART3, (uint8_t*) "ATBD7\r");
 	xBee_checkOk();
 
    	// configure xBee source and destination addresses
@@ -494,18 +479,6 @@ void init_timer() {
 	TIM_TIMERCFG_Type TimerConfigStruct;
 	TIM_MATCHCFG_Type TimerMatcher;
 
-	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
-	TimerConfigStruct.PrescaleValue = preScaleValue2;
-
-	TimerMatcher.MatchChannel = 0;
-	TimerMatcher.IntOnMatch = ENABLE;
-	TimerMatcher.ResetOnMatch = TRUE;
-	TimerMatcher.StopOnMatch = FALSE;
-	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / preScaleValue2;
-
-	TIM_Init(LPC_TIM2, TIM_TIMER_MODE, &TimerConfigStruct);
-	TIM_ConfigMatch (LPC_TIM2, &TimerMatcher);
 
 	// configure Timer1 for reporting
 
@@ -513,10 +486,26 @@ void init_timer() {
 	TimerConfigStruct.PrescaleValue = preScaleValue1;
 
 	TimerMatcher.MatchChannel = 0;
+	TimerMatcher.IntOnMatch = ENABLE;
+	TimerMatcher.ResetOnMatch = TRUE;
+	TimerMatcher.StopOnMatch = FALSE;
+	TimerMatcher.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
 	TimerMatcher.MatchValue = (REPORTING_PERIOD_MS * 1000) / preScaleValue1;
 
 	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &TimerConfigStruct);
 	TIM_ConfigMatch (LPC_TIM1, &TimerMatcher);
+
+	// configure Timer 2
+	TimerConfigStruct.PrescaleOption = TIM_PRESCALE_USVAL;
+	TimerConfigStruct.PrescaleValue = preScaleValue2;
+
+	TimerMatcher.MatchChannel = 0;
+	TimerMatcher.MatchValue = (ACC_UPDATE_PERIOD_MS * 1000) / preScaleValue2;
+
+	TIM_Init(LPC_TIM2, TIM_TIMER_MODE, &TimerConfigStruct);
+	TIM_ConfigMatch (LPC_TIM2, &TimerMatcher);
+
+
 
 	//configure timer3 for uart
 
@@ -532,15 +521,15 @@ void init_timer() {
 
 	//Configure NVIC
 
-	NVIC_SetPriority(TIMER2_IRQn, ((0x11<<3)|0x01));
+	NVIC_SetPriority(TIMER2_IRQn, ((1<<3)|0x00));
 	NVIC_ClearPendingIRQ(TIMER2_IRQn);
 	NVIC_EnableIRQ(TIMER2_IRQn);
 
-	NVIC_SetPriority(TIMER1_IRQn, ((0x01<<3)|0x01));
+	NVIC_SetPriority(TIMER1_IRQn, ((3<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER1_IRQn);
 	NVIC_EnableIRQ(TIMER1_IRQn);
 
-	NVIC_SetPriority(TIMER3_IRQn, ((0x01<<3)|0x01));
+	NVIC_SetPriority(TIMER3_IRQn, ((3<<3)|0x01));
 	NVIC_ClearPendingIRQ(TIMER3_IRQn);
 	NVIC_EnableIRQ(TIMER3_IRQn);
 }
@@ -561,9 +550,11 @@ void init_temp_interrupt(int32_t *var) {
 	LPC_GPIOINT->IO0IntEnR |= (1 << 2);
 
 	temp_pointer = var;
+	NVIC_SetPriority(EINT3_IRQn, ((0x11<<3)|0x01));
 	NVIC_ClearPendingIRQ(EINT3_IRQn);
 	NVIC_EnableIRQ(EINT3_IRQn);
 }
+
 
 void disable_temp_interrupt() {
 	LPC_GPIOINT->IO0IntEnF &= ~(1 << 2);
@@ -586,9 +577,9 @@ void calibratingHandler() {
 	enterCalibratingState();
 	while(currentState == FFS_CALIBRATING) {
 		writeAccValueToOled();
-        if (((GPIO_ReadValue(CALIBRATED_PORT) >> CALIBRATED_PIN) & 0x01) == 0) {
-        	currentState = FFS_STDBY_COUNTING_DOWN;
-        }
+		if (((GPIO_ReadValue(CALIBRATED_PORT) >> CALIBRATED_PIN) & 0x01) == 0) {
+			currentState = FFS_STDBY_COUNTING_DOWN;
+		}
 	}
 	leaveCalibratingState();
 }
@@ -641,47 +632,43 @@ void activeHandler() {
 			setWarningToStart = 0;
 			isWarningOn = 1;
 		}
-
-		if (isWarningOn) {
-			//playNote(2551, 50);
-		}
 	}
 	leaveActiveState();
 }
 
 // interrupt handlers
 void SysTick_Handler(void) {
-  msTicks++;
+	msTicks++;
 
-  switch (currentState) {
-  	case FFS_STDBY_COUNTING_DOWN:
-  		if (msTicks - oneSecondTick >= 1000) {
+	switch (currentState) {
+		case FFS_STDBY_COUNTING_DOWN:
+		if (msTicks - oneSecondTick >= 1000) {
 			oneSecondTick = msTicks;
 			if (countDownStarted) {
 				decrementCount();
 			}
 		}
-  	case FFS_STDBY_ENV_TESTING:
-  	  		if (msTicks - handShakeSymbolTick >= 500) {
-  	  			handShakeSymbolTick = msTicks;
-  	  			handShakeSymbol = (handShakeSymbol=='H')?' ':'H';
-  	  		}
-  	  		break;
-	case FFS_ACTIVE:
+		case FFS_STDBY_ENV_TESTING:
+		if (msTicks - handShakeSymbolTick >= 500) {
+			handShakeSymbolTick = msTicks;
+			handShakeSymbol = (handShakeSymbol=='H')?' ':'H';
+		}
+		break;
+		case FFS_ACTIVE:
 		if (isWarningOn) {
 			switch(buzzerState) {
 				case BUZZER_HIGH:
-					NOTE_PIN_LOW();
-					buzzerState = BUZZER_LOW;
-					break;
+				NOTE_PIN_LOW();
+				buzzerState = BUZZER_LOW;
+				break;
 				case BUZZER_LOW:
-					NOTE_PIN_HIGH();
-					buzzerState = BUZZER_HIGH;
-					break;
+				NOTE_PIN_HIGH();
+				buzzerState = BUZZER_HIGH;
+				break;
 			}
 		}
 		if (msTicks - accTick >= FREQ_UPDATE_PERIOD_MS) {
-		  	accTick = msTicks;
+			accTick = msTicks;
 			currentFrequency = ((currentFreqCounter*500.0)/FREQ_UPDATE_PERIOD_MS);
 			int isNonResonant = (currentFrequency > UNSAFE_UPPER_HZ || currentFrequency < UNSAFE_LOWER_HZ);
 
@@ -707,9 +694,9 @@ void SysTick_Handler(void) {
 			}
 		}
 		break;
-	default:
+		default:
 		break;
-  }
+	}
 }
 
 void EINT0_IRQHandler(void) {
@@ -732,7 +719,7 @@ void EINT3_IRQHandler(void) {
 		LPC_GPIOINT->IO2IntClr |= (1 << 5);
 	}
 	else if (((LPC_GPIOINT->IO0IntStatF >> 2) & 0x1) ||
-			((LPC_GPIOINT->IO0IntStatR >> 2) & 0x1)) {
+		((LPC_GPIOINT->IO0IntStatR >> 2) & 0x1)) {
 		if (temp_t1 == 0 && temp_t2 == 0) {
 			temp_t1 = getMsTicks();
 		}
@@ -760,15 +747,15 @@ void TIMER1_IRQHandler (void) {
 	if(LPC_TIM1->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM1,TIM_MR0_INT);
 		//if (sendReportFlag) {
-			newReport[0] = '\0';
-			sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
-			reportBytesLeftToSend = strlen(newReport);
+		newReport[0] = '\0';
+		sprintf	(newReport, MESSAGE_REPORT_TEMPLATE, (int) currentFrequency, (isWarningOn ? " WARNING" : ""));
+		reportBytesLeftToSend = strlen(newReport);
 
-			reportBytesLeftToSend -= UART_Send (LPC_UART3, newReport, reportBytesLeftToSend, NONE_BLOCKING);
+		reportBytesLeftToSend -= UART_Send (LPC_UART3, newReport, reportBytesLeftToSend, NONE_BLOCKING);
 
-			if(reportBytesLeftToSend > 0) {
-					UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
-			}
+		if(reportBytesLeftToSend > 0) {
+			UART_IntConfig(LPC_UART3, UART_INTCFG_THRE, ENABLE);
+		}
 		//}
 	}
 }
@@ -776,7 +763,12 @@ void TIMER1_IRQHandler (void) {
 void TIMER2_IRQHandler(void) {
 	if(LPC_TIM2->IR & (1 << 0)) {
 		TIM_ClearIntPending(LPC_TIM2,TIM_MR0_INT);
-		updateFreqCounter();
+		if (currentState == FFS_CALIBRATING) {
+			updateAccReading();
+		}
+		else {
+			updateFreqCounter();
+		}
 	}
 }
 
@@ -808,14 +800,7 @@ void UART3_IRQHandler (void) {
 		if(stationCommand[3] == '\r') {
 			hasNewCommand = 1;
 		}
-
-		//char data[5];
-		//UART_Receive(LPC_UART3, data, 4, BLOCKING);
-		//data[4] = '\0';
-		//printf("%s\n", data);
-
 		stationCommand[4] = '\0';
-		//printf("RDA: %s\n", stationCommand);
 	}
 
 	if ((LPC_UART3->IIR & 14) == UART_IIR_INTID_CTI) {
@@ -833,12 +818,11 @@ void UART3_IRQHandler (void) {
 		{
 			stationCommand[currentlen] = '\0';
 			hasNewCommand = 1;
-			//printf("%s\n", stationCommand);
 		}
 		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
 
-	
+
 }
 
 uint32_t getMsTicks(void) {
@@ -854,7 +838,7 @@ void enterCalibratingState() {
 	TIM_ResetCounter(LPC_TIM2);
 	TIM_Cmd(LPC_TIM2, ENABLE);
 	writeHeaderToOled(" CALIBRATING! ");
-	rgb_setLeds_OledHack(0);
+	rgb_setLeds(0);
 	led7seg_setChar('-', 0);
 	disable_temp_interrupt();
 }
@@ -888,9 +872,9 @@ void leaveActiveState() {
 }
 
 void leaveCalibratingState() {
-	accXOffset += accX;
-	accYOffset += accY;
-	accZOffset += accZ;
+	accXOffset = accX;
+	accYOffset = accY;
+	accZOffset = accZ;
 }
 
 void leaveStdByCountingDownState() {
@@ -906,13 +890,13 @@ void leaveStdByCountingDownState() {
 void updateReadings() {
 	switch(currentState) {
 		case FFS_STDBY_ENV_TESTING:
-			updateTemperatureReading();
-			break;
+		updateTemperatureReading();
+		break;
 		case FFS_ACTIVE:
-			updateTemperatureReading();
-			break;
+		updateTemperatureReading();
+		break;
 		default:
-			break;
+		break;
 	}
 }
 
@@ -927,13 +911,13 @@ void updateTemperatureReading() {
 
 void updateAccReading() {
 	acc_read(&accX, &accY, &accZ);
-	accX -= accXOffset;
-	accY -= accYOffset;
-	accZ -= accZOffset;
 }
 
 void updateFreqCounter() {
 	updateAccReading();
+	accX -= accXOffset;
+	accY -= accYOffset;
+	accZ -= accZOffset;
 	accZValToRemove = accValues[currentAccIdx];
 	accValues[currentAccIdx] = accZ;
 	currentAccIdx = (++currentAccIdx) % NUM_OF_ACC_VALUES_TO_AVG;
@@ -941,34 +925,6 @@ void updateFreqCounter() {
 	// mean filter:
 	currentAccZFilteredValue = (prevAccZFilteredValue * NUM_OF_ACC_VALUES_TO_AVG - accZValToRemove + accZ) / NUM_OF_ACC_VALUES_TO_AVG;
 
-	// median filter
-
-	/*int tempIdx = 0;
-	int tempVal = 0;
-
-	while(accValuesSorted[tempIdx] != accZValToRemove) {
-		tempIdx++;
-	}
-
-	accValuesSorted[tempIdx] = accZ;
-
-	if(accZValToRemove > accZ) {
-		while ((--tempIdx) && accValuesSorted[tempIdx] < accZ) {
-			tempVal = accZ;
-			accZ = accValuesSorted[tempIdx];
-			accValuesSorted[tempIdx] = tempVal;
-		}
-	} else {
-		while (((++tempIdx) < NUM_OF_ACC_VALUES_TO_AVG) && (accValuesSorted[tempIdx] > accZ)) {
-			tempVal = accZ;
-			accZ = accValuesSorted[tempIdx];
-			accValuesSorted[tempIdx] = tempVal;
-		}
-	}
-
-	currentAccZFilteredValue = NUM_OF_ACC_VALUES_TO_AVG % 2 == 0 ? accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] :
-	 		(accValuesSorted[NUM_OF_ACC_VALUES_TO_AVG/2] + accValuesSorted[(NUM_OF_ACC_VALUES_TO_AVG+1)/2])/2;
-	 		*/
 	if (hasCrossedAccThreshold == 1) {
 		if ((prevAccZFilteredValue < 0 && currentAccZFilteredValue > 0) || (prevAccZFilteredValue > 0 && currentAccZFilteredValue < 0)) {
 			currentFreqCounter ++;
@@ -984,13 +940,13 @@ void updateFreqCounter() {
 }
 
 //-----------------------------------------------------------
-//------------------- Actuator Functio ----------------------
+//------------------- Actuator Function ----------------------
 //-----------------------------------------------------------
 
 void startWarning() {
 	isWarningOn = 1;
 	turnOnLedArray();
-	rgb_setLeds_OledHack(RGB_RED);
+	rgb_setLeds(RGB_RED);
 	NOTE_PIN_HIGH();
 }
 
@@ -1003,16 +959,12 @@ void stopWarning() {
 	NOTE_PIN_LOW();
 	buzzerState = BUZZER_LOW;
 	turnOffLedArray();
-	rgb_setLeds_OledHack(0);
+	rgb_setLeds(0);
 	NOTE_PIN_LOW();
 }
 
 void turnOffLedArray() {
 	pca9532_setLeds(0, 0xffff);
-}
-
-void runWarning() {
-	//playNote(2272, 1);
 }
 
 //-----------------------------------------------------------
@@ -1023,12 +975,15 @@ void countDownFrom(int startCount) {
 	currentState = FFS_STDBY_COUNTING_DOWN;
 	currentCountValue = startCount;
 	countDownStarted = 1;
+	char str[2];
+	toStringInt(str, startCount);
+	led7seg_setChar(str[0], 0);
 }
 
 void decrementCount() {
 	if (currentCountValue != 0) {
 		char str[2];
-		toStringInt(str, currentCountValue--);
+		toStringInt(str, --currentCountValue);
 		led7seg_setChar(str[0], 0);
 	}
 	else {
@@ -1071,28 +1026,12 @@ void writeTempToOled() {
 
 void writeAccValueToOled() {
 	char str[15] = "";
-	strcat(str, "   X : ");
+	strcat(str, "  Z : ");
 	char val[5] = "";
-	toStringInt(val, accX);
-	strcat(str, val);
-	strcat(str, "   ");
-	oled_putString(7, 32, str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
-
-	str[0] = '\0';
-	strcat(str, "   Y : ");
-	val[0] = '\0';
-	toStringInt(val, accY);
-	strcat(str, val);
-	strcat(str, "   ");
-	oled_putString(7, 40, str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
-
-	str[0] = '\0';
-	strcat(str, "   Z : ");
-	val[0] = '\0';
 	toStringInt(val, accZ);
 	strcat(str, val);
 	strcat(str, "   ");
-	oled_putString(7, 48, str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	oled_putString(7, 40, str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 }
 
 //-----------------------------------------------------------
@@ -1140,7 +1079,7 @@ void processUartCommand() {
 
 
 		} else if (strncmpi(stationCommand, CMD_CHANGE_TIME_WINDOW, strlen(CMD_CHANGE_TIME_WINDOW)) == 0) {
-			
+
 			if (changeTimeWindow(stationCommand+strlen(CMD_CHANGE_TIME_WINDOW)+1) != 0) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_TWTIME, strlen(MESSAGE_CONFIRM_CHANGE_TWTIME), NONE_BLOCKING);
 			} else {
@@ -1149,7 +1088,7 @@ void processUartCommand() {
 
 
 		} else if (strncmpi(stationCommand, CMD_CHANGE_UPPER_THRESHOLD, strlen(CMD_CHANGE_UPPER_THRESHOLD)) == 0) {
-			
+
 			if (changeUpperThreshold(stationCommand+strlen(CMD_CHANGE_UPPER_THRESHOLD)+1) != 0) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_UPPER_THRESHOLD), NONE_BLOCKING);
 			} else {
@@ -1157,7 +1096,7 @@ void processUartCommand() {
 			}
 
 		} else if (strncmpi(stationCommand, CMD_CHANGE_LOWER_THRESHOLD, strlen(CMD_CHANGE_LOWER_THRESHOLD)) == 0) {
-			
+
 			if (changeLowerThreshold(stationCommand+strlen(CMD_CHANGE_LOWER_THRESHOLD)+1) != 0) {
 				UART_Send(LPC_UART3, MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD, strlen(MESSAGE_CONFIRM_CHANGE_LOWER_THRESHOLD), NONE_BLOCKING);
 			} else {
@@ -1195,13 +1134,6 @@ int changeReportingTime(char *newTime) {
 		TIM_Cmd(LPC_TIM1, ENABLE);
 		return 1;
 	}
-	/*
-	 else if (newReportingTime == 0) {
-		sendReportFlag = 0;
-		TIM_Cmd(LPC_TIM1, DISABLE);
-		return 1;
-	}
-	*/
 	return 0;
 }
 int changeTimeWindow(char *newTime) {
@@ -1235,30 +1167,6 @@ int changeUpperThreshold(char *newThreshold) {
 //-------------------- Helper Functions ---------------------
 //-----------------------------------------------------------
 
-static void playNote(uint32_t note, uint32_t durationMs) {
-
-    uint32_t t = 0;
-
-    if (note > 0) {
-
-        while (t < (durationMs*1000)) {
-            NOTE_PIN_HIGH();
-            Timer0_us_Wait(note / 2);
-            //delay32Us(0, note / 2);
-
-            NOTE_PIN_LOW();
-            Timer0_us_Wait(note / 2);
-            //delay32Us(0, note / 2);
-
-            t += note;
-        }
-
-    }
-    else {
-    	Timer0_Wait(durationMs);
-        //delay32Ms(0, durationMs);
-    }
-}
 
 void tempToString(char *str) {
 	strcat(str, " TEMP: ");
@@ -1275,10 +1183,6 @@ void toStringInt(char *str, int val) {
 
 void toStringDouble(char *str, float val) {
 	sprintf(str, "%.1f", val);
-}
-
-void rgb_setLeds_OledHack(uint8_t ledMask) {
-	rgb_setLeds(ledMask | RGB_GREEN);
 }
 
 int stringToInt(char *intString) {
@@ -1306,27 +1210,27 @@ int main (void) {
 	initAllPeripherals();
 	init_timer();
 
-    while (1)
-    {
-    	switch(currentState)
-    	{
+	while (1)
+	{
+		switch(currentState)
+		{
 			case FFS_CALIBRATING:
-				calibratingHandler();
-				break;
+			calibratingHandler();
+			break;
 			case FFS_STDBY_COUNTING_DOWN:
-				stdbyCountingDownHandler();
-				break;
+			stdbyCountingDownHandler();
+			break;
 			case FFS_STDBY_ENV_TESTING:
-				stdbyEnvTestingHandler();
-				break;
+			stdbyEnvTestingHandler();
+			break;
 			case FFS_ACTIVE:
-				activeHandler();
-				break;
+			activeHandler();
+			break;
 			default:
-				break;
-    	}
+			break;
+		}
         //Timer0_Wait(1);
-    }
+	}
 }
 
 void check_failed(uint8_t *file, uint32_t line) {
