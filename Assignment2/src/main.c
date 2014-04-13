@@ -35,8 +35,6 @@
 #define TEMP_NUM_HALF_PERIODS 340
 #define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
 #define CELSIUS_SYMBOL_ASCII 128
-#define HANDSHAKE_SYMBOL_ASCII 129
-#define NOT_HANDSHAKE_SYMBOL_ASCII 130
 
 
 // ##################################### //
@@ -71,6 +69,8 @@ unsigned short TIME_WINDOW_MS = 3000;
 unsigned short UNSAFE_LOWER_HZ = 2;
 unsigned short UNSAFE_UPPER_HZ = 10;
 unsigned short REPORTING_PERIOD_MS = 1000;
+
+char handShakeSymbol = 'H';
 
 const uint32_t notes[] = {
         2272, // A - 440 Hz
@@ -181,9 +181,9 @@ short sendReportFlag = 1;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
+volatile uint32_t handShakeSymbolTick = 0;
 volatile uint32_t accTick = 0;
 volatile uint32_t warningTick = 0;
-static 	 char* msg = NULL;
 
 // #################################### //
 // #####  Function Declarations   ##### //
@@ -191,13 +191,15 @@ static 	 char* msg = NULL;
 
 //// Initializers ////
 void initAllPeripherals();
-static	void init_ssp	(void);
-static	void init_i2c	(void);
-static	void init_GPIO	(void);
-		void init_buzzer(void);
-		void init_timer (void);
-		void init_temp_interrupt(int32_t *var);
-		void init_handShake(void);
+void init_ssp	(void);
+void init_i2c	(void);
+void init_GPIO	(void);
+void init_buzzer(void);
+void init_timer (void);
+void init_uart	(void);
+void init_xBee	(void);
+void init_temp_interrupt(int32_t *var);
+void init_handShake(void);
 
 //// handlers ////
 
@@ -282,7 +284,10 @@ void initAllPeripherals() {
 	init_GPIO();
     init_i2c();
     init_ssp();
+
     init_uart();
+
+    //init_xBee();
 
     pca9532_init();
     pca9532_setLeds(0, 0xffff);
@@ -311,7 +316,7 @@ void initAllPeripherals() {
     NVIC_EnableIRQ(EINT0_IRQn);
 }
 
-static void init_ssp(void) {
+void init_ssp(void) {
 	SSP_CFG_Type SSP_ConfigStruct;
 	PINSEL_CFG_Type PinCfg;
 
@@ -346,7 +351,7 @@ static void init_ssp(void) {
 	SSP_Cmd(LPC_SSP1, ENABLE);
 }
 
-static void init_i2c(void) {
+void init_i2c(void) {
 	PINSEL_CFG_Type PinCfg;
 
 	/* Initialize I2C2 pin connect */
@@ -364,7 +369,7 @@ static void init_i2c(void) {
 	I2C_Cmd(LPC_I2C2, ENABLE);
 }
 
-static void init_GPIO(void) {
+void init_GPIO(void) {
 	// Initialize button
 	PINSEL_CFG_Type PinCfg;
 
@@ -433,6 +438,47 @@ void init_uart() {
 
 	NVIC_ClearPendingIRQ(UART3_IRQn);
 	NVIC_EnableIRQ(UART3_IRQn);
+}
+
+void xBee_checkOk() {
+	char buf[4] = "";
+	UART_Receive(LPC_UART3, buf, 3, BLOCKING);
+}
+
+void init_xBee() {
+
+	UART_DeInit(LPC_UART3);
+
+ 	UART_CFG_Type uartCfg;
+	uartCfg.Baud_rate = 9600;
+	uartCfg.Databits = UART_DATABIT_8;
+	uartCfg.Parity = UART_PARITY_NONE;
+	uartCfg.Stopbits = UART_STOPBIT_1;
+
+	UART_Init(LPC_UART3, &uartCfg);
+	UART_TxCmd(LPC_UART3, ENABLE);
+   	
+   	
+   	Timer0_Wait(1000);
+ 	UART_SendString(LPC_UART3, (uint8_t*) "+++");
+   	Timer0_Wait(1000);
+   	xBee_checkOk();
+   	UART_SendString(LPC_UART3, (uint8_t*) "ATBD7\r");
+	xBee_checkOk();
+
+   	// configure xBee source and destination addresses
+	UART_SendString(LPC_UART3, (uint8_t*) "ATMY35b\r");
+	xBee_checkOk();
+	UART_SendString(LPC_UART3, (uint8_t*) "ATDL35a\r");
+	xBee_checkOk();
+	UART_SendString(LPC_UART3, (uint8_t*) "ATWR\r");
+	xBee_checkOk();
+	UART_SendString(LPC_UART3, (uint8_t*) "ATCN\r");
+	xBee_checkOk();
+
+	UART_DeInit(LPC_UART3);
+
+	init_uart();
 }
 
 void init_timer() {
@@ -547,6 +593,7 @@ void calibratingHandler() {
 void stdbyCountingDownHandler() {
 	enterStdByCountingDownState();
 	while(currentState == FFS_STDBY_COUNTING_DOWN){
+		writeStatesToOled();
 		processUartCommand();
 	}
 	leaveStdByCountingDownState();
@@ -602,13 +649,21 @@ void activeHandler() {
 // interrupt handlers
 void SysTick_Handler(void) {
   msTicks++;
+
   switch (currentState) {
   	case FFS_STDBY_COUNTING_DOWN:
   		if (msTicks - oneSecondTick >= 1000) {
 			oneSecondTick = msTicks;
-			oneSecondHandler();
+			if (countDownStarted) {
+				decrementCount();
+			}
 		}
-		break;
+  	case FFS_STDBY_ENV_TESTING:
+  	  		if (msTicks - handShakeSymbolTick >= 500) {
+  	  			handShakeSymbolTick = msTicks;
+  	  			handShakeSymbol = (handShakeSymbol=='H')?' ':'H';
+  	  		}
+  	  		break;
 	case FFS_ACTIVE:
 		if (isWarningOn) {
 			switch(buzzerState) {
@@ -775,18 +830,12 @@ void UART3_IRQHandler (void) {
 		{
 			stationCommand[currentlen] = '\0';
 			hasNewCommand = 1;
-			printf("%s\n", stationCommand);
+			//printf("%s\n", stationCommand);
 		}
 		NVIC_ClearPendingIRQ(UART3_IRQn);
 	}
 
 	
-}
-
-void oneSecondHandler() {
-	if (countDownStarted) {
-		decrementCount();
-	}
 }
 
 uint32_t getMsTicks(void) {
@@ -987,25 +1036,28 @@ void decrementCount() {
 }
 
 //-----------------------------------------------------------
-//----------------- OLed Related Functio --------------------
+//----------------- OLed Related Function --------------------
 //-----------------------------------------------------------
+
 
 void writeHeaderToOled(char *str) {
 	oled_clearScreen(OLED_COLOR_BLACK);
 	oled_fillRect(0,0,96,23, OLED_COLOR_WHITE);
 	oled_putString(7, 8, str, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
-	if (currentState != FFS_CALIBRATING) {
-		char handShakeStr[15] = "              ";
-		handShakeStr[13] = (currentHandshakeState == HANDSHAKE_DONE)?(char)(HANDSHAKE_SYMBOL_ASCII):(char)(NOT_HANDSHAKE_SYMBOL_ASCII);
-		oled_putString(7, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
-	}
 }
 
 void writeStatesToOled() {
-	char stateStrings[15] = "";
-	strcat(stateStrings, tempStateStringMap[temperatureState]);
-	strcat(stateStrings, radiationStateStringMap[radiationState]);
-	oled_putString(7, 32, stateStrings, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	if (currentState != FFS_STDBY_COUNTING_DOWN) {
+		char stateStrings[15] = "";
+		strcat(stateStrings, tempStateStringMap[temperatureState]);
+		strcat(stateStrings, radiationStateStringMap[radiationState]);
+		oled_putString(7, 32, stateStrings, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	}
+	if (currentState != FFS_CALIBRATING) {
+		char handShakeStr[2] = "";
+		handShakeStr[0] = (currentHandshakeState == HANDSHAKE_DONE)?'H':handShakeSymbol;
+		oled_putString(2, 2, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+	}
 }
 
 void writeTempToOled() {
@@ -1222,7 +1274,7 @@ int stringToInt(char *intString) {
 	while(i < len) {
 		if (!isdigit(intString[i])) return -1;
 
-		answer = answer*10 + (intString[i] - '0');
+		answer = answer*10 + (intString[i++] - '0');
 	}
 
 	return answer;
