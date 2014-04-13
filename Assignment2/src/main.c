@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "helpers.h"
 
 #define DEL_ASSET_TAG_ID 013
 #define COUNT_DOWN_START 1
@@ -35,7 +36,6 @@
 #define TEMP_SCALAR_DIV10 1
 #define TEMP_NUM_HALF_PERIODS 340
 #define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
-#define CELSIUS_SYMBOL_ASCII 128
 #define HANDSHAKE_SYMBOL_ASCII 129
 #define NOT_HANDSHAKE_SYMBOL_ASCII 130
 
@@ -249,12 +249,6 @@ int changeReportingTime();
 int changeTimeWindow();
 int changeLowerThreshold();
 int changeUpperThreshold();
-
-// helper functions
-void tempToString			(char *str);
-void toStringInt			(char *str, int val);
-void toStringDouble			(char *str, float val);
-int stringToInt				(char *intString);
 
 // ########################### //
 // ##### Implementations ##### //
@@ -1020,7 +1014,7 @@ void writeStatesToOled() {
 
 void writeTempToOled() {
 	char str[15] = "";
-	tempToString(str);
+	tempToString(currentTemperatureReading, str);
 	oled_putString(7, 48, (uint8_t *)str, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
 }
 
@@ -1161,44 +1155,6 @@ int changeUpperThreshold(char *newThreshold) {
 		return 1;
 	}
 	return 0;
-}
-
-//-----------------------------------------------------------
-//-------------------- Helper Functions ---------------------
-//-----------------------------------------------------------
-
-
-void tempToString(char *str) {
-	strcat(str, " TEMP: ");
-	char tempStr[5] = "";
-	toStringDouble(tempStr, currentTemperatureReading/10.0);
-	strcat(str, tempStr);
-	char unitStr[4] = {	(char)(CELSIUS_SYMBOL_ASCII), 'C', ' ' };
-	strcat(str, unitStr);
-}
-
-void toStringInt(char *str, int val) {
-	sprintf(str, "%d", val);
-}
-
-void toStringDouble(char *str, float val) {
-	sprintf(str, "%.1f", val);
-}
-
-int stringToInt(char *intString) {
-	if (intString == NULL || strcmp(intString, "")==0) return -1;
-
-	int len = strlen(intString);
-	int answer = 0;
-	int i = 0;
-
-	while(i < len) {
-		if (!isdigit(intString[i])) return -1;
-
-		answer = answer*10 + (intString[i++] - '0');
-	}
-
-	return answer;
 }
 
 int main (void) {

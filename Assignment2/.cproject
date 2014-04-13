@@ -108,7 +108,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry excluding="helpers.c|frequency_filter.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+<entry excluding="frequency_filter.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 </sourceEntries>
 </configuration>
 </storageModule>
@@ -561,7 +561,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry excluding="helpers.c|frequency_filter.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+<entry excluding="frequency_filter.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 </sourceEntries>
 </configuration>
 </storageModule>

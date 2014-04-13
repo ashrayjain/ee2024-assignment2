@@ -16,7 +16,8 @@ src/main.d src/main.o: ../src/main.c \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/temp.h \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/rgb.h \
   C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/led7seg.h \
-  C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/light.h
+  C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/light.h \
+  ../src/helpers.h
 
 C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_MCU\inc/lpc17xx_pinsel.h:
 
@@ -53,3 +54,5 @@ C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/rgb.h:
 C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/led7seg.h:
 
 C:\Users\Ashray\ Jain\Desktop\EE2024\ Workspace\Lib_EaBaseBoard\inc/light.h:
+
+../src/helpers.h:
