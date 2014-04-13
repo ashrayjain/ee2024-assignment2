@@ -35,8 +35,6 @@
 #define TEMP_NUM_HALF_PERIODS 340
 #define TEMP_READ ((GPIO_ReadValue(0) & (1 << 2)) != 0)
 #define CELSIUS_SYMBOL_ASCII 128
-#define HANDSHAKE_SYMBOL_ASCII 129
-#define NOT_HANDSHAKE_SYMBOL_ASCII 130
 
 
 // ##################################### //
@@ -71,6 +69,8 @@ unsigned short TIME_WINDOW_MS = 3000;
 unsigned short UNSAFE_LOWER_HZ = 2;
 unsigned short UNSAFE_UPPER_HZ = 10;
 unsigned short REPORTING_PERIOD_MS = 1000;
+
+char handShakeSymbol = 'H';
 
 const uint32_t notes[] = {
         2272, // A - 440 Hz
@@ -181,6 +181,7 @@ short sendReportFlag = 1;
 
 volatile uint32_t msTicks; // counter for 1ms SysTicks
 volatile uint32_t oneSecondTick = 0;
+volatile uint32_t handShakeSymbolTick = 0;
 volatile uint32_t accTick = 0;
 volatile uint32_t warningTick = 0;
 
@@ -592,6 +593,7 @@ void calibratingHandler() {
 void stdbyCountingDownHandler() {
 	enterStdByCountingDownState();
 	while(currentState == FFS_STDBY_COUNTING_DOWN){
+		writeStatesToOled();
 		processUartCommand();
 	}
 	leaveStdByCountingDownState();
@@ -647,13 +649,21 @@ void activeHandler() {
 // interrupt handlers
 void SysTick_Handler(void) {
   msTicks++;
+
   switch (currentState) {
   	case FFS_STDBY_COUNTING_DOWN:
   		if (msTicks - oneSecondTick >= 1000) {
 			oneSecondTick = msTicks;
-			oneSecondHandler();
+			if (countDownStarted) {
+				decrementCount();
+			}
 		}
-		break;
+  	case FFS_STDBY_ENV_TESTING:
+  	  		if (msTicks - handShakeSymbolTick >= 500) {
+  	  			handShakeSymbolTick = msTicks;
+  	  			handShakeSymbol = (handShakeSymbol=='H')?' ':'H';
+  	  		}
+  	  		break;
 	case FFS_ACTIVE:
 		if (isWarningOn) {
 			switch(buzzerState) {
@@ -826,12 +836,6 @@ void UART3_IRQHandler (void) {
 	}
 
 	
-}
-
-void oneSecondHandler() {
-	if (countDownStarted) {
-		decrementCount();
-	}
 }
 
 uint32_t getMsTicks(void) {
@@ -1032,8 +1036,9 @@ void decrementCount() {
 }
 
 //-----------------------------------------------------------
-//----------------- OLed Related Functio --------------------
+//----------------- OLed Related Function --------------------
 //-----------------------------------------------------------
+
 
 void writeHeaderToOled(char *str) {
 	oled_clearScreen(OLED_COLOR_BLACK);
@@ -1047,10 +1052,17 @@ void writeHeaderToOled(char *str) {
 }
 
 void writeStatesToOled() {
-	char stateStrings[15] = "";
-	strcat(stateStrings, tempStateStringMap[temperatureState]);
-	strcat(stateStrings, radiationStateStringMap[radiationState]);
-	oled_putString(7, 32, stateStrings, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	if (currentState != FFS_STDBY_COUNTING_DOWN) {
+		char stateStrings[15] = "";
+		strcat(stateStrings, tempStateStringMap[temperatureState]);
+		strcat(stateStrings, radiationStateStringMap[radiationState]);
+		oled_putString(7, 32, stateStrings, OLED_COLOR_WHITE, OLED_COLOR_BLACK);
+	}
+	if (currentState != FFS_CALIBRATING) {
+		char handShakeStr[2] = "";
+		handShakeStr[0] = (currentHandshakeState == HANDSHAKE_DONE)?'H':handShakeSymbol;
+		oled_putString(5, 0, handShakeStr, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+	}
 }
 
 void writeTempToOled() {
@@ -1156,7 +1168,7 @@ void processUartCommand() {
 int changeReportingTime(char *newTime) {
 	int newReportingTime = stringToInt(newTime);
 	if (newReportingTime > 0) {
-		REPORTING_PERIOD_MS = newReportingTime;
+		REPORTING_PERIOD_MS = newReportingTime*1000;
 		sendReportFlag = 1;
 
 		int preScaleValue1 = 100000;
@@ -1183,7 +1195,7 @@ int changeReportingTime(char *newTime) {
 int changeTimeWindow(char *newTime) {
 	int newTimeWindow = stringToInt(newTime);
 	if (newTimeWindow != -1) {
-		TIME_WINDOW_MS = newTimeWindow;
+		TIME_WINDOW_MS = newTimeWindow*1000;
 		return 1;
 	}
 	return 0;
@@ -1258,7 +1270,7 @@ void rgb_setLeds_OledHack(uint8_t ledMask) {
 }
 
 int stringToInt(char *intString) {
-	if (intString == NULL) return -1;
+	if (intString == NULL || intString == "") return -1;
 
 	int len = strlen(intString);
 	int answer = 0;
@@ -1267,7 +1279,7 @@ int stringToInt(char *intString) {
 	while(i < len) {
 		if (!isdigit(intString[i])) return -1;
 
-		answer = answer*10 + (intString[i] - '0');
+		answer = answer*10 + (intString[i++] - '0');
 	}
 
 	return answer;
