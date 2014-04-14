@@ -888,7 +888,7 @@ void enterStdByCountingDownState() {
 	writeHeaderToOled("   STAND-BY   ");
 	countDownFrom(COUNT_DOWN_START);
 	acc_setMode(ACC_MODE_STANDBY);
-	light_setHiThreshold(800);
+	light_setHiThreshold(RAD_UPPER_LIMIT);
 	init_temp_interrupt(&currentTemperatureReading);
 	init_handShake();
 }
